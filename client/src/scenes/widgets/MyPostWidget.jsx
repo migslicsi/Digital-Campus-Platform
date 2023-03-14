@@ -1,11 +1,9 @@
 import {
   EditOutlined,
   DeleteOutlined,
-  AttachFileOutlined,
-  GifBoxOutlined,
-  ImageOutlined,
-  MicOutlined,
   MoreHorizOutlined,
+  AttachFileOutlined,
+  MovieCreation,
 } from "@mui/icons-material";
 import {
   Box,
@@ -24,6 +22,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const MyPostWidget = ({ picturePath }) => {
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
         <InputBase
-          placeholder="What's on your mind..."
+          placeholder="Create a Post"
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{
@@ -122,20 +122,20 @@ const MyPostWidget = ({ picturePath }) => {
 
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <ImageOutlined sx={{ color: mediumMain }} />
+          <InsertPhotoIcon sx={{ color: mediumMain }} />
           <Typography
             color={mediumMain}
             sx={{ "&:hover": { cursor: "pointer", color: medium } }}
           >
-            Image
+            Photo
           </Typography>
         </FlexBetween>
 
         {isNonMobileScreens ? (
           <>
             <FlexBetween gap="0.25rem">
-              <GifBoxOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Clip</Typography>
+              <MovieCreation sx={{ color: mediumMain }} />
+              <Typography color={mediumMain}>Video</Typography>
             </FlexBetween>
 
             <FlexBetween gap="0.25rem">
@@ -144,8 +144,8 @@ const MyPostWidget = ({ picturePath }) => {
             </FlexBetween>
 
             <FlexBetween gap="0.25rem">
-              <MicOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Audio</Typography>
+              <NewspaperIcon sx={{ color: mediumMain }} />
+              <Typography color={mediumMain}>Article</Typography>
             </FlexBetween>
           </>
         ) : (
@@ -159,11 +159,14 @@ const MyPostWidget = ({ picturePath }) => {
           onClick={handlePost}
           sx={{
             color: palette.background.alt,
-            backgroundColor: palette.primary.main,
+            backgroundColor: palette.primary,
             borderRadius: "3rem",
+            border: "2px solid",
+            borderWidth: "2px",
+            width: "100px",
           }}
         >
-          POST
+          <Typography fontWeight="bold" color={mediumMain}>POST</Typography>
         </Button>
       </FlexBetween>
     </WidgetWrapper>

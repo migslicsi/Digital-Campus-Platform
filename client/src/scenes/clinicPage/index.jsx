@@ -40,9 +40,12 @@ const ClinicPage = () => {
   const medium = palette.neutral.medium;
   const navigate = useNavigate();
   const [currentWidget, setCurrentWidget] = useState('Home');
+  const [activeButton, setActiveButton] = useState(null);
+
 
   const handleWidgetSelection = (widget) => {
     setCurrentWidget(widget);
+    setActiveButton(widget);
   };
 
 
@@ -73,6 +76,7 @@ const ClinicPage = () => {
                 
                 <ListItem disablePadding>
                     <ListItemButton
+                    selected={activeButton === 'Clinic'}
                     onClick={() => handleWidgetSelection('Clinic')}
                     >
                     <ListItemIcon><LocalHospitalIcon /></ListItemIcon>
@@ -82,6 +86,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
                     >
                     <ListItemIcon><PsychologyIcon /></ListItemIcon>
                       <Typography color={dark}>Councelling</Typography>
@@ -89,49 +95,70 @@ const ClinicPage = () => {
                   </ListItem>
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >  
                     <ListItemIcon><AddToQueueIcon /></ListItemIcon>
                       <Typography color={dark}>Registrar</Typography>
                     </ListItemButton>
                   </ListItem>
                   
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><LibraryBooksIcon /></ListItemIcon>
                       <Typography color={dark}>Library</Typography>
                     </ListItemButton>
                   </ListItem> 
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><SavingsOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Financial Aid</Typography>
                     </ListItemButton>
                   </ListItem>   
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><HomeWorkOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Housing</Typography>
                     </ListItemButton>
                   </ListItem> 
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><SchoolOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Scholarships</Typography>
                     </ListItemButton>
                   </ListItem>   
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><DevicesOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>IT Help</Typography>
                     </ListItemButton>
                   </ListItem> 
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                     <ListItemIcon><DirectionsBusOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Transportation Help</Typography>
                     </ListItemButton>
@@ -160,6 +187,7 @@ const ClinicPage = () => {
                  <ListItem disablePadding>
                     <ListItemButton
                     onClick={() => handleWidgetSelection('Events')}
+                    selected={activeButton === 'Events'}
                     >
                      <ListItemIcon><StadiumOutlinedIcon /></ListItemIcon>
                      <Typography color={dark}>School Events</Typography>
@@ -167,63 +195,90 @@ const ClinicPage = () => {
                   </ListItem>
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><CalendarTodayOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Academic Calendar</Typography>
                     </ListItemButton>
                   </ListItem>
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><CampaignOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Annoucements</Typography>
                     </ListItemButton>
                   </ListItem>
                   
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><BookOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Handbook</Typography>
                     </ListItemButton>
                   </ListItem> 
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><HistoryEduOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Admission/Enrollment Hub</Typography>
                     </ListItemButton>
                   </ListItem>   
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><Diversity1OutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Student Organizations</Typography>
                     </ListItemButton>
                   </ListItem> 
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><FolderSharedOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Contact Faculty</Typography>
                     </ListItemButton>
                   </ListItem>   
     
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><StoreMallDirectoryOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>School Directory</Typography>
                     </ListItemButton>
                   </ListItem>     
                   
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><WorkOutlineOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Internships</Typography>
                     </ListItemButton>
                   </ListItem>
 
                   <ListItem disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                    selected={activeButton === ''}
+                    onClick={() => handleWidgetSelection('')}
+                    >
                      <ListItemIcon><AssuredWorkloadOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Alumni Hub</Typography>
                     </ListItemButton>
