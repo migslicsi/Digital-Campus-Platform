@@ -33,7 +33,7 @@ const ServicesInfoHome = () => {
             pl="1rem" 
             pb="0.5rem" 
             >
-            <Accordion>
+            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
