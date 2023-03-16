@@ -30,6 +30,7 @@ import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import { useState } from "react";
 import ServicesInfoHome from "scenes/widgets/ServicesInfoHome";
+import {motion} from "framer-motion"
 
 /* import of widgets */
 import EventsWidget from "scenes/widgets/servicesinfowidgets/EventsWidget";
@@ -40,7 +41,6 @@ import AnnoucementWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsW
 import CalendarWidget from "scenes/widgets/servicesinfowidgets/CalendarWidget";    
 import ContactFacultyWidget from "scenes/widgets/servicesinfowidgets/ContactFacultyWidget";
 import FinancialAidWidget from "scenes/widgets/servicesinfowidgets/FinancialAidWidget";
-import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";
 import HousingWidget from "scenes/widgets/servicesinfowidgets/HousingWidget";
 import InternshipsWidget from "scenes/widgets/servicesinfowidgets/InternshipsWidget";
 import ITWidget from "scenes/widgets/servicesinfowidgets/ITWidget";
@@ -67,10 +67,13 @@ const ClinicPage = () => {
     setActiveButton(widget);
   };
 
-
   return (
     
-    <Box>
+    <motion.Box
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0}}
+    >
       <Navbar />
       <Box
         width="100%"
@@ -92,12 +95,11 @@ const ClinicPage = () => {
                 </Typography>
                 <Divider/>
                 <List>
-                
+
                 <ListItem disablePadding>
                     <ListItemButton
                     selected={activeButton === 'Clinic'}
-                    onClick={() => handleWidgetSelection('Clinic')}
-                    >
+                    onClick={() => handleWidgetSelection('Clinic')}>
                     <ListItemIcon><LocalHospitalIcon /></ListItemIcon>
                     <Typography color={dark}>School Clinic</Typography>
                     </ListItemButton>
@@ -181,9 +183,7 @@ const ClinicPage = () => {
                     <ListItemIcon><DirectionsBusOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Transportation Help</Typography>
                     </ListItemButton>
-                  </ListItem>         
-                  
-
+                  </ListItem>       
                 </List>
             </nav>
             </Box>
@@ -337,7 +337,7 @@ const ClinicPage = () => {
             {currentWidget === 'Councelling' && <CouncellingWidget />}
           </Box>
       </Box>
-    </Box>
+    </motion.Box>
   );
 };
 

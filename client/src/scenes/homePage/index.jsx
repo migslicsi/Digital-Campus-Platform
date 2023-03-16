@@ -8,6 +8,7 @@ import LatestWidget from "scenes/widgets/LatestWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import ServicesWidget from "scenes/widgets/ServicesWidget";
 import InformationWidget from "scenes/widgets/InformationWidget";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
   
@@ -15,7 +16,11 @@ const HomePage = () => {
   const { _id, picturePath } = useSelector((state) => state.user);
 
   return (
-    <Box>
+    <motion.Box
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0}}
+    >
       <Navbar />
       <Box
         width="100%"
@@ -45,7 +50,7 @@ const HomePage = () => {
           </Box>
         )}
       </Box>
-    </Box>
+    </motion.Box>
   );
 };
 

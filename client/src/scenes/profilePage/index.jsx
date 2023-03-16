@@ -7,6 +7,7 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import FriendListWidget from "scenes/widgets/FriendListWidget";
 import PostsWidget from "scenes/widgets/PostsWidget";
 import UserWidget from "scenes/widgets/UserWidget";
+import { motion } from "framer-motion";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -31,7 +32,11 @@ const ProfilePage = () => {
   if (!user) return null;
 
   return (
-    <Box>
+    <motion.Box
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0}}
+    >
       <Navbar />
       <Box
         width="100%"
@@ -54,7 +59,7 @@ const ProfilePage = () => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </motion.Box>
   );
 };
 
