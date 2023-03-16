@@ -1,6 +1,5 @@
 import {
     EditOutlined,
-    LocationOnOutlined,
   } from "@mui/icons-material";
   import { Box, Typography, Divider, useTheme } from "@mui/material";
   import UserImage from "components/UserImage";
@@ -10,6 +9,7 @@ import {
   import { useEffect, useState } from "react";
   import { useNavigate } from "react-router-dom";
   import React from "react";
+  import ClassTwoToneIcon from '@mui/icons-material/ClassTwoTone';
   
   const UserWidget = ({ userId, picturePath }) => {
     const [user, setUser] = useState(null);
@@ -81,7 +81,7 @@ import {
         {/* SECOND ROW */}
         <Box p="1rem 0">
           <Box display="flex" alignItems="center" gap="1rem" mb="0.5rem">
-            <LocationOnOutlined fontSize="large" sx={{ color: main }} />
+            <ClassTwoToneIcon fontSize="large" sx={{ color: main }} />
             <Typography color={medium}>{location}</Typography>
           </Box>
         </Box>

@@ -1,6 +1,6 @@
 import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
 import Navbar from "scenes/navbar";
-import ClinicWidget from "scenes/widgets/ClinicWidget";
+import ClinicWidget from "scenes/widgets/servicesinfowidgets/ClinicWidget";
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -29,8 +29,27 @@ import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import { useState } from "react";
-import EventsWidget from "scenes/widgets/EventsWidget";
 import ServicesInfoHome from "scenes/widgets/ServicesInfoHome";
+
+/* import of widgets */
+import EventsWidget from "scenes/widgets/servicesinfowidgets/EventsWidget";
+import CouncellingWidget from "scenes/widgets/servicesinfowidgets/CouncellingWidget";
+import AdmissionHubWidget from "scenes/widgets/servicesinfowidgets/AdmissionHubWidget";
+import AlumniWidget from "scenes/widgets/servicesinfowidgets/AlumniWidget";
+import AnnoucementWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsWidget";
+import CalendarWidget from "scenes/widgets/servicesinfowidgets/CalendarWidget";    
+import ContactFacultyWidget from "scenes/widgets/servicesinfowidgets/ContactFacultyWidget";
+import FinancialAidWidget from "scenes/widgets/servicesinfowidgets/FinancialAidWidget";
+import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";
+import HousingWidget from "scenes/widgets/servicesinfowidgets/HousingWidget";
+import InternshipsWidget from "scenes/widgets/servicesinfowidgets/InternshipsWidget";
+import ITWidget from "scenes/widgets/servicesinfowidgets/ITWidget";
+import LibraryWidget from "scenes/widgets/servicesinfowidgets/LibraryWidget";
+import RegistrarWidget from "scenes/widgets/servicesinfowidgets/RegistrarWidget";
+import ScholarshipsWidget from "scenes/widgets/servicesinfowidgets/ScholarshipsWidget";
+import SchoolDirectoryWidget from "scenes/widgets/servicesinfowidgets/SchoolDirectoryWidget";
+import StudentOrgWidget from "scenes/widgets/servicesinfowidgets/StudentOrgWidget";
+import TransportationWidget from "scenes/widgets/servicesinfowidgets/TransportationWidget";             
 
 const ClinicPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -86,8 +105,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Councelling'}
+                    onClick={() => handleWidgetSelection('Councelling')}
                     >
                     <ListItemIcon><PsychologyIcon /></ListItemIcon>
                       <Typography color={dark}>Councelling</Typography>
@@ -96,8 +115,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Registrar'}
+                    onClick={() => handleWidgetSelection('Registrar')}
                     >  
                     <ListItemIcon><AddToQueueIcon /></ListItemIcon>
                       <Typography color={dark}>Registrar</Typography>
@@ -106,8 +125,8 @@ const ClinicPage = () => {
                   
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Library'}
+                    onClick={() => handleWidgetSelection('Library')}
                     >
                     <ListItemIcon><LibraryBooksIcon /></ListItemIcon>
                       <Typography color={dark}>Library</Typography>
@@ -116,8 +135,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Financial'}
+                    onClick={() => handleWidgetSelection('Financial')}
                     >
                     <ListItemIcon><SavingsOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Financial Aid</Typography>
@@ -126,8 +145,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Housing'}
+                    onClick={() => handleWidgetSelection('Housing')}
                     >
                     <ListItemIcon><HomeWorkOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Housing</Typography>
@@ -136,8 +155,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Scholarships'}
+                    onClick={() => handleWidgetSelection('Scholarships')}
                     >
                     <ListItemIcon><SchoolOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Scholarships</Typography>
@@ -146,8 +165,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'IT'}
+                    onClick={() => handleWidgetSelection('IT')}
                     >
                     <ListItemIcon><DevicesOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>IT Help</Typography>
@@ -156,8 +175,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Transportation'}
+                    onClick={() => handleWidgetSelection('Transportation')}
                     >
                     <ListItemIcon><DirectionsBusOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Transportation Help</Typography>
@@ -196,8 +215,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Calendar'}
+                    onClick={() => handleWidgetSelection('Calendar')}
                     >
                      <ListItemIcon><CalendarTodayOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Academic Calendar</Typography>
@@ -206,8 +225,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Annoucements'}
+                    onClick={() => handleWidgetSelection('Annoucements')}
                     >
                      <ListItemIcon><CampaignOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Annoucements</Typography>
@@ -216,8 +235,8 @@ const ClinicPage = () => {
                   
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Handbook'}
+                    onClick={() => handleWidgetSelection('Handbook')}
                     >
                      <ListItemIcon><BookOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Handbook</Typography>
@@ -226,8 +245,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Admission'}
+                    onClick={() => handleWidgetSelection('Admission')}
                     >
                      <ListItemIcon><HistoryEduOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Admission/Enrollment Hub</Typography>
@@ -236,8 +255,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Org'}
+                    onClick={() => handleWidgetSelection('Org')}
                     >
                      <ListItemIcon><Diversity1OutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Student Organizations</Typography>
@@ -246,8 +265,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Faculty'}
+                    onClick={() => handleWidgetSelection('Faculty')}
                     >
                      <ListItemIcon><FolderSharedOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Contact Faculty</Typography>
@@ -256,8 +275,8 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Directory'}
+                    onClick={() => handleWidgetSelection('Directory')}
                     >
                      <ListItemIcon><StoreMallDirectoryOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>School Directory</Typography>
@@ -266,8 +285,8 @@ const ClinicPage = () => {
                   
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Internships'}
+                    onClick={() => handleWidgetSelection('Internships')}
                     >
                      <ListItemIcon><WorkOutlineOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Internships</Typography>
@@ -276,8 +295,8 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === ''}
-                    onClick={() => handleWidgetSelection('')}
+                    selected={activeButton === 'Alumni'}
+                    onClick={() => handleWidgetSelection('Alumni')}
                     >
                      <ListItemIcon><AssuredWorkloadOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>Alumni Hub</Typography>
@@ -300,8 +319,23 @@ const ClinicPage = () => {
             {currentWidget === 'Home' && <ServicesInfoHome />}
             {currentWidget === 'Clinic' && <ClinicWidget />}
             {currentWidget === 'Events' && <EventsWidget />}
+            {currentWidget === 'Alumni' && <AlumniWidget />}
+            {currentWidget === 'Internships' && <InternshipsWidget />}
+            {currentWidget === 'Directory' && <SchoolDirectoryWidget />}
+            {currentWidget === 'Faculty' && <ContactFacultyWidget />}
+            {currentWidget === 'Org' && <StudentOrgWidget />}
+            {currentWidget === 'Admission' && <AdmissionHubWidget />}
+            {currentWidget === 'Annoucemenet' && <AnnoucementWidget />}
+            {currentWidget === 'Calendar' && <CalendarWidget />}
+            {currentWidget === 'Transportation' && <TransportationWidget />}
+            {currentWidget === 'IT' && <ITWidget />}
+            {currentWidget === 'Scholarships' && <ScholarshipsWidget />}
+            {currentWidget === 'Housing' && <HousingWidget />}
+            {currentWidget === 'Financial' && <FinancialAidWidget />}
+            {currentWidget === 'Library' && <LibraryWidget />}
+            {currentWidget === 'Registrar' && <RegistrarWidget />}
+            {currentWidget === 'Councelling' && <CouncellingWidget />}
           </Box>
-        
       </Box>
     </Box>
   );

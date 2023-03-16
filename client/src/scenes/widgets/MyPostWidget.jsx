@@ -68,7 +68,7 @@ const MyPostWidget = ({ picturePath }) => {
           sx={{
             width: "100%",
             backgroundColor: palette.neutral.light,
-            borderRadius: "2rem",
+            borderRadius: "1rem",
             padding: "1rem 2rem",
           }}
         />
@@ -154,22 +154,24 @@ const MyPostWidget = ({ picturePath }) => {
           </FlexBetween>
         )}
 
-        <Button
-          disabled={!post}
-          onClick={handlePost}
-          sx={{
-            color: palette.background.alt,
-            backgroundColor: palette.primary,
-            borderRadius: "3rem",
-            border: "2px solid",
-            borderWidth: "2px",
-            width: "100px",
-          }}
-        >
-          <Typography fontWeight="bold" color={mediumMain}>POST</Typography>
-        </Button>
-      </FlexBetween>
-    </WidgetWrapper>
+          <Button
+            disabled={!post}
+            onClick={handlePost}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: palette.primary.main,
+              borderRadius: "3rem",
+              "&:hover":{
+                cursor:"pointer",
+                color: palette.background.alt,
+                backgroundColor: palette.primary.main,
+              }
+            }}
+          >
+            POST
+          </Button>
+        </FlexBetween>
+      </WidgetWrapper>
   );
 };
 
