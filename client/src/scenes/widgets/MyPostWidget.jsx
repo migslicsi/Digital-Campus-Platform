@@ -57,6 +57,8 @@ const MyPostWidget = ({ picturePath }) => {
     setPost("");
   };
 
+  
+
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
@@ -81,7 +83,7 @@ const MyPostWidget = ({ picturePath }) => {
           p="1rem"
         >
           <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
+            acceptedFiles=".jpg,.jpeg,.png,"
             multiple={false}
             onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
           >

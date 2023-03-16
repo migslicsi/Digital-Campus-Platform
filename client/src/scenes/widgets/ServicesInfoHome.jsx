@@ -98,11 +98,10 @@ const ServicesInfoHome = () => {
               </Box>
             </Grid>
           </Grid>
-
-        </Box>
-
+        
         
 
+        </Box>
     );
 };
 
