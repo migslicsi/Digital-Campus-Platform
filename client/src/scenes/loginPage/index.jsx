@@ -8,7 +8,7 @@ const LoginPage = () => {
   return (
     <Box
         sx={{
-          backgroundImage: "url(http://localhost:3001/assets/bg3.png)",
+          backgroundImage: "url(http://localhost:3001/assets/bg3-4.png)",
           backgroundSize: "cover",
           minHeight: "100vh",
           display: "flex",
@@ -17,7 +17,7 @@ const LoginPage = () => {
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
           "@media(max-width: 600px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bg3-mobile.png)",
+            backgroundImage: "url(http://localhost:3001/assets/bg3-4-mobile.png)",
           },
         }}
       >
