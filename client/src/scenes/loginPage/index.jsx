@@ -1,11 +1,17 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form.jsx";
+import { motion } from "framer-motion";
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   return (
+    <motion.div
+    initial={{opacity: 0}}
+    animate={{opacity: 1}}
+    exit={{opacity: 0}}
+    >
     <Box
         sx={{
           backgroundImage: "url(http://localhost:3001/assets/bg3-4.png)",
@@ -54,11 +60,12 @@ const LoginPage = () => {
           sx={{ mb: "1.5rem" }}
           color= " rgba(255, 255, 255, 255)"
         >
-          <center>Let's get started!</center>
+          <center>Let's Get Started!</center>
         </Typography>
         <Form />
       </Box>
     </Box>
+    </motion.div>
   );
 };
 
