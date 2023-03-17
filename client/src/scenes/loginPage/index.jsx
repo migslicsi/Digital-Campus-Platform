@@ -2,43 +2,64 @@ import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form.jsx";
 
 const LoginPage = () => {
-    const theme = useTheme();
-    const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
-    return <Box>
-        <Box 
-        width="100%" 
-        backgroundColor={theme.palette.background.alt} 
-        p="1rem 6%" 
-        textAlign="center"
+  const theme = useTheme();
+  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+
+  return (
+    <Box
+        sx={{
+          backgroundImage: "url(http://localhost:3001/assets/bg3.png)",
+          backgroundSize: "cover",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backdropFilter: "blur(10px) opacity(0.8)",
+          // Add media queries here
+          "@media(max-width: 600px)": {
+            backgroundImage: "url(http://localhost:3001/assets/bg3-mobile.png)",
+          },
+        }}
+      >
+      <Box
+       width={isNonMobileScreens ? "25%" : "93%"}
+       display="absolute"
+       p="2rem"
+       borderRadius="1.5rem"
+       borderStyle="solid" 
+       bgcolor=" transparent" // Change the background color to transparent with some opacity
+       border=" 2px solid rgba(0,213,253,255)"
+       sx={{ 
+        backdropFilter: "blur(10px)",
+        mr: "10%",
+        ml: "auto",
+        }}
         >
-        <Typography
-        fontWeight="bold"
-        fontSize="32px"
-        color="primary"
+          <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mb="2rem"
         >
-          CIIT++
-        </Typography>
+           <img
+            src="http://localhost:3001/assets/cicon2.png"
+            alt="Your Logo"
+            style={{ maxWidth: "50%", maxHeight: "50%" }}
+          />
         </Box>
 
-        <Box
-          width={isNonMobileScreens ? "50%" : "93%"}
-          p="2rem"
-          m="2rem auto"
-          borderRadius="1.5rem"
-          backgroundColor={theme.palette.background.alt}
-        >
-          <Typography
+        <Typography
           fontWeight="500"
           variant="h5"
-          sx= {{ mb: "1.5rem"}}
-          >
-            Welcome to CIIT++, The Exclusive Online Campus Platform for CIIT Students!
-          </Typography>
-          <Form />
-
-
-        </Box>
-    </Box>;
+          sx={{ mb: "1.5rem" }}
+          color= " rgba(255, 255, 255, 255)"
+        >
+          <center>Let's get started!</center>
+        </Typography>
+        <Form />
+      </Box>
+    </Box>
+  );
 };
 
 export default LoginPage;
