@@ -76,6 +76,7 @@ const ClinicPage = () => {
     >
       <Navbar />
       <Box
+        mt="70px"
         width="100%"
         padding="0rem 6%"
         display={isNonMobileScreens ? "flex" : "block"}

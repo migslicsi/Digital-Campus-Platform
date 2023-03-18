@@ -14,7 +14,7 @@ const LoginPage = () => {
     >
     <Box
         sx={{
-          backgroundImage: "url(http://localhost:3001/assets/bg3-4.png)",
+          backgroundImage: "url(http://localhost:3001/assets/bg3-4.webp)",
           backgroundSize: "cover",
           minHeight: "100vh",
           display: "flex",
@@ -22,23 +22,36 @@ const LoginPage = () => {
           alignItems: "center",
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
+          "@media(max-width: 1000px)": {
+            backgroundImage: "url(http://localhost:3001/assets/bg2-1.png)",
+            backgroundPosition: "center center",
+          },
           "@media(max-width: 600px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bg3-4-mobile.png)",
+            backgroundImage: "url(http://localhost:3001/assets/bg2-1.png)",
+            backgroundPosition: "center center",
           },
         }}
       >
       <Box
-       width={isNonMobileScreens ? "25%" : "93%"}
+       width="25%"
        display="absolute"
        p="2rem"
        borderRadius="1.5rem"
        borderStyle="solid" 
-       bgcolor=" transparent" // Change the background color to transparent with some opacity
+       bgcolor="transparent" // Change the background color to transparent with some opacity
        border=" 2px solid rgba(0,213,253,255)"
        sx={{ 
         backdropFilter: "blur(10px)",
         mr: "10%",
         ml: "auto",
+        "@media(max-width: 1000px)": {
+          width: "50%", // Set width to 50% upon 1000px media query
+          mr: "auto", // Set margin right to "auto" to center the box horizontally
+        },
+        "@media(max-width: 600px)": {
+          width: "80%", // Set width to 50% upon 1000px media query
+          mr: "auto", // Set margin right to "auto" to center the box horizontally
+        },
         }}
         >
           <Box

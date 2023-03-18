@@ -44,25 +44,40 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween 
+    padding="1rem 6%" 
+    backgroundColor={alt} 
+    width="100%"
+    position="fixed"
+    top="0"
+    zIndex="1"
+    boxShadow={theme.palette.mode === "dark" ? '0px 1px 2px rgba(255, 255, 255, 0.2)' : '0px 1px 2px rgba(0, 0, 0, 0.2)'}
+    >
       <FlexBetween gap="1.75rem">
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="primary"
-          onClick={() => {
-            navigate("/home");
-            window.location.reload();
-          }}
-          sx={{
-            "&:hover": {
-              color: primaryLight,
-              cursor: "pointer",
-            },
-          }}
-        >
-          CIIT++
-        </Typography>
+       <Box
+        component="img"
+        src={
+          theme.palette.mode === "dark"
+            ? "http://localhost:3001/assets/cicon-1.png"
+            : "http://localhost:3001/assets/cicon-1.png"
+        }
+        alt="CIIT++"
+        sx={{
+          width: "125px",
+          height: "35px",
+          fontWeight: "bold",
+          fontSize: "clamp(1rem, 2rem, 2.25rem)",
+          color: "primary",
+          "&:hover": {
+            cursor: "pointer",
+            filter: "brightness(1.2)",
+          },
+        }}
+        onClick={() => {
+          navigate("/home");
+          window.location.reload();
+        }}
+        />
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
@@ -171,6 +186,7 @@ const Navbar = () => {
                 <LightMode sx={{ color: dark, fontSize: "25px" }} />
               )}
             </IconButton>
+            <InfoIcon style={{ cursor: 'pointer' }} sx={{ fontSize: "25px" }} onClick={() => navigate("/services-information-page")}></InfoIcon>
             <Message sx={{ fontSize: "25px" }} />
             <Notifications sx={{ fontSize: "25px" }} />
             <Help sx={{ fontSize: "25px" }} />

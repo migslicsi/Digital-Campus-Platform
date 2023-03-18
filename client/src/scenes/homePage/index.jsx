@@ -23,6 +23,7 @@ const HomePage = () => {
     >
       <Navbar />
       <Box
+        mt="70px"
         width="100%"
         padding="2rem 6%"
         display={isNonMobileScreens ? "flex" : "block"}
