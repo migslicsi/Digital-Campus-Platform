@@ -24,10 +24,8 @@ const LatestWidget = () => {
         src="http://localhost:3001/assets/info4.jpg"
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
-      <FlexBetween>
         <Typography sx={{fontWeight: 'bold'}} color={main}>Happy Women's Day!</Typography>
         <Typography color={medium}>March 17, 2023</Typography>
-      </FlexBetween>
       <Typography color={medium} m="0.5rem 0">
        Today, we celebrate you our strong and independent Obebe girlies. We, Obelisk stands with every
        woman in the society as they continue to fight for gender equality, sexism, sexual harassment,
