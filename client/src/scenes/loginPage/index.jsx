@@ -23,11 +23,11 @@ const LoginPage = () => {
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
           "@media(max-width: 1000px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bg2-1.png)",
+            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
             backgroundPosition: "center center",
           },
           "@media(max-width: 600px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bg2-1.png)",
+            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
             backgroundPosition: "center center",
           },
         }}
