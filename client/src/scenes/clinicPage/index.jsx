@@ -37,7 +37,7 @@ import EventsWidget from "scenes/widgets/servicesinfowidgets/EventsWidget";
 import CouncellingWidget from "scenes/widgets/servicesinfowidgets/CouncellingWidget";
 import AdmissionHubWidget from "scenes/widgets/servicesinfowidgets/AdmissionHubWidget";
 import AlumniWidget from "scenes/widgets/servicesinfowidgets/AlumniWidget";
-import AnnoucementWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsWidget";
+import AnnoucementsWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsWidget";
 import CalendarWidget from "scenes/widgets/servicesinfowidgets/CalendarWidget";    
 import ContactFacultyWidget from "scenes/widgets/servicesinfowidgets/ContactFacultyWidget";
 import FinancialAidWidget from "scenes/widgets/servicesinfowidgets/FinancialAidWidget";
@@ -49,14 +49,15 @@ import RegistrarWidget from "scenes/widgets/servicesinfowidgets/RegistrarWidget"
 import ScholarshipsWidget from "scenes/widgets/servicesinfowidgets/ScholarshipsWidget";
 import SchoolDirectoryWidget from "scenes/widgets/servicesinfowidgets/SchoolDirectoryWidget";
 import StudentOrgWidget from "scenes/widgets/servicesinfowidgets/StudentOrgWidget";
-import TransportationWidget from "scenes/widgets/servicesinfowidgets/TransportationWidget";             
+import TransportationWidget from "scenes/widgets/servicesinfowidgets/TransportationWidget"; 
+import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";            
 
 const ClinicPage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
-  const medium = palette.neutral.medium;
+  const neutralLight = palette.background.alt;
   const navigate = useNavigate();
   const [currentWidget, setCurrentWidget] = useState('Home');
   const [activeButton, setActiveButton] = useState(null);
@@ -82,6 +83,11 @@ const ClinicPage = () => {
         display={isNonMobileScreens ? "flex" : "block"}
         gap="0.5rem"
         justifyContent="space-between"
+        sx={{
+          "@media(max-width: 1000px)": {
+            marginTop:"100px",
+          },
+          }}
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
             <WidgetWrapper marginTop="1.5rem">
@@ -313,9 +319,11 @@ const ClinicPage = () => {
         
           
           <Box 
+            mt="25px"
             flexBasis="70%"
             borderRadius="10px"
             padding="1rem"
+            backgroundColor={neutralLight}
           >
             {currentWidget === 'Home' && <ServicesInfoHome />}
             {currentWidget === 'Clinic' && <ClinicWidget />}
@@ -326,7 +334,7 @@ const ClinicPage = () => {
             {currentWidget === 'Faculty' && <ContactFacultyWidget />}
             {currentWidget === 'Org' && <StudentOrgWidget />}
             {currentWidget === 'Admission' && <AdmissionHubWidget />}
-            {currentWidget === 'Annoucemenet' && <AnnoucementWidget />}
+            {currentWidget === 'Annoucements' && <AnnoucementsWidget />}
             {currentWidget === 'Calendar' && <CalendarWidget />}
             {currentWidget === 'Transportation' && <TransportationWidget />}
             {currentWidget === 'IT' && <ITWidget />}
@@ -336,6 +344,7 @@ const ClinicPage = () => {
             {currentWidget === 'Library' && <LibraryWidget />}
             {currentWidget === 'Registrar' && <RegistrarWidget />}
             {currentWidget === 'Councelling' && <CouncellingWidget />}
+            {currentWidget === 'Handbook' && <HandbookWidget />}
           </Box>
       </Box>
     </motion.Box>

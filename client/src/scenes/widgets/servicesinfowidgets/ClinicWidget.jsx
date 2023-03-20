@@ -1,4 +1,4 @@
-import { Button, Divider, useTheme, Box, Typography, useMediaQuery, Grid } from "@mui/material"
+import { Button, Divider, useTheme, Box, Typography, useMediaQuery, Grid } from "@mui/material";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import { motion } from "framer-motion";
 
 const ClinicWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -25,7 +26,10 @@ const ClinicWidget = () => {
 
   
   return (
-        <Box 
+        <motion.Box 
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0, transition: {duration: 0.5}}}
             flexBasis="70%"
             borderRadius="10px"
             padding="1rem"
@@ -153,7 +157,7 @@ const ClinicWidget = () => {
         <Box mt="1.5rem" mb="1.5rem">
         </Box>
         </Box>
-        </Box>
+        </motion.Box>
 
     );
 };

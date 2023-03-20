@@ -5,6 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import { motion } from "framer-motion";
 
 const EventsWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -13,7 +14,10 @@ const EventsWidget = () => {
   const main = palette.neutral.main;
   
   return (
-        <Box 
+        <motion.Box 
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0, transition: {duration: 0.5}}}
             flexBasis="70%"
             borderRadius="10px"
             padding="1rem"
@@ -185,7 +189,7 @@ const EventsWidget = () => {
 
 
             </Box>
-          </Box>
+          </motion.Box>
 
     );
 };

@@ -10,6 +10,7 @@ const ServicesInfoHome = () => {
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
+  const neutralLight = palette.background.default;
   
   return (
         <Box 
@@ -33,6 +34,32 @@ const ServicesInfoHome = () => {
             pl="1rem" 
             pb="0.5rem" 
             >
+            
+            <img src="http://localhost:3001/assets/homebg.webp" alt="clinic" style={{ width: '100%', height: '100%'}} />
+
+            <Box mt="1rem" backgroundColor={neutralLight} borderRadius={1}>
+            <Typography
+             variant={isNonMobileScreens ? "h4" : "h5"}
+             style={{ textDecoration: "underline" }}
+             textAlign="center"
+            >Purpose:</Typography>
+            <Typography mt="0.5rem" variant="h6" component="p" textAlign="center">
+              Our hub is designed to provide a comprehensive range of services and information to support your academic and personal success. From academic support and career services to counseling and mental health resources, we've got you covered. Our team is here to help you navigate the challenges of student life and make the most of your time on campus. So take a look around, explore our services and resources, and discover how we can help you achieve your goals.
+            </Typography>
+            </Box>
+
+            <Box mt="1rem"backgroundColor={neutralLight} borderRadius={1}>
+            <Typography
+             variant={isNonMobileScreens ? "h4" : "h5"}
+             textAlign="center"
+             style={{ textDecoration: "underline" }}
+            >Vision:</Typography>
+            <Typography mt="0.5rem" mb="1.5rem" variant="h6" component="p" textAlign="center">
+              Our vision is a society in which every student engages with social and environmental challenges during their time at university, empowering them to become active citizens: we do this by mainstreaming student social action, providing practical opportunities alongside training and skill development. We aim to reach students who otherwise wouldn’t engage and empower them to become active citizens, so that they can achieve positive change now and after they graduate.
+            </Typography>
+            </Box>
+
+
             <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -54,10 +81,43 @@ const ServicesInfoHome = () => {
               </AccordionDetails>
             </Accordion>
 
+            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc', marginTop: "1.5rem"}}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h6" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
+                  IMPORTANT COLLEGE-WIDE ANNOUCEMENTS
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="p">General Annoucements:
+                <ol>
+                  <li>Student services are available online and onsite during weekdays from 9:00 am to 6:00 pm starting Q1 SY 2022-2023</li>
+                  <li> Important dates to remember can now be added to your Google Calendar</li>
+                  <li>You may now view subject equivalencies</li>
+                  <li>Our School Clinic would like to remind those who are currently processing their medical clearance to kindly check the medical results released by the laboratory to make sure that there are no further instructions given on the status of your medical results. The comprehensive instructions were sent to your respective CIIT email addresses (Subject: READ: Checking of Online Medical Results before Submission to the Clinic). Please make sure to read it thoroughly.</li>
+                </ol>
+              </Typography>
+              <Typography variant="p">IT Related Annoucements:
+                <ol>
+                  <li>Student_CIIT password is "iamciitstudent"</li>
+                  <li>PC Lab student password "ciitstudent"</li>
+                  <li>To all students, please make sure to update your password every term to avoid account compromise. Make sure to log out of the account if you are not using your own equipment. Compromised passwords may lead to data leaks. Please refer to #1 for password guidelines.</li>
+                </ol>
+              </Typography>
+              </AccordionDetails>
+            </Accordion>
+
             <Typography
              pt="2rem"
              variant={isNonMobileScreens ? "h4" : "h5"}
+             style={{ textDecoration: "underline" }}
             >What's New in March 2023</Typography>
+
+            
+
             </Box>
 
             <Grid container spacing={1} pl={"1rem"}>
