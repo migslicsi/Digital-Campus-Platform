@@ -58,7 +58,7 @@ const Navbar = () => {
         component="img"
         src={
           theme.palette.mode === "dark"
-            ? "http://localhost:3001/assets/cicon-1.png"
+            ? "http://localhost:3001/assets/ciconw.png"
             : "http://localhost:3001/assets/cicon-1.png"
         }
         alt="CIIT++"
