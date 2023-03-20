@@ -1,13 +1,20 @@
 import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
+import { Viewer, Worker } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+
+
 
 const HandbookWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
-  
+ 
+
+
   return (
         <motion.Box 
             initial={{opacity: 0}}
@@ -39,7 +46,17 @@ const HandbookWidget = () => {
 
             <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
             
-            {/* your content here */}
+            <div style={{ 
+                border: '1px solid rgba(0, 0, 0, 0.3)',
+                height: '700px',
+                width: '100%',
+                overflow: 'scroll'
+            }}>
+              <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.min.js">
+                <Viewer fileUrl="http://localhost:3001/assets/handbook.pdf" defaultScale={1.25} />
+              </Worker>
+            </div>
+
 
             </Box>
           </motion.Box>

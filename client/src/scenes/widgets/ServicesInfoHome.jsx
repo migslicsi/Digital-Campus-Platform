@@ -1,4 +1,4 @@
-import { Grid, Divider, useTheme, Box, Typography, useMediaQuery,} from "@mui/material"
+import { Link, Grid, Divider, useTheme, Box, Typography, useMediaQuery,} from "@mui/material"
 import * as React from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -109,58 +109,52 @@ const ServicesInfoHome = () => {
               </Typography>
               </AccordionDetails>
             </Accordion>
-
-            <Typography
-             pt="2rem"
-             variant={isNonMobileScreens ? "h4" : "h5"}
-             style={{ textDecoration: "underline" }}
-            >What's New in March 2023</Typography>
-
-            
-
             </Box>
 
-            <Grid container spacing={1} pl={"1rem"}>
+            <Grid container spacing={1} pt={"1.75rem"} pl={"1rem"}>
             <Grid item xs={12} md={4}>
               <Box border={1} borderColor="grey.500" borderRadius={4} p={2} width="100%">
-                <Typography variant="h6" gutterBottom>
-                  Box 1
+                <Typography variant="h4" align="left" mb="1rem">
+                  Contact Us
                 </Typography>
-                <Typography variant="body1" component="div">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel nulla auctor,
-                  tincidunt felis sit amet, commodo odio. Suspendisse potenti. Nunc pretium nunc eget enim
-                  convallis, quis ullamcorper velit pharetra.
+                <Typography align="left" mb="1rem">
+                  To get in contact with us, please email us at usp@saonet.ucla.edu or call us at 310.206.2980.
+                </Typography>
+                <Typography align="left">
+                  You can also schedule an appointment with us just use the email cc: appt.set
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box border={1} borderColor="grey.500" borderRadius={4} p={2} width="100%">
-                <Typography variant="h6" gutterBottom>
-                  Box 2
+                <Typography variant="h4" align="left" mb="1rem">
+                  Visit Us
                 </Typography>
-                <Typography variant="body1" component="div">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel nulla auctor,
-                  tincidunt felis sit amet, commodo odio. Suspendisse potenti. Nunc pretium nunc eget enim
-                  convallis, quis ullamcorper velit pharetra.
+                <Typography align="left" mb="1rem">
+                Monday to Friday 9am-5pm<br></br>Excluding university holidays
+                </Typography>
+                <Typography align="left">
+                Student Activities Center, Suite B52
+                220 Westwood Plaza
+                Box 951453
+                Campus Mail: 145306
                 </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Box border={1} borderColor="grey.500" borderRadius={4} p={2} width="100%">
-                <Typography variant="h6" gutterBottom>
-                  Box 3
+                <Typography variant="h4" align="left" mb="1rem">
+                  Stay in the Know
                 </Typography>
-                <Typography variant="body1" component="div">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel nulla auctor,
-                  tincidunt felis sit amet, commodo odio. Suspendisse potenti. Nunc pretium nunc eget enim
-                  convallis, quis ullamcorper velit pharetra.
+                <Typography align="left" mb="1rem">
+                  Use #UndocuBruin to reach the UndocuBruin Community
+                </Typography>
+                <Typography align="left">
+                  Join our email listserv for students to stay updated.
                 </Typography>
               </Box>
             </Grid>
           </Grid>
-        
-        
-
         </Box>
     );
 };
