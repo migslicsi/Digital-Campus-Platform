@@ -54,7 +54,7 @@ const ClinicWidget = () => {
             >Schedule a meeting with the school clinic for your medical needs.
             </Typography>
 
-            <Grid container spacing={0} mb="1rem" ml="0.5rem" mr="0.5rem">
+            <Grid container spacing={0} mb="1rem" ml="0.5rem" pr="1rem">
             <Grid item xs={12} sm={6}>
                 <img src="http://localhost:3001/assets/clinic.png" alt="clinic" style={{ width: '100%', height: '100%'}} />
             </Grid>

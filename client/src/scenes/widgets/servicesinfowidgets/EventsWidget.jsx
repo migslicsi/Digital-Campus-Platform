@@ -67,19 +67,16 @@ const EventsWidget = () => {
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> Thursday, March 10th, 4:00pm <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> Free Admission <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> College of Social Sciences Bldg 1
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
             
@@ -100,23 +97,20 @@ const EventsWidget = () => {
              />
                <CardContent>
                 <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
+                  Sportsfest 2023
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> 3rd Week of March <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> Free Admission <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> Gymnasium
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
 
@@ -137,23 +131,20 @@ const EventsWidget = () => {
              />
                <CardContent>
                 <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
+                  Pride Club Celebration
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> Friday, March 25th, 3:00pm <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> Free for members / $10 for non members <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> Humanities Building Rm312
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
 
@@ -174,23 +165,20 @@ const EventsWidget = () => {
              />
                <CardContent>
                 <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
+                  School Job Fair 
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> Wednesday, March 28-30, 8:00am <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> 5 <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> Jose Rizal Lobby
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
 
@@ -211,23 +199,20 @@ const EventsWidget = () => {
              />
                <CardContent>
                 <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
+                  Alumni Night 2023
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> Saturday, April 2nd, 7:00pm <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> Free (Alumni Only) <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> Theatre Hall C
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
 
@@ -248,23 +233,20 @@ const EventsWidget = () => {
              />
                <CardContent>
                 <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
+                  95th Annual Art and Tech Fair
                 </Typography>
                 <Typography variant="h7" color="text.secondary">
                   <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00am <br></br>
+                    <CalendarMonthIcon /> 2nd Week of April, 12:00nn <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 40 <br></br>
+                    <AttachMoneyIcon /> Free <br></br>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Mid Lane
+                    <LocationOnIcon /> Library Wing A & B
                   </div>
                 </Typography>
                 </CardContent>
-                <CardActions>
-                <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
             </motion.div>
 

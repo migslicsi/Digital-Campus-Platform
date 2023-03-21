@@ -3,17 +3,15 @@ import * as React from 'react';
 import { motion } from "framer-motion";
 import { Viewer, Worker } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
-import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 
 
 const HandbookWidget = () => {
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const isNonMobileScreens = useMediaQuery("(min-width:620px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
- 
-
+  const defaultScale = isNonMobileScreens ? 1.25 : 0.8;
 
   return (
         <motion.Box 
@@ -45,20 +43,18 @@ const HandbookWidget = () => {
             </Typography>
 
             <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
-            
-            <div style={{ 
-                border: '1px solid rgba(0, 0, 0, 0.3)',
-                height: '700px',
-                width: '100%',
-                overflow: 'scroll'
-            }}>
-              <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.min.js">
-                <Viewer fileUrl="http://localhost:3001/assets/handbook.pdf" defaultScale={1.25} />
-              </Worker>
-            </div>
-
-
+              <Box sx={{ 
+                  border: '1px solid rgba(0, 0, 0, 0.3)',
+                  height: '700px',
+                  width: '100%',
+                  overflow: 'scroll',
+              }}>
+                <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.min.js">
+                  <Viewer fileUrl="http://localhost:3001/assets/handbook.pdf" defaultScale={defaultScale} />
+                </Worker>
+              </Box>
             </Box>
+
           </motion.Box>
 
     );
