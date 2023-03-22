@@ -6,6 +6,7 @@ import ClinicPage from "scenes/clinicPage";
 import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {AnimatePresence} from "framer-motion";
+import ScrollToTop from './ScrollToTop';
 
 function AnimatedRoutes() {
     const isAuth = Boolean(useSelector((state) => state.token));
@@ -13,6 +14,7 @@ function AnimatedRoutes() {
 
   return (
     <AnimatePresence>
+        <ScrollToTop/>
         <Routes location={location} key={location.pathname}>
             <Route path="/" element={<LoginPage />} />
             <Route 
