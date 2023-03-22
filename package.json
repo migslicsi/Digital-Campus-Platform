@@ -12,6 +12,7 @@
   "dependencies": {
     "@mui/lab": "^5.0.0-alpha.123",
     "framer-motion": "^10.4.0",
-    "react-datepicker": "^4.10.0"
+    "react-datepicker": "^4.10.0",
+    "react-spinners": "^0.13.8"
   }
 }

@@ -1,18 +1,89 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form.jsx";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { PuffLoader } from "react-spinners";
+
 
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+    }, 2000)
+  },[])
+
+  const loaderVariants = {
+    hidden: {
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
-    <motion.div
-    initial={{opacity: 0}}
-    animate={{opacity: 1}}
-    exit={{opacity: 0}}
-    >
-    <Box
+    <motion.div>
+    {
+      loading ?
+      <Box
+        sx={{
+          position: "center center",
+          height: "100%",
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box
+          sx={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+            opacity: loading ? 1 : 0, // Set opacity based on loading state
+            transition: `opacity 1s ease-out ${loading ? "" : "1s"}`, // Add transition animation with 1s delay when loader is finished
+          }}
+        >
+          <Box
+            sx={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              textAlign: "center",
+            }}
+          >
+            <img
+              src={
+                theme.palette.mode === "dark"
+                  ? "http://localhost:3001/assets/ciconw.png"
+                  : "http://localhost:3001/assets/cicon2-1.png"
+              }
+              style={{ width: "300px", height: "auto", marginBottom: "250px" }}
+            />
+          </Box>
+          <PuffLoader color={"#00D5FA"} loading={loading} size={100} />
+        </Box>
+      </Box>
+      :
+      <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 1, ease: "easeInOut" } }}
+      exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+      >
+      <Box
         sx={{
           backgroundImage: "url(http://localhost:3001/assets/bg3-4.webp)",
           backgroundSize: "cover",
@@ -82,6 +153,9 @@ const LoginPage = () => {
         <Form />
       </Box>
     </Box>
+    </motion.div>
+    }
+    
     </motion.div>
   );
 };
