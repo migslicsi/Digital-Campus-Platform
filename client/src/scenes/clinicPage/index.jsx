@@ -22,7 +22,6 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import StadiumOutlinedIcon from '@mui/icons-material/StadiumOutlined';
 import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
-import StoreMallDirectoryOutlinedIcon from '@mui/icons-material/StoreMallDirectoryOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
@@ -47,7 +46,6 @@ import ITWidget from "scenes/widgets/servicesinfowidgets/ITWidget";
 import LibraryWidget from "scenes/widgets/servicesinfowidgets/LibraryWidget";
 import RegistrarWidget from "scenes/widgets/servicesinfowidgets/RegistrarWidget";
 import ScholarshipsWidget from "scenes/widgets/servicesinfowidgets/ScholarshipsWidget";
-import SchoolDirectoryWidget from "scenes/widgets/servicesinfowidgets/SchoolDirectoryWidget";
 import StudentOrgWidget from "scenes/widgets/servicesinfowidgets/StudentOrgWidget";
 import TransportationWidget from "scenes/widgets/servicesinfowidgets/TransportationWidget"; 
 import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";            
@@ -276,19 +274,9 @@ const ClinicPage = () => {
                     onClick={() => handleWidgetSelection('Faculty')}
                     >
                      <ListItemIcon><FolderSharedOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Contact Faculty</Typography>
-                    </ListItemButton>
-                  </ListItem>   
-    
-                  <ListItem disablePadding>
-                    <ListItemButton
-                    selected={activeButton === 'Directory'}
-                    onClick={() => handleWidgetSelection('Directory')}
-                    >
-                     <ListItemIcon><StoreMallDirectoryOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>School Directory</Typography>
                     </ListItemButton>
-                  </ListItem>     
+                  </ListItem>    
                   
                   <ListItem disablePadding>
                     <ListItemButton
@@ -330,7 +318,6 @@ const ClinicPage = () => {
             {currentWidget === 'Events' && <EventsWidget />}
             {currentWidget === 'Alumni' && <AlumniWidget />}
             {currentWidget === 'Internships' && <InternshipsWidget />}
-            {currentWidget === 'Directory' && <SchoolDirectoryWidget />}
             {currentWidget === 'Faculty' && <ContactFacultyWidget />}
             {currentWidget === 'Org' && <StudentOrgWidget />}
             {currentWidget === 'Admission' && <AdmissionHubWidget />}

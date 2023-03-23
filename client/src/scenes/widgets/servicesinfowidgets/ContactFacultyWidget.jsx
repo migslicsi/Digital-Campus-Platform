@@ -38,7 +38,7 @@ const ContactFacultyWidget = () => {
             variant="h2"
             color={dark}
             >
-            Contact Faculty
+            School Directory
             </Typography>
             <Divider />
 
