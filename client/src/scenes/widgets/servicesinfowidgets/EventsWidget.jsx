@@ -48,6 +48,9 @@ const EventsWidget = () => {
             <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
             {/*event 1*/}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -82,6 +85,9 @@ const EventsWidget = () => {
             
               {/*event 2*/}
               <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },
@@ -116,6 +122,9 @@ const EventsWidget = () => {
 
             {/*event 3*/}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },
@@ -150,6 +159,9 @@ const EventsWidget = () => {
 
             {/*event 4*/}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },
@@ -184,6 +196,9 @@ const EventsWidget = () => {
 
             {/*event 5*/}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },
@@ -218,6 +233,9 @@ const EventsWidget = () => {
 
             {/*event 6*/}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
               whileHover={{
                 scale: 1.05,
                 transition: { duration: 0.2 },

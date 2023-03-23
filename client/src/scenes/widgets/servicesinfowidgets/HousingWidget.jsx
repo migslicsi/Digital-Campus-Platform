@@ -50,6 +50,9 @@ const HousingWidget = () => {
             
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -84,6 +87,9 @@ const HousingWidget = () => {
             
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -118,6 +124,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -152,6 +161,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -186,6 +198,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -220,6 +235,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -254,6 +272,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
@@ -288,6 +309,9 @@ const HousingWidget = () => {
 
             {/* house card */}
             <motion.div
+            style={{
+              margin: '0 auto', // add this line to set margin to 0 auto
+            }}
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
