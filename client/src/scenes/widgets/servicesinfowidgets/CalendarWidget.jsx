@@ -386,6 +386,7 @@ const CalendarWidget = () => {
                     marginLeft: '0rem',
                     paddingLeft: '0rem',
                     borderLeft: 'none',
+                    borderTop: '2px solid grey',
                   }
                 }}>
 
