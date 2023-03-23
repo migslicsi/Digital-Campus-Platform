@@ -1,8 +1,8 @@
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form.jsx";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { PuffLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 
 
 const LoginPage = () => {
@@ -16,21 +16,6 @@ const LoginPage = () => {
       setLoading(false)
     }, 2000)
   },[])
-
-  const loaderVariants = {
-    hidden: {
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
 
   return (
     <motion.div>
@@ -66,6 +51,7 @@ const LoginPage = () => {
             }}
           >
             <img
+              alt="logo"
               src={
                 theme.palette.mode === "dark"
                   ? "http://localhost:3001/assets/ciconw.png"
@@ -74,7 +60,7 @@ const LoginPage = () => {
               style={{ width: "300px", height: "auto", marginBottom: "250px" }}
             />
           </Box>
-          <PuffLoader color={"#00D5FA"} loading={loading} size={100} />
+          <CircleLoader color={"#00D5FA"} loading={loading} size={60} />
         </Box>
       </Box>
       :
