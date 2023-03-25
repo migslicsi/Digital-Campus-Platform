@@ -54,7 +54,7 @@ const LoginPage = () => {
               alt="logo"
               src={
                 theme.palette.mode === "dark"
-                  ? "http://localhost:3001/assets/ciconw.png"
+                  ? "http://localhost:3001/assets/ciconw-b.png"
                   : "http://localhost:3001/assets/cicon2-1.png"
               }
               style={{ width: "300px", height: "auto", marginBottom: "250px" }}
