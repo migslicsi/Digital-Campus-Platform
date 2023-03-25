@@ -1,17 +1,30 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { IconButton, Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import { useState } from "react";
+import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 const HousingWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   return (
         <motion.Box 
@@ -56,7 +69,9 @@ const HousingWidget = () => {
             whileHover={{
               scale: 1.05,
               transition: { duration: 0.2 },
+              cursor: "pointer",
             }}
+            onClick={handleOpen}
             >
             <Card sx={{ height: 350, width: 550, borderRadius: 3,
             "@media(max-width: 1000px)": {
@@ -84,6 +99,68 @@ const HousingWidget = () => {
                 </Typography>
                 </CardContent>
             </motion.div>
+            <Modal 
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                  width="80%" 
+                  height="90%" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Typography variant="h3" underline="always" fontWeight="bold">
+                    Acacia Residences
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    Acacia has rooms good for two occupants only. Each room also has its own toilet. It has a big parking space nearby, making it easy for students with vehicles to park their cars or motorbikes.
+                    <ul>
+                      <li>Number of rooms: 59</li>
+                      <li>Number of occupants per room: 2</li>
+                      <li>Total number of occupants: 118</li>
+                      <li>Rate: P2,800 per month</li>
+                      <li>Note: Dorm and apartment fees are subject to change without prior notice.</li>
+                      <li>Home Dean:</li>
+                      <li>Elmer Lagarile</li>
+                      <li>E-mail: emlagarile@aup.edu.ph</li>
+                    </ul>
+                    <Box sx={{ width: '100%', height: '100%' }}>
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.4658929182765!2d121.03962401526019!3d14.629474980289483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7b13bb7e85f%3A0xeb723961f1d4bbdc!2sJose%20Building!5e0!3m2!1sen!2sph!4v1679766549135!5m2!1sen!2sph"
+                        width="100%"
+                        height={isNonMobileScreens ? "350px" : "250px"}
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                      />
+                    </Box>
+                  </Typography>
+                </Box>
+              </Fade>
+            </Modal>
+
             
             {/* house card */}
             <motion.div
