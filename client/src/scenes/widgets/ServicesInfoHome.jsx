@@ -37,7 +37,7 @@ const ServicesInfoHome = () => {
             
             <img src="http://localhost:3001/assets/homebg.webp" alt="clinic" style={{ width: '100%', height: '100%'}} />
 
-            <Box mt="1rem" backgroundColor={neutralLight} borderRadius={1}>
+            <Box mt="1rem" pl="4rem" pr="4rem" backgroundColor={neutralLight} borderRadius={1}>
             <Typography
              variant={isNonMobileScreens ? "h4" : "h5"}
              style={{ textDecoration: "underline" }}
@@ -48,7 +48,7 @@ const ServicesInfoHome = () => {
             </Typography>
             </Box>
 
-            <Box mt="1rem"backgroundColor={neutralLight} borderRadius={1}>
+            <Box mt="1rem"backgroundColor={neutralLight} pl="4rem" pr="4rem" borderRadius={1}>
             <Typography
              variant={isNonMobileScreens ? "h4" : "h5"}
              textAlign="center"
