@@ -95,8 +95,9 @@ const LoginPage = () => {
        p="2rem"
        borderRadius="1.5rem"
        borderStyle="solid" 
-       bgcolor="transparent" // Change the background color to transparent with some opacity
+       backgroundColor={theme.palette.background.alt}
        border=" 2px solid rgba(0,213,253,255)"
+       boxShadow="0 0 10px rgba(0,213,253,0.7), 0 0 20px rgba(0,213,253,0.5), 0 0 30px rgba(0,213,253,0.3), 0 0 40px rgba(0,213,253,0.1)"
        sx={{ 
         backdropFilter: "blur(10px)",
         mr: "10%",
@@ -132,7 +133,7 @@ const LoginPage = () => {
           fontWeight="500"
           variant="h5"
           sx={{ mb: "1.5rem" }}
-          color= " rgba(255, 255, 255, 255)"
+          color= " rgba(0,213,253,255)"
         >
           <center>Let's Get Started!</center>
         </Typography>

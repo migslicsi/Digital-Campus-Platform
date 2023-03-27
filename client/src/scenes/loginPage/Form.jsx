@@ -6,6 +6,9 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -23,7 +26,7 @@ const registerSchema = yup.object().shape({
   .string()
   .email("Invalid Email")
   .required("Email Required")
-  .matches(/^[^\s@]+@ciit\.edu\.ph$/i, "Please use your School Email"),
+  .matches(/^[^\s@]+@ciit\.edu\.ph$/i, "Invalid School Email"),
   password: yup.string().required("Password Required"),
   location: yup.string().required("Course Required"),
   picture: yup.string().required("Please upload a profile picture"),
@@ -153,16 +156,27 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
-                <TextField
-                  label="Course/Major"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.location}
-                  name="location"
-                  error={Boolean(touched.location) && Boolean(errors.location)}
-                  helperText={touched.location && errors.location}
-                   sx={{ gridColumn: "span 4" }}
-                />
+                <Box sx={{ gridColumn: "span 4" }}>
+                  <Typography mb="0.5rem" sx={{ textDecoration: "underline" }}>
+                    Select Your Course/Major
+                  </Typography>
+                  <Select
+                    name="location"
+                    value={values.location}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.location) && Boolean(errors.location)}
+                    helperText={touched.location && errors.location}
+                    sx={{ width: "100%", gridColumn: "span 4" }}     
+                  >
+                    <MenuItem value="BS Computer Science">BS Computer Science</MenuItem>
+                    <MenuItem value="BA Multimedia Arts">BA Multimedia Arts</MenuItem>
+                    <MenuItem value="BS Entrepreneurship">BS Entrepreneurship</MenuItem>
+                    <MenuItem value="BS Entertainment and Multimedia Computing">BS Entertainment and Multimedia Computing</MenuItem>
+                    <MenuItem value="BS Information Systems">BS Information Systems</MenuItem>
+                  </Select>
+                </Box>
+
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.primary.main}`}
@@ -185,7 +199,7 @@ const Form = () => {
                       >
                         <input {...getInputProps()} />
                         {!values.picture ? (
-                          <p>Click Here to Open File Picker/Drop Your Picture Here</p>
+                          <Typography sx={{ textAlign: "center"}}>Drop your picture here or click to upload</Typography>
                         ) : (
                           <FlexBetween>
                             <Typography>{values.picture.name}</Typography>
@@ -245,6 +259,7 @@ const Form = () => {
               sx={{
                 textDecoration: "underline",
                 color: palette.primary.main,
+                textAlign: "center",
                 "&:hover": {
                   cursor: "pointer",
                   color: palette.primary.light,
