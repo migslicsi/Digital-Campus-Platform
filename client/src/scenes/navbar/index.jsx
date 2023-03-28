@@ -58,8 +58,8 @@ const Navbar = () => {
         component="img"
         src={
           theme.palette.mode === "dark"
-            ? "http://localhost:3001/assets/ciconw.png"
-            : "http://localhost:3001/assets/cicon-1.png"
+            ? "http://localhost:3001/assets/cicon-clean.png"
+            : "http://localhost:3001/assets/cicon-cleanb.png"
         }
         alt="CIIT++"
         sx={{
@@ -78,19 +78,6 @@ const Navbar = () => {
           window.location.reload();
         }}
         />
-        {isNonMobileScreens && (
-          <FlexBetween
-            backgroundColor={neutralLight}
-            borderRadius="9px"
-            gap="3rem"
-            padding="0.1rem 1.5rem"
-          >
-            <InputBase placeholder="Search..." />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </FlexBetween>
-        )}
       </FlexBetween>
 
       {/* DESKTOP NAV */}
@@ -107,12 +94,6 @@ const Navbar = () => {
           </Tooltip>
           <Tooltip title="Info & Services Hub">
           <InfoIcon style={{ cursor: 'pointer' }} sx={{ fontSize: "25px" }} onClick={() => navigate("/services-information-page")}></InfoIcon>
-          </Tooltip>
-          <Tooltip title="Messages">
-          <Message style={{ cursor: 'pointer' }} sx={{ fontSize: "25px" }} />
-          </Tooltip>
-          <Tooltip title="Notifications">
-          <Notifications style={{ cursor: 'pointer' }} sx={{ fontSize: "25px" }} />
           </Tooltip>
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -187,9 +168,6 @@ const Navbar = () => {
               )}
             </IconButton>
             <InfoIcon style={{ cursor: 'pointer' }} sx={{ fontSize: "25px" }} onClick={() => navigate("/services-information-page")}></InfoIcon>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
