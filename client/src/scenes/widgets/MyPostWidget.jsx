@@ -36,6 +36,7 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
+  const theme = useTheme();
 
   const handlePost = async () => {
     const formData = new FormData();
@@ -161,7 +162,7 @@ const MyPostWidget = ({ picturePath }) => {
             onClick={handlePost}
             sx={{
               color: palette.background.alt,
-              backgroundColor: palette.primary.main,
+              backgroundColor: palette.neutral.light,
               borderRadius: "3rem",
               "&:hover":{
                 cursor:"pointer",
@@ -170,7 +171,9 @@ const MyPostWidget = ({ picturePath }) => {
               }
             }}
           >
-            POST
+            <Typography style={{color: theme.palette.mode === "dark" ? "white" : "black"}}>
+              POST
+            </Typography>
           </Button>
         </FlexBetween>
       </WidgetWrapper>
