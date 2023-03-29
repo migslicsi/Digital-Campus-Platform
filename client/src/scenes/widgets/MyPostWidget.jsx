@@ -23,7 +23,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
