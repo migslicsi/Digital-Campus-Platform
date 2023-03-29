@@ -99,7 +99,7 @@ const HousingWidget = () => {
                 </Typography>
                 </CardContent>
             </motion.div>
-            <Modal 
+            <Modal
               closeAfterTransition
               open={open} 
               onClose={handleClose}
@@ -114,9 +114,9 @@ const HousingWidget = () => {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     bgcolor: 'background.paper',
-                    border: '2px solid #000',
                     boxShadow: 24,
                     p: 4,
+                    borderRadius: '16px',
                   }}
                 >
                   <IconButton

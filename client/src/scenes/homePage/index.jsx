@@ -32,6 +32,8 @@ const HomePage = () => {
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <UserWidget userId={_id} picturePath={picturePath} />
+          <Box m="2rem 0" />
+          <FriendListWidget userId={_id} />
           <ServicesWidget />
           <InformationWidget />
         </Box>
@@ -45,8 +47,7 @@ const HomePage = () => {
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis="26%">
-            <FriendListWidget userId={_id} />
-            <Box m="2rem 0" />
+            
             <LatestWidget />
           </Box>
         )}

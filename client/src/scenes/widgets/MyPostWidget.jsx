@@ -137,18 +137,12 @@ const MyPostWidget = ({ picturePath }) => {
         {isNonMobileScreens ? (
           <>
             <FlexBetween gap="0.25rem">
-              <MovieCreation sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Video</Typography>
             </FlexBetween>
 
             <FlexBetween gap="0.25rem">
-              <AttachFileOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Attachment</Typography>
             </FlexBetween>
 
             <FlexBetween gap="0.25rem">
-              <NewspaperIcon sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Article</Typography>
             </FlexBetween>
           </>
         ) : (

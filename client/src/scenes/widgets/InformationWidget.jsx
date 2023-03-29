@@ -11,12 +11,10 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import StadiumOutlinedIcon from '@mui/icons-material/StadiumOutlined';
 import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
-import StoreMallDirectoryOutlinedIcon from '@mui/icons-material/StoreMallDirectoryOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
 import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
-import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import { useNavigate } from "react-router-dom";
 
 
@@ -95,14 +93,6 @@ const InformationWidget = () => {
                       <Typography color={dark}>Internships</Typography>
                     </ListItemButton>
                   </ListItem>
-
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                     <ListItemIcon><AssuredWorkloadOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Alumni Hub</Typography>
-                    </ListItemButton>
-                  </ListItem>
-    
                 </List>
              </nav>
             </Box>

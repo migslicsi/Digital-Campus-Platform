@@ -287,17 +287,6 @@ const ClinicPage = () => {
                       <Typography color={dark}>Internships</Typography>
                     </ListItemButton>
                   </ListItem>
-
-                  <ListItem disablePadding>
-                    <ListItemButton
-                    selected={activeButton === 'Alumni'}
-                    onClick={() => handleWidgetSelection('Alumni')}
-                    >
-                     <ListItemIcon><AssuredWorkloadOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Alumni Hub</Typography>
-                    </ListItemButton>
-                  </ListItem>
-    
                 </List>
              </nav>
             </Box>
