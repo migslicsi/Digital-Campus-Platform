@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const EventSchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
     {
         picturePath: String,
         eventTitle: String,
-        date: Date,
+        date: String,
         eventCost: String,
         eventLocation: String,
     },
