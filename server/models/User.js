@@ -38,7 +38,10 @@ const UserSchema = new mongoose.Schema(
         course: String,
         viewedProfile: Number,
         impressions: Number,
-        isAdmin: Boolean,
+        isAdmin: {
+            type: Boolean,
+            default: false,
+        }
     }, { timestamps: true }
 );
 
