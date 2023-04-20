@@ -41,8 +41,6 @@ import {
       firstName,
       lastName,
       location,
-      viewedProfile,
-      impressions,
       friends,
     } = user;
   
@@ -73,7 +71,6 @@ import {
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
           </FlexBetween>
-          {/*<ManageAccountsOutlined />*/}
         </FlexBetween>
   
         <Divider />

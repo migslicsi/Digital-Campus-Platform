@@ -1,13 +1,92 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { 
+  Divider, 
+  useTheme, 
+  Box, 
+  Typography, 
+  useMediaQuery,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
+
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const InternshipsWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
+  const light = palette.neutral.light;
+  const [internships, setInternships] = useState([]);
+  const internshipsCollectionRef = collection(db, "internships")
+  const [newCompany, setNewCompany] = useState("");
+  const [newField, setNewField] = useState("");
+  const [newSetup, setNewSetup] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "internships", id);
+    await deleteDoc(userDoc);
+    toast.success('OJT Opportunity sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(internshipsCollectionRef, (snapshot) => {
+      setInternships(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(internshipsCollectionRef, { Company: newCompany, Field: newField, Setup: newSetup});
+    toast.success('OJT Opportunity created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
   
+  const user = useSelector((state) => state.user);
+
   return (
         <motion.Box 
             initial={{ opacity: 0 }}
@@ -36,14 +115,113 @@ const InternshipsWidget = () => {
             color={main}
             >Explore our internship opportunities and gain real-world experience in your field of study.
             </Typography>
+                   
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
+            </Stack>
+
+
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Company" variant="outlined" 
+                  onChange={(event) => {setNewCompany(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Field" variant="outlined"
+                  onChange={(event) => {setNewField(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Setup" variant="outlined" 
+                  onChange={(event) => {setNewSetup(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create Internship</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
+
 
             <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
-            
-            {/* your content here */}
-
+            <TableContainer component={Paper}>
+              <Table aria-label="Calendar table">
+                <TableHead>
+                  <TableRow style={{ backgroundColor: "black", color: "white" }}>
+                    <TableCell colSpan={5} style={{ textAlign: "center" }}>
+                      <Typography color="white">Internship/OJT Opportunities</Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow >
+                    <TableCell align="left">Company Name</TableCell>
+                    <TableCell align="left">Field</TableCell>
+                    <TableCell colSpan={2} align="left">Work Setup</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {internships.map((internships) => (
+                    <TableRow colSpan={5} key={internships.company}>
+                      <TableCell align="left">
+                        <Typography>{internships.Company}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{internships.Field}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{internships.Setup}</Typography>
+                      </TableCell>
+                      {user.isAdmin && (
+                      <TableCell align="left">
+                        <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={() => {deleteUser(internships.id)}}>
+                          <DeleteIcon/>
+                          </IconButton>
+                      </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
             </Box>
           </motion.Box>
-
     );
 };
 

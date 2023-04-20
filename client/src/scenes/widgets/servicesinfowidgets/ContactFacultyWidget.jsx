@@ -36,8 +36,9 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import TextField from '@mui/material/TextField';
-import { ToastContainer, toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const ContactFacultyWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -83,6 +84,8 @@ const ContactFacultyWidget = () => {
       position: toast.POSITION.TOP_RIGHT
     });
   };
+  
+  const user = useSelector((state) => state.user);
 
   return (
         <motion.Box 
@@ -113,12 +116,14 @@ const ContactFacultyWidget = () => {
             >Find and contact our faculty members for guidance, advice, and support.
             </Typography>
                    
-            {/* make this only visible to admin */}
             <Stack direction="row" spacing={1} justifyContent="flex-end">
-              <IconButton aria-label="delete" onClick={handleOpen}>
-                <AddIcon />
-              </IconButton>
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
             </Stack>
+
 
             <Modal
               closeAfterTransition
@@ -202,12 +207,14 @@ const ContactFacultyWidget = () => {
                       <TableCell align="left">
                         <Typography>{faculty.contactFor}</Typography>
                       </TableCell>
+                      {user.isAdmin && (
                       <TableCell align="left">
                         <IconButton><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(faculty.id)}}>
                           <DeleteIcon/>
                           </IconButton>
                       </TableCell>
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>

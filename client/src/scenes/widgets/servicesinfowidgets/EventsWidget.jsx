@@ -1,276 +1,220 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { Grid, Divider, useTheme, Box, Typography, useMediaQuery, Button } from "@mui/material";
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import { motion } from "framer-motion";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const EventsWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
+  const [events, setEvents] = useState([]);
+  const eventsCollectionRef = collection(db, "events")
+  const [newDate, setnewDate] = useState("");
+  const [newLocation, setnewLocation] = useState("");
+  const [newName, setnewName] = useState("");
+  const [newPrice, setnewPrice] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "events", id);
+    await deleteDoc(userDoc);
+    toast.success('Event sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+  useEffect(() => {
+    const unsubscribe = onSnapshot(eventsCollectionRef, (snapshot) => {
+      setEvents(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(eventsCollectionRef, { Name: newName, Location: newLocation, Price: newPrice, Date: newDate});
+    toast.success('Event created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+  
+  const user = useSelector((state) => state.user);
   
   return (
-        <motion.Box 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
-            exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
-            flexBasis="70%"
-            borderRadius="10px"
-            padding="1rem"
+    <motion.Box 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
+        exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+        flexBasis="70%"
+        borderRadius="10px"
+        padding="1rem"
+    >
+        <Typography 
+        pt="1rem" 
+        pl="1rem" 
+        pb="0.5rem"
+        variant="h2"
+        color={dark}
         >
-            <Typography 
-            pt="1rem" 
-            pl="1rem" 
-            pb="0.5rem"
-            variant="h2"
-            color={dark}
+        Events
+        </Typography>
+        <Divider />
+
+        <Typography 
+        pt="1rem"
+        pl="1rem" 
+        pb="0.5rem" 
+        variant={isNonMobileScreens ? "body1" : "body2"}
+        color={main}
+        >Get info on the latest events around the campus.
+        </Typography>
+               
+        <Stack direction="row" spacing={1} justifyContent="flex-end">
+          {user.isAdmin && (
+            <IconButton aria-label="delete" onClick={handleOpen}>
+              <AddIcon />
+            </IconButton>
+          )}
+        </Stack>
+
+
+        <Modal
+          closeAfterTransition
+          open={open} 
+          onClose={handleClose}
+        >
+          <Fade in={open}>
+            <Box 
+               minWidth="350px" 
+               minHeight="300px" 
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 4,
+                borderRadius: '16px',
+              }}
             >
-            School Events
-            </Typography>
-            <Divider />
-
-            <Typography 
-            pt="1rem"
-            pl="1rem" 
-            pb="0.5rem" 
-            variant={isNonMobileScreens ? "body1" : "body2"}
-            color={main}
-            >Get info on the latest events around the campus.
-            </Typography>
-
-            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
-            {/*event 1*/}
-            <motion.div
-            style={{
-              margin: '0 auto', // add this line to set margin to 0 auto
-            }}
-            whileHover={{
-              scale: 1.05,
-              transition: { duration: 0.2 },
-            }}
-            >
-            <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/japan.png"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Japan Foundation Day 2023
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Thursday, March 10th, 4:00pm <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> Free Admission <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> College of Social Sciences Bldg 1
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-            
-              {/*event 2*/}
-              <motion.div
-              style={{
-                margin: '0 auto', // add this line to set margin to 0 auto
-              }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
+              <IconButton
+                aria-label="close"
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  color: 'primary.main',
+                }}
+                onClick={handleClose}
               >
-              <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/sportsfest.png"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Sportsfest 2023
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> 3rd Week of March <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> Free Admission <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Gymnasium
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-
-            {/*event 3*/}
-            <motion.div
-            style={{
-              margin: '0 auto', // add this line to set margin to 0 auto
-            }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-              >
-            <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/pride.jpg"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Pride Club Celebration
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Friday, March 25th, 3:00pm <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> Free for members / $10 for non members <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Humanities Building Rm312
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-
-            {/*event 4*/}
-            <motion.div
-            style={{
-              margin: '0 auto', // add this line to set margin to 0 auto
-            }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-              >
-            <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/fair.jpg"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  School Job Fair 
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Wednesday, March 28-30, 8:00am <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> 5 <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Jose Rizal Lobby
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-
-            {/*event 5*/}
-            <motion.div
-            style={{
-              margin: '0 auto', // add this line to set margin to 0 auto
-            }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-              >
-            <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/alumni.jpg"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  Alumni Night 2023
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> Saturday, April 2nd, 7:00pm <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> Free (Alumni Only) <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Theatre Hall C
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-
-            {/*event 6*/}
-            <motion.div
-            style={{
-              margin: '0 auto', // add this line to set margin to 0 auto
-            }}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 0.2 },
-              }}
-              >
-            <Card sx={{ width: 345, borderRadius: 3, boxShadow: '0 2px 8px rgba(0, 213, 250, 0.6)' }}>
-             <CardMedia
-                padding="1rem"
-                component="img"
-                alt="green iguana"
-                height="140"
-                image="http://localhost:3001/assets/science.jpg"
-             />
-               <CardContent>
-                <Typography color={dark} gutterBottom variant="h4" component="div">
-                  95th Annual Art and Tech Fair
-                </Typography>
-                <Typography variant="h7" color="text.secondary">
-                  <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-                    <CalendarMonthIcon /> 2nd Week of April, 12:00nn <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <AttachMoneyIcon /> Free <br></br>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "left" }}>
-                    <LocationOnIcon /> Library Wing A & B
-                  </div>
-                </Typography>
-                </CardContent>
-            </Card>
-            </motion.div>
-
-
+                <CloseRoundedIcon />
+              </IconButton>
+              <Stack spacing={1} justifyContent="flex-end">
+              <TextField id="outlined-basic" label="Event Name" variant="outlined" 
+              onChange={(event) => {setnewName(event.target.value)
+              }}/>
+              <TextField id="outlined-basic" label="Data" variant="outlined"
+              onChange={(event) => {setnewDate(event.target.value)
+              }}/>
+              <TextField id="outlined-basic" label="Admission Price" variant="outlined" 
+              onChange={(event) => {setnewPrice(event.target.value)
+              }}/>
+              <TextField id="outlined-basic" label="Location" variant="outlined" 
+              onChange={(event) => {setnewLocation(event.target.value)
+              }}/>
+              <Button 
+                variant="outlined" 
+                onClick={() => {
+                  createUser();
+                  handleClose();
+                }}
+              ><Typography p={1}>Create Event</Typography></Button>
+              </Stack>
             </Box>
-          </motion.Box>
+          </Fade>
+        </Modal>
+        
+        <Grid container spacing={2}>
+          {events.map((events) => (
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <Card sx={{ width: '100%', borderRadius: 3, my: 2, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)'}}>
+                <CardContent>
+                  <Typography pt="1rem" pl="2rem" pr="2rem" color={dark} gutterBottom variant="h4" component="div">
+                    {events.Name}
+                  </Typography>
+                  <div style={{ paddingLeft:'2rem', display: 'flex', alignItems: 'center' }}>
+                    <CalendarMonthIcon />
+                    <Typography pl="0.5rem" pr="2rem" variant="body" component="div">
+                      {events.Date}
+                    </Typography>
+                  </div>
+                  <div style={{ paddingLeft:'2rem', display: 'flex', alignItems: 'center' }}>
+                    <AttachMoneyIcon />
+                    <Typography pl="0.5rem" pr="2rem" variant="body">
+                      {events.Price}
+                    </Typography>
+                  </div>
+                  <div style={{ paddingLeft:'2rem', display: 'flex', alignItems: 'center' }}>
+                    <LocationOnIcon />
+                    <Typography pl="0.5rem" pr="2rem" variant="body">
+                      {events.Location}
+                    </Typography>
+                  </div>
 
-    );
+                  
+                  {user.isAdmin && (
+                  <Stack direction="row" spacing={1} justifyContent="flex-end">
+                    <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={() => {deleteUser(events.id)}}>
+                        <DeleteIcon/>
+                        </IconButton>
+                  </Stack>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+       </Grid>
+        
+      </motion.Box>
+);
 };
 
 export default EventsWidget;

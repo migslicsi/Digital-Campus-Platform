@@ -13,11 +13,34 @@ import {
   Paper,
   Tabs,
   Tab,
+  Button,
 } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 
 const CalendarWidget = () => {
@@ -26,6 +49,12 @@ const CalendarWidget = () => {
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const blue = palette.primary.main;
+  const [calendar, setCalendar] = useState([]);
+  const calendarCollectionRef = collection(db, "calendar")
+  const [newDate, setNewDate] = useState("");
+  const [newDay, setNewDay] = useState("");
+  const [newActivity, setNewActivity] = useState("");
+  const [open, setOpen] = useState(false);
 
   const [value, setValue] = useState("one");
 
@@ -41,6 +70,42 @@ const CalendarWidget = () => {
       setLoading(false)
     }, 2000)
   },[])
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "calendar", id);
+    await deleteDoc(userDoc);
+    toast.success('Calendar entry sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(calendarCollectionRef, (snapshot) => {
+      const sortedCalendar = snapshot.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+      setCalendar(sortedCalendar);
+    });
+    return unsubscribe;
+  }, []);
+  
+
+  const createUser = async () => {
+    await addDoc(calendarCollectionRef, { Date: newDate, Activity: newActivity, Day: newDay});
+    toast.success('Calendar entry created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const user = useSelector((state) => state.user);
 
   
   return (
@@ -76,278 +141,104 @@ const CalendarWidget = () => {
               Calendar List of Activities
             </Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%', mb: '1rem'}}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                textColor={main}
-                indicatorColor="primary"
-                aria-label="secondary tabs example"
-              >
-                <Tab value="one" label="March" />
-                <Tab value="two" label="April" />
-                <Tab value="three" label="May" />
-                <Tab value="four" label="June" />
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
+            </Stack>
 
-              </Tabs>
-            </Box>
-            
-            {/* march */}
-            <Box style={{ overflowX: "auto" }}>
-            <div style={{ display: value === "one" ? "block" : "none" }}>
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Date" variant="outlined" 
+                  onChange={(event) => {setNewDate(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Day/s" variant="outlined"
+                  onChange={(event) => {setNewDay(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Activity/Event" variant="outlined" 
+                  onChange={(event) => {setNewActivity(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create Calendar Entry</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
+
+            {/* calendar */}
+            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
             <TableContainer component={Paper}>
               <Table aria-label="Calendar table">
                 <TableHead>
-                  <tr style={{ backgroundColor: "black", color: "white" }}>
-                    <th colSpan="3" style={{ textAlign: "center" }}>MARCH 2023</th>
-                  </tr>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Day</TableCell>
-                    <TableCell>Activity/Deadline/Holiday</TableCell>
+                  <TableRow >
+                    <TableCell align="left">Date</TableCell>
+                    <TableCell align="left">Day/s</TableCell>
+                    <TableCell colSpan={2} align="left">Activity/Event</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell>2-4</TableCell>
-                    <TableCell>Thu-Sat</TableCell>
-                    <TableCell>Conference on Sustainable Development and Climate Change</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>6-7</TableCell>
-                    <TableCell>Mon-Tue</TableCell>
-                    <TableCell>Workshop on Digital Marketing Strategies for Small Businesses</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>8-9</TableCell>
-                    <TableCell>Wed-Thu</TableCell>
-                    <TableCell>Research Symposium on Artificial Intelligence and Machine Learning</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>13-15</TableCell>
-                    <TableCell>Mon-Wed</TableCell>
-                    <TableCell>International Conference on Education and Technology</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>18-20</TableCell>
-                    <TableCell>Sat-Mon</TableCell>
-                    <TableCell>Art and Music Festival featuring local artists and musicians</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>23-25</TableCell>
-                    <TableCell>Thu-Sat</TableCell>
-                    <TableCell>Leadership and Team Building Retreat for Corporate Executives</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>29-30</TableCell>
-                    <TableCell>Tue-Wed</TableCell>
-                    <TableCell>Workshop on Cross-Cultural Communication for Global Business Professionals</TableCell>
-                  </TableRow>
+                  {calendar.map((calendar) => (
+                    <TableRow colSpan={5} key={calendar}>
+                      <TableCell align="left">
+                        <Typography>{calendar.Date}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{calendar.Day}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography>{calendar.Activity}</Typography>
+                      </TableCell>
+                      {user.isAdmin && (
+                      <TableCell align="left">
+                        <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={() => {deleteUser(calendar.id)}}>
+                          <DeleteIcon/>
+                          </IconButton>
+                      </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            </div>
-            </Box>
-
-            {/* april */}
-            <Box style={{ overflowX: "auto" }}>
-            <div style={{ display: value === "two" ? "block" : "none" }}>
-            <TableContainer component={Paper}>
-              <Table aria-label="Calendar table">
-                <TableHead>
-                  <tr style={{ backgroundColor: "black", color: "white" }}>
-                    <th colSpan="3" style={{ textAlign: "center" }}>APRIL 2023</th>
-                  </tr>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Day</TableCell>
-                    <TableCell>Activity/Deadline/Holiday</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>2-3</TableCell>
-                    <TableCell>Sat-Sun</TableCell>
-                    <TableCell>Weekend Yoga Retreat for Health and Wellness Enthusiasts</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>5-7</TableCell>
-                    <TableCell>Tue-Thu</TableCell>
-                    <TableCell>International Conference on Renewable Energy and Sustainability</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>10-11</TableCell>
-                    <TableCell>Mon-Tue</TableCell>
-                    <TableCell>Workshop on Creative Writing and Publishing</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>13-15</TableCell>
-                    <TableCell>Thu-Sat</TableCell>
-                    <TableCell>Entrepreneurship and Innovation Summit for Startups and Investors</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>16-17</TableCell>
-                    <TableCell>Sat-Sun</TableCell>
-                    <TableCell>Community Service Project for Local Environmental Conservation</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>20-22</TableCell>
-                    <TableCell>Wed-Fri</TableCell>
-                    <TableCell>International Conference on Business and Economics</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>25-26</TableCell>
-                    <TableCell>Tue-Wed</TableCell>
-                    <TableCell>Workshop on Photography and Visual Storytelling</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </div>
-            </Box>
-
-            {/* may */}
-            <Box style={{ overflowX: "auto" }}>
-            <div style={{ display: value === "three" ? "block" : "none" }}>
-            <TableContainer component={Paper}>
-              <Table aria-label="Calendar table">
-                <TableHead>
-                  <tr style={{ backgroundColor: "black", color: "white" }}>
-                    <th colSpan="3" style={{ textAlign: "center" }}>MAY 2023</th>
-                  </tr>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Day</TableCell>
-                    <TableCell>Activity/Deadline/Holiday</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>1-4</TableCell>
-                    <TableCell>Mon-Thu</TableCell>
-                    <TableCell>Final Examination for Undergraduate Students</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>6-7</TableCell>
-                    <TableCell>Sat-Sun</TableCell>
-                    <TableCell>Weekend Community Service for Student Volunteers</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>8</TableCell>
-                    <TableCell>Mon</TableCell>
-                    <TableCell>Start of Summer Classes for Undergraduate Students</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>12-14</TableCell>
-                    <TableCell>Fri-Sun</TableCell>
-                    <TableCell>Retreat and Reflection Days for Graduating Seniors</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>15-19</TableCell>
-                    <TableCell>Mon-Fri</TableCell>
-                    <TableCell>Intensive Language Training for International Students</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>20-21</TableCell>
-                    <TableCell>Sat-Sun</TableCell>
-                    <TableCell>Leadership Training for Student Organizations</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>23</TableCell>
-                    <TableCell>Wed</TableCell>
-                    <TableCell>University Forum on Climate Change and Sustainability</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>25</TableCell>
-                    <TableCell>Fri</TableCell>
-                    <TableCell>Special School Forum, 2PM</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>27</TableCell>
-                    <TableCell>Sun</TableCell>
-                    <TableCell>Summer Sports Fest</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>29-31</TableCell>
-                    <TableCell>Tue-Thu</TableCell>
-                    <TableCell>Workshop on Research Methods and Data Analysis for Graduate Students</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </div>
-            </Box>
-
-            {/* june */}
-            <Box style={{ overflowX: "auto" }}>
-            <div style={{ display: value === "four" ? "block" : "none" }}>
-            <TableContainer component={Paper}>
-              <Table aria-label="Calendar table">
-                <TableHead>
-                  <tr style={{ backgroundColor: "black", color: "white" }}>
-                    <th colSpan="3" style={{ textAlign: "center" }}>JUNE 2023</th>
-                  </tr>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Day</TableCell>
-                    <TableCell>Activity/Deadline/Holiday</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>1-4</TableCell>
-                    <TableCell>Wed-Sat</TableCell>
-                    <TableCell>International Conference on Artificial Intelligence</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>5-6</TableCell>
-                    <TableCell>Sun-Mon</TableCell>
-                    <TableCell>Weekend Camping Trip for Outdoor Enthusiasts Club</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>7-9</TableCell>
-                    <TableCell>Tue-Thu</TableCell>
-                    <TableCell>Faculty Development Workshop on Innovative Teaching Strategies</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>12-15</TableCell>
-                    <TableCell>Sun-Wed</TableCell>
-                    <TableCell>Annual Music Festival featuring local and international artists</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>16-18</TableCell>
-                    <TableCell>Thu-Sat</TableCell>
-                    <TableCell>Entrepreneurship Bootcamp for aspiring young entrepreneurs</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>19-21</TableCell>
-                    <TableCell>Sun-Tue</TableCell>
-                    <TableCell>Graduation Ceremony for Master's and Doctoral Candidates</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>23-24</TableCell>
-                    <TableCell>Thu-Fri</TableCell>
-                    <TableCell>Workshop on Project Management for Business Professionals</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>25-27</TableCell>
-                    <TableCell>Sat-Mon</TableCell>
-                    <TableCell>Summer Film Festival showcasing award-winning independent films</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>28</TableCell>
-                    <TableCell>Tue</TableCell>
-                    <TableCell>Guest Lecture on Neuroscience and the Human Brain</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>30</TableCell>
-                    <TableCell>Thu</TableCell>
-                    <TableCell>Charity Fun Run for the Benefit of Local Orphanages</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-            </div>
             </Box>
 
             <Box mt="2rem">
@@ -365,7 +256,7 @@ const CalendarWidget = () => {
                 </Box>
                 :
                 <iframe
-                src="https://calendar.google.com/calendar/embed?src=ciitplusplus%40gmail.com&ctz=Asia%2FManila"
+                src="https://calendar.google.com/calendar/embed?src=ateneo.edu_4bp7jq54ifkut95r4a2t5vongs%40group.calendar.google.com&ctz=Asia%2FManila"
                 width="50%"
                 height="350"
                 frameBorder="0"

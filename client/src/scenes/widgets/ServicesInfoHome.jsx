@@ -58,60 +58,9 @@ const ServicesInfoHome = () => {
               Our vision is a society in which every student engages with social and environmental challenges during their time at university, empowering them to become active citizens: we do this by mainstreaming student social action, providing practical opportunities alongside training and skill development. We aim to reach students who otherwise wouldn’t engage and empower them to become active citizens, so that they can achieve positive change now and after they graduate.
             </Typography>
             </Box>
-
-
-            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
-                  IMPORTANT REMINDERS IN ACCESSING THE SERVICES & INFORMATION HUB
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="p">
-                <ol>
-                  <li>Use Google Chrome browser on a non-mobile device; clear the browser's cache and/or use Incognito mode.</li>
-                  <li>Ensure to satisfy the captcha. The login concern will always reoccur whenever the captcha is unsatisfied.</li>
-                  <li>If it says "Bad Credentials", click on the "Forgot Password". Reset email password may go in the Junk Folder</li>
-                </ol>
-              </Typography>
-              </AccordionDetails>
-            </Accordion>
-
-            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc', marginTop: "1.5rem"}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
-                  IMPORTANT COLLEGE-WIDE ANNOUCEMENTS
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="p">General Annoucements:
-                <ol>
-                  <li>Student services are available online and onsite during weekdays from 9:00 am to 6:00 pm starting Q1 SY 2022-2023</li>
-                  <li> Important dates to remember can now be added to your Google Calendar</li>
-                  <li>You may now view subject equivalencies</li>
-                  <li>Our School Clinic would like to remind those who are currently processing their medical clearance to kindly check the medical results released by the laboratory to make sure that there are no further instructions given on the status of your medical results. The comprehensive instructions were sent to your respective CIIT email addresses (Subject: READ: Checking of Online Medical Results before Submission to the Clinic). Please make sure to read it thoroughly.</li>
-                </ol>
-              </Typography>
-              <Typography variant="p">IT Related Annoucements:
-                <ol>
-                  <li>Student_CIIT password is "iamciitstudent"</li>
-                  <li>PC Lab student password "ciitstudent"</li>
-                  <li>To all students, please make sure to update your password every term to avoid account compromise. Make sure to log out of the account if you are not using your own equipment. Compromised passwords may lead to data leaks. Please refer to #1 for password guidelines.</li>
-                </ol>
-              </Typography>
-              </AccordionDetails>
-            </Accordion>
             </Box>
 
-            <Grid container spacing={1} pt={"1.75rem"} pl={"1rem"}>
+            <Grid container spacing={1} pl={"1rem"}>
             <Grid item xs={12} md={4}>
               <Box border={1} borderColor="grey.500" borderRadius={4} p={2} width="100%">
                 <Typography variant="h4" align="left" mb="1rem">

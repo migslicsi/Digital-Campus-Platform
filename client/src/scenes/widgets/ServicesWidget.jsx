@@ -11,12 +11,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import PsychologyIcon from '@mui/icons-material/Psychology';
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import DirectionsBusOutlinedIcon from '@mui/icons-material/DirectionsBusOutlined';
 
 const ServicesWidget = () => {
     const { palette } = useTheme();
@@ -46,14 +43,6 @@ const ServicesWidget = () => {
               </ListItem>
 
               <ListItem disablePadding>
-                <ListItemButton
-                >
-                 <ListItemIcon><PsychologyIcon /></ListItemIcon>
-                  <Typography color={dark}>Counselling</Typography>
-                </ListItemButton>
-              </ListItem>
-
-              <ListItem disablePadding>
                 <ListItemButton>
                  <ListItemIcon><AddToQueueIcon /></ListItemIcon>
                   <Typography color={dark}>Registrar</Typography>
@@ -76,13 +65,6 @@ const ServicesWidget = () => {
 
               <ListItem disablePadding>
                 <ListItemButton>
-                 <ListItemIcon><HomeWorkOutlinedIcon /></ListItemIcon>
-                  <Typography color={dark}>Housing</Typography>
-                </ListItemButton>
-              </ListItem> 
-
-              <ListItem disablePadding>
-                <ListItemButton>
                  <ListItemIcon><SchoolOutlinedIcon /></ListItemIcon>
                   <Typography color={dark}>Scholarships</Typography>
                 </ListItemButton>
@@ -93,15 +75,7 @@ const ServicesWidget = () => {
                  <ListItemIcon><DevicesOutlinedIcon /></ListItemIcon>
                   <Typography color={dark}>IT Help</Typography>
                 </ListItemButton>
-              </ListItem> 
-
-              <ListItem disablePadding>
-                <ListItemButton>
-                 <ListItemIcon><DirectionsBusOutlinedIcon /></ListItemIcon>
-                  <Typography color={dark}>Transportation Help</Typography>
-                </ListItemButton>
-              </ListItem>         
-              
+              </ListItem>       
 
             </List>
          </nav>

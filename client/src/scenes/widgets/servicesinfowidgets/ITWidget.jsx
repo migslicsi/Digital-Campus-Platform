@@ -1,12 +1,75 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { Button, Divider, useTheme, Box, Typography, useMediaQuery, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const ITWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
+  const [ithelp, setithelp] = useState([]);
+  const ithelpCollectionRef = collection(db, "ithelp")
+  const [newquestion, setNewQuestion] = useState("");
+  const [newanswer, setNewAnswer] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "ithelp", id);
+    await deleteDoc(userDoc);
+    toast.success('FAQ deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(ithelpCollectionRef, (snapshot) => {
+      setithelp(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(ithelpCollectionRef, { question: newquestion, answer: newanswer});
+    toast.success('FAQ created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+  
+  const user = useSelector((state) => state.user);
   
   return (
         <motion.Box
@@ -36,12 +99,93 @@ const ITWidget = () => {
             color={main}
             >Get technical support and troubleshooting assistance for your IT needs.
             </Typography>
-
-            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
             
-            {/* your content here */}
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
+            </Stack>
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Question" variant="outlined" 
+                  onChange={(event) => {setNewQuestion(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Answer" variant="outlined"
+                  onChange={(event) => {setNewAnswer(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create FAQ</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
 
-            </Box>
+            <Stack m={1} gap={2}>
+            {ithelp.map((ithelp) => (
+            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h6" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
+                  {ithelp.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="p">
+                  {ithelp.answer}
+                </Typography>
+                {user.isAdmin && (
+                <Stack direction="row" justifyContent="flex-end">
+                  <IconButton><EditIcon/></IconButton>
+                    <IconButton onClick={() => {deleteUser(ithelp.id)}}>
+                      <DeleteIcon/>
+                    </IconButton>
+                </Stack>
+                )}
+              </AccordionDetails>
+            </Accordion>
+            ))}
+            </Stack>
           </motion.Box>
 
     );

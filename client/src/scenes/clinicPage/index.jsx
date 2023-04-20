@@ -14,7 +14,6 @@ import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
-import DirectionsBusOutlinedIcon from '@mui/icons-material/DirectionsBusOutlined';
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -24,29 +23,23 @@ import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
-import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
-import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import { useState } from "react";
 import ServicesInfoHome from "scenes/widgets/ServicesInfoHome";
 import {motion} from "framer-motion"
 
 /* import of widgets */
 import EventsWidget from "scenes/widgets/servicesinfowidgets/EventsWidget";
-import CouncellingWidget from "scenes/widgets/servicesinfowidgets/CouncellingWidget";
-import AdmissionHubWidget from "scenes/widgets/servicesinfowidgets/AdmissionHubWidget";
 import AnnoucementsWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsWidget";
 import CalendarWidget from "scenes/widgets/servicesinfowidgets/CalendarWidget";    
 import ContactFacultyWidget from "scenes/widgets/servicesinfowidgets/ContactFacultyWidget";
 import FinancialAidWidget from "scenes/widgets/servicesinfowidgets/FinancialAidWidget";
-import HousingWidget from "scenes/widgets/servicesinfowidgets/HousingWidget";
 import InternshipsWidget from "scenes/widgets/servicesinfowidgets/InternshipsWidget";
 import ITWidget from "scenes/widgets/servicesinfowidgets/ITWidget";
 import LibraryWidget from "scenes/widgets/servicesinfowidgets/LibraryWidget";
 import RegistrarWidget from "scenes/widgets/servicesinfowidgets/RegistrarWidget";
 import ScholarshipsWidget from "scenes/widgets/servicesinfowidgets/ScholarshipsWidget";
 import StudentOrgWidget from "scenes/widgets/servicesinfowidgets/StudentOrgWidget";
-import TransportationWidget from "scenes/widgets/servicesinfowidgets/TransportationWidget"; 
 import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";            
 
 const ClinicPage = () => {
@@ -111,16 +104,6 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === 'Counselling'}
-                    onClick={() => handleWidgetSelection('Counselling')}
-                    >
-                    <ListItemIcon><PsychologyIcon /></ListItemIcon>
-                      <Typography color={dark}>Counselling</Typography>
-                    </ListItemButton>
-                  </ListItem>
-
-                  <ListItem disablePadding>
-                    <ListItemButton
                     selected={activeButton === 'Registrar'}
                     onClick={() => handleWidgetSelection('Registrar')}
                     >  
@@ -151,16 +134,6 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === 'Housing'}
-                    onClick={() => handleWidgetSelection('Housing')}
-                    >
-                    <ListItemIcon><HomeWorkOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Housing</Typography>
-                    </ListItemButton>
-                  </ListItem> 
-
-                  <ListItem disablePadding>
-                    <ListItemButton
                     selected={activeButton === 'Scholarships'}
                     onClick={() => handleWidgetSelection('Scholarships')}
                     >
@@ -177,17 +150,7 @@ const ClinicPage = () => {
                     <ListItemIcon><DevicesOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>IT Help</Typography>
                     </ListItemButton>
-                  </ListItem> 
-
-                  <ListItem disablePadding>
-                    <ListItemButton
-                    selected={activeButton === 'Transportation'}
-                    onClick={() => handleWidgetSelection('Transportation')}
-                    >
-                    <ListItemIcon><DirectionsBusOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Transportation Help</Typography>
-                    </ListItemButton>
-                  </ListItem>       
+                  </ListItem>    
                 </List>
             </nav>
             </Box>
@@ -249,16 +212,6 @@ const ClinicPage = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === 'Admission'}
-                    onClick={() => handleWidgetSelection('Admission')}
-                    >
-                     <ListItemIcon><HistoryEduOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Admission/Enrollment Hub</Typography>
-                    </ListItemButton>
-                  </ListItem>   
-    
-                  <ListItem disablePadding>
-                    <ListItemButton
                     selected={activeButton === 'Org'}
                     onClick={() => handleWidgetSelection('Org')}
                     >
@@ -307,17 +260,13 @@ const ClinicPage = () => {
             {currentWidget === 'Internships' && <InternshipsWidget />}
             {currentWidget === 'Faculty' && <ContactFacultyWidget />}
             {currentWidget === 'Org' && <StudentOrgWidget />}
-            {currentWidget === 'Admission' && <AdmissionHubWidget />}
             {currentWidget === 'Annoucements' && <AnnoucementsWidget />}
             {currentWidget === 'Calendar' && <CalendarWidget />}
-            {currentWidget === 'Transportation' && <TransportationWidget />}
             {currentWidget === 'IT' && <ITWidget />}
             {currentWidget === 'Scholarships' && <ScholarshipsWidget />}
-            {currentWidget === 'Housing' && <HousingWidget />}
             {currentWidget === 'Financial' && <FinancialAidWidget />}
             {currentWidget === 'Library' && <LibraryWidget />}
             {currentWidget === 'Registrar' && <RegistrarWidget />}
-            {currentWidget === 'Counselling' && <CouncellingWidget />}
             {currentWidget === 'Handbook' && <HandbookWidget />}
           </Box>
       </Box>

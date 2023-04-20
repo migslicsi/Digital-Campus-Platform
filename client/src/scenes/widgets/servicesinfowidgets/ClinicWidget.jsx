@@ -24,8 +24,9 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import TextField from '@mui/material/TextField';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const ClinicWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -71,6 +72,7 @@ const ClinicWidget = () => {
     });
   };
 
+  const user = useSelector((state) => state.user);
 
   return (
         <motion.Box 
@@ -138,9 +140,11 @@ const ClinicWidget = () => {
                 <Typography variant="h3" gutterBottom sx={{ pl: 1 }}>
                     Clinic Staff:
                 </Typography>
+                {user.isAdmin && (
                 <IconButton aria-label="delete" onClick={handleOpen}>
                     <AddIcon />
                 </IconButton>
+                )}
             </Box>
 
 
@@ -201,12 +205,14 @@ const ClinicWidget = () => {
                     <TableRow key={clinicStaff.Name}>
                         <TableCell>{clinicStaff.Name}</TableCell>
                         <TableCell>{clinicStaff.Specialization}</TableCell>
+                        {user.isAdmin && (
                         <TableCell align="left">
                             <IconButton><EditIcon/></IconButton>
                             <IconButton onClick={() => {deleteUser(clinicStaff.id)}}>
                             <DeleteIcon/>
                             </IconButton>
-                      </TableCell>
+                        </TableCell>
+                        )}
                     </TableRow>
                     ))}
                 </TableBody>

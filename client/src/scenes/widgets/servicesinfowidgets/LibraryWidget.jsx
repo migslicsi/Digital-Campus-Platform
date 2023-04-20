@@ -1,4 +1,4 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { Divider, useTheme, Box, Typography, useMediaQuery, Card, CardMedia, CardContent } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
 
@@ -34,12 +34,127 @@ const LibraryWidget = () => {
             pb="0.5rem" 
             variant={isNonMobileScreens ? "body1" : "body2"}
             color={main}
-            >Access our extensive collection of resources, books, and journals to support your academic and research needs.
+            >Access our various library services to support your academic and research needs. Visit the library website for info on viewing and borrowing books.
             </Typography>
 
-            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
-            
-            {/* your content here */}
+            <Box m={1} display="flex" sx={{ pb:"1rem", gap: '1.5rem' }} flexWrap="wrap">
+
+              {/* house card1 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/lib1.png"
+                 style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Printing Services
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
+
+              {/* house card2 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/lib2.jpg"
+                 style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Artwork Scanning
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
+
+              {/* house card3 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/lib3.jpg"
+                 style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Screen Calibration Service
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
 
             </Box>
           </motion.Box>
