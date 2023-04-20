@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
+
 import { useState, useEffect } from "react";
 import {db} from "./firebase-config";
 import {
@@ -50,11 +51,6 @@ const ContactFacultyWidget = () => {
   const [newContactDetails, setNewContactDetails] = useState("");
   const [newContactFor, setNewContactFor] = useState("");
   const [open, setOpen] = useState(false);
-
-   // Update States
-   const [updatedDepartment, setUpdatedDepartment] = useState("");
-   const [updatedContactDetails, setUpdatedContactDetails] = useState("");
-   const [updatedContactFor, setUpdatedContactFor] = useState("");
 
   const handleOpen = () => {
     setOpen(true);

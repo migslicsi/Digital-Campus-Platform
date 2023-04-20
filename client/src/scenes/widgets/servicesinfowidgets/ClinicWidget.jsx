@@ -1,15 +1,31 @@
-import { Button, Divider, useTheme, Box, Typography, useMediaQuery, Grid } from "@mui/material";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import {   Table, TableHead,
+    TableBody,
+    TableCell,
+    TableRow,Button, Divider, useTheme, Box, Typography, useMediaQuery, Grid } from "@mui/material";
 import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ClinicWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -17,14 +33,45 @@ const ClinicWidget = () => {
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [yrlvl, setyrlvl] = React.useState('');
+  const [clinicStaff, setClinicStaff] = useState([]);
+  const clinicstaffCollectionRef = collection(db, "clinicstaff")
+  const [newName, setNewName] = useState("");
+  const [newSpecialization, setNewSpecialization] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const handleChange = (event) => {
-    setyrlvl(event.target.value);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "clinicstaff", id);
+    await deleteDoc(userDoc);
+    toast.success('Clinic Staff sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(clinicstaffCollectionRef, (snapshot) => {
+      setClinicStaff(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(clinicstaffCollectionRef, { Name: newName, Specialization: newSpecialization});
+    toast.success('Clinic Staff created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
   };
 
 
-  
   return (
         <motion.Box 
             initial={{ opacity: 0 }}
@@ -71,8 +118,9 @@ const ClinicWidget = () => {
                 The clinic is open from 8:00 A.M. to 12:00 P.M. and 1:00 P.M. to 5:00 P.M. (Mondays to Fridays except Saturdays, Sundays and Special Holidays).
             </Typography>
 
-            <Typography variant="h6" gutterBottom sx={{ pl: 1 }}>
-                SERVICES:
+            <br></br>
+            <Typography variant="h3" gutterBottom sx={{ pl: 1 }}>
+                Services:
             </Typography>
 
             <Typography variant="body1" gutterBottom sx={{ pl: 1 }}>
@@ -84,78 +132,93 @@ const ClinicWidget = () => {
                 <li>REFERRAL - In case of persistent symptoms or illness, the school nurse informs the parents/guardians and class adviser of the scholars immediately. Scholars will then be referred and brought to the nearest medical clinic or medical facility for further evaluation and management. If confinement is necessary, parents/guardians are advised to proceed immediately to the said medical facility.</li>
                 </ol>
             </Typography>
-            
-            <Box
-             sx={{ border: "1px solid grey", borderRadius: "10px", p: "1rem" }}>
-            <Typography 
-            pt="1rem" 
-            pl="1rem" 
-            pb="0.5rem"
-            variant="h2"
-            color={dark}
-            align="center"
-            >
-            Schedule A Clinic Appointment
-            </Typography>
-            <Box
-            mt="2rem"
-            display="grid"
-            gap="2rem"
-            gridTemplateColumns={isNonMobile ? "repeat(4, 1fr)" : "repeat(1, 1fr)"}
-            alignItems="center"
-            >
-            <Typography variant="h4" color={dark}>
-                Full Name:
-            </Typography>
-            <TextField label="" variant="outlined" />
+            <br></br>
+            <br/>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography variant="h3" gutterBottom sx={{ pl: 1 }}>
+                    Clinic Staff:
+                </Typography>
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                    <AddIcon />
+                </IconButton>
+            </Box>
 
-            <Typography variant="h4" color={dark}>
-                Student Number
-            </Typography>
-            <TextField label="" variant="outlined" />
 
-            <Typography variant="h4" color={dark}>
-                Year Level
-            </Typography>
-            <FormControl sx={{ minWidth: 120 }} size="medium">
-                <InputLabel id="demo-select-small"></InputLabel>
-                <Select
-                labelId="demo-select-small"
-                id="demo-select-small"
-                value={yrlvl}
-                label=""
-                onChange={handleChange}
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
                 >
-                <MenuItem value={10}>1st Year</MenuItem>
-                <MenuItem value={20}>2nd Year</MenuItem>
-                <MenuItem value={30}>3rd Year </MenuItem>
-                <MenuItem value={40}>4th Year </MenuItem>
-                </Select>
-            </FormControl>
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Name" variant="outlined" 
+                  onChange={(event) => {setNewName(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Specialization" variant="outlined"
+                  onChange={(event) => {setNewSpecialization(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create Staff</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
+            
+            <Table>
+                <TableBody>
+                    {clinicStaff.map((clinicStaff) => (
+                    <TableRow key={clinicStaff.Name}>
+                        <TableCell>{clinicStaff.Name}</TableCell>
+                        <TableCell>{clinicStaff.Specialization}</TableCell>
+                        <TableCell align="left">
+                            <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => {deleteUser(clinicStaff.id)}}>
+                            <DeleteIcon/>
+                            </IconButton>
+                      </TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
 
-            <Typography variant="h4" color={dark}>
-                Preferred Date:
-            </Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DatePicker"]}>
-                <DatePicker
-                    inputFormat="MM/dd/yyyy"
-                    style={{ width: "8rem", fontSize: "1rem" }}
-                    renderInput={(params) => (
-                    <TextField {...params} variant="outlined" />
-                    )}
-                />
-                </DemoContainer>
-            </LocalizationProvider>
-         </Box>
-
+            
         <Box mt="2rem" display="flex" justifyContent="center">
         <Button sx={{ width: '20rem' }} variant="contained">
-        <Typography variant="subtitle1" style={{ fontSize: '1.2rem' }}>Submit</Typography>
+        <Typography variant="subtitle1" style={{ fontSize: '1.2rem' }}>Schedule a consultation</Typography>
         </Button>
         </Box>
         <Box mt="1.5rem" mb="1.5rem">
-        </Box>
         </Box>
         </motion.Box>
 
