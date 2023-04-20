@@ -5,6 +5,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import AnimatedRoutes from "components/AnimatedRoutes";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -18,6 +20,7 @@ function App() {
         <CssBaseline />
         <AnimatedRoutes />
         </ThemeProvider>
+        <ToastContainer />
       </BrowserRouter>
     </div>
   );

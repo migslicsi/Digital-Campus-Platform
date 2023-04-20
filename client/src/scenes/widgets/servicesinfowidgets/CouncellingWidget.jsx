@@ -24,7 +24,7 @@ const CouncellingWidget = () => {
             variant="h2"
             color={dark}
             >
-            Councelling
+            Counselling
             </Typography>
             <Divider />
 
@@ -34,7 +34,7 @@ const CouncellingWidget = () => {
             pb="0.5rem" 
             variant={isNonMobileScreens ? "body1" : "body2"}
             color={main}
-            >Access our counselling services for emotional support, mental health care, and personal growth.
+            >Access our Counseling services for emotional support, mental health care, and personal growth.
             </Typography>
 
             <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">

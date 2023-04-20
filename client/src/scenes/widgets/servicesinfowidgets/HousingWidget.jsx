@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
-import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 

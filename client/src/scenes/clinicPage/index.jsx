@@ -35,7 +35,6 @@ import {motion} from "framer-motion"
 import EventsWidget from "scenes/widgets/servicesinfowidgets/EventsWidget";
 import CouncellingWidget from "scenes/widgets/servicesinfowidgets/CouncellingWidget";
 import AdmissionHubWidget from "scenes/widgets/servicesinfowidgets/AdmissionHubWidget";
-import AlumniWidget from "scenes/widgets/servicesinfowidgets/AlumniWidget";
 import AnnoucementsWidget from "scenes/widgets/servicesinfowidgets/AnnouncementsWidget";
 import CalendarWidget from "scenes/widgets/servicesinfowidgets/CalendarWidget";    
 import ContactFacultyWidget from "scenes/widgets/servicesinfowidgets/ContactFacultyWidget";
@@ -112,11 +111,11 @@ const ClinicPage = () => {
 
                   <ListItem disablePadding>
                     <ListItemButton
-                    selected={activeButton === 'Councelling'}
-                    onClick={() => handleWidgetSelection('Councelling')}
+                    selected={activeButton === 'Counselling'}
+                    onClick={() => handleWidgetSelection('Counselling')}
                     >
                     <ListItemIcon><PsychologyIcon /></ListItemIcon>
-                      <Typography color={dark}>Councelling</Typography>
+                      <Typography color={dark}>Counselling</Typography>
                     </ListItemButton>
                   </ListItem>
 
@@ -305,7 +304,6 @@ const ClinicPage = () => {
             {currentWidget === 'Home' && <ServicesInfoHome />}
             {currentWidget === 'Clinic' && <ClinicWidget />}
             {currentWidget === 'Events' && <EventsWidget />}
-            {currentWidget === 'Alumni' && <AlumniWidget />}
             {currentWidget === 'Internships' && <InternshipsWidget />}
             {currentWidget === 'Faculty' && <ContactFacultyWidget />}
             {currentWidget === 'Org' && <StudentOrgWidget />}
@@ -319,7 +317,7 @@ const ClinicPage = () => {
             {currentWidget === 'Financial' && <FinancialAidWidget />}
             {currentWidget === 'Library' && <LibraryWidget />}
             {currentWidget === 'Registrar' && <RegistrarWidget />}
-            {currentWidget === 'Councelling' && <CouncellingWidget />}
+            {currentWidget === 'Counselling' && <CouncellingWidget />}
             {currentWidget === 'Handbook' && <HandbookWidget />}
           </Box>
       </Box>

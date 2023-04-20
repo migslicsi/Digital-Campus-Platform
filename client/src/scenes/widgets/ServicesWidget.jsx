@@ -49,7 +49,7 @@ const ServicesWidget = () => {
                 <ListItemButton
                 >
                  <ListItemIcon><PsychologyIcon /></ListItemIcon>
-                  <Typography color={dark}>Councelling</Typography>
+                  <Typography color={dark}>Counselling</Typography>
                 </ListItemButton>
               </ListItem>
 
