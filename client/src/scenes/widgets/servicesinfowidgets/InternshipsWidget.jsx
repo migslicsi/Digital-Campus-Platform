@@ -52,7 +52,6 @@ const InternshipsWidget = () => {
   const [newField, setNewField] = useState("");
   const [newSetup, setNewSetup] = useState("");
   const [open, setOpen] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
 
   //updated states
   const [updatedCompany, setUpdatedCompany] = useState()
@@ -65,14 +64,6 @@ const InternshipsWidget = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleOpenEdit = (id) => {
-    setOpenEdit(true);
-  };
-
-  const handleCloseEdit = (id) => {
-    setOpenEdit(false);
   };
 
   const deleteUser = async (id) => {
@@ -228,64 +219,9 @@ const InternshipsWidget = () => {
                       </TableCell>
                       {user.isAdmin && (
                       <TableCell align="left">
-                        <IconButton onClick={handleOpenEdit}><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(internships.id)}}>
                           <DeleteIcon/>
                           </IconButton>
-
-                          <Modal
-                            closeAfterTransition
-                            open={openEdit} 
-                            onClose={handleCloseEdit}
-                          >
-                            <Fade in={openEdit}>
-                              <Box 
-                                minWidth="350px" 
-                                minHeight="300px" 
-                                sx={{
-                                  position: 'absolute',
-                                  top: '50%',
-                                  left: '50%',
-                                  transform: 'translate(-50%, -50%)',
-                                  bgcolor: 'background.paper',
-                                  boxShadow: 24,
-                                  p: 4,
-                                  borderRadius: '16px',
-                                }}
-                              >
-                                <IconButton
-                                  aria-label="close"
-                                  sx={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    color: 'primary.main',
-                                  }}
-                                  onClick={handleCloseEdit}
-                                >
-                                  <CloseRoundedIcon />
-                                </IconButton>
-                                <Stack spacing={1} justifyContent="flex-end">
-                                <TextField id="outlined-basic" label="Company" variant="outlined" defaultValue={internships.Company} 
-                                onChange={(event) => {setUpdatedCompany(event.target.value)
-                                }}/>
-                                <TextField id="outlined-basic" label="Field" variant="outlined" defaultValue={internships.Field} 
-                                onChange={(event) => {setUpdatedField(event.target.value)
-                                }}/>
-                                <TextField id="outlined-basic" label="Work Setup" variant="outlined" defaultValue={internships.Setup} 
-                                onChange={(event) => {setUpdatedSetup(event.target.value)
-                                }}/>
-                                <Button 
-                                  variant="outlined" 
-                                  onClick={() => {
-                                    updateUser(internships.id);
-                                    handleCloseEdit();
-                                  }}
-                                ><Typography p={1}>Update Company</Typography></Button>
-                                </Stack>
-                              </Box>
-                            </Fade>
-                          </Modal>
                       </TableCell>
                       )}
                     </TableRow>
