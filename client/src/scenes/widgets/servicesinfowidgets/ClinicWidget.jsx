@@ -74,6 +74,14 @@ const ClinicWidget = () => {
 
   const user = useSelector((state) => state.user);
 
+  const [open1, setOpen1] = useState(false);
+  const handleOpen1 = () => {
+    setOpen1(true);
+  };
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
   return (
         <motion.Box 
             initial={{ opacity: 0 }}
@@ -219,14 +227,73 @@ const ClinicWidget = () => {
             </Table>
 
             
-        <Box mt="2rem" display="flex" justifyContent="center">
-        <Button sx={{ width: '20rem' }} variant="contained">
-        <Typography variant="subtitle1" style={{ fontSize: '1.2rem' }}>Schedule a consultation</Typography>
-        </Button>
-        </Box>
-        <Box mt="1.5rem" mb="1.5rem">
-        </Box>
+          <Box mt="2rem" display="flex" justifyContent="center">
+            <Button onClick={handleOpen1} sx={{ width: '20rem' }} variant="contained">
+            <Typography variant="subtitle1" style={{ fontSize: '1.2rem' }}>Schedule a consultation</Typography>
+            </Button>
+            </Box>
+            <Box mt="1.5rem" mb="1.5rem">
+            
+            <Modal
+              closeAfterTransition
+              open={open1} 
+              onClose={handleClose1}
+              >
+              <Fade in={open1}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose1}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack
+                    spacing={1}
+                    justifyContent={isNonMobileScreens ? 'flex-end' : 'center'}
+                    sx={{
+                      '& > *': {
+                        width: isNonMobileScreens ? '750px' : '100%', // set iframe width based on screen size
+                        maxWidth: '100%',
+                      },
+                    }}
+                    >
+                    <iframe
+                      src="https://docs.google.com/forms/d/e/1FAIpQLSeWKkxNNOfQJSOOGH27MVzBLM5XN0G2hKAveQAle0W68A2RYQ/viewform?embedded=true"
+                      height="750"
+                      frameborder="0"
+                      marginheight="0"
+                      marginwidth="0"
+                      scrolling="yes"
+                    >
+                      Loading...
+                    </iframe>
+                  </Stack>                
+                  </Box>
+              </Fade>
+              </Modal>
+          </Box>
         </motion.Box>
+
+        
 
     );
 };
