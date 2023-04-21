@@ -36,6 +36,30 @@ const RegistrarWidget = () => {
     setOpen3(false);
   };
 
+  const [open4, setOpen4] = useState(false);
+  const handleOpen4 = () => {
+    setOpen4(true);
+  };
+  const handleClose4 = () => {
+    setOpen4(false);
+  };
+
+  const [open5, setOpen5] = useState(false);
+  const handleOpen5 = () => {
+    setOpen5(true);
+  };
+  const handleClose5 = () => {
+    setOpen5(false);
+  };
+
+  const [open6, setOpen6] = useState(false);
+  const handleOpen6 = () => {
+    setOpen6(true);
+  };
+  const handleClose6 = () => {
+    setOpen6(false);
+  };
+
   return (
         <motion.Box
             initial={{opacity: 0}}
@@ -104,9 +128,8 @@ const RegistrarWidget = () => {
                   <Typography variant="h7" color="text.secondary">
                   </Typography>
                   </CardContent>
-              </motion.div>
-
-              <Modal
+             </motion.div>
+             <Modal
               closeAfterTransition
               open={open1} 
               onClose={handleClose1}
@@ -161,7 +184,7 @@ const RegistrarWidget = () => {
                   </Stack>                
                   </Box>
               </Fade>
-              </Modal>
+             </Modal>
 
               {/* house card2 */}
               <motion.div
@@ -190,7 +213,7 @@ const RegistrarWidget = () => {
                   height="100%"
                   width="100%"
                   image="http://localhost:3001/assets/regis1.png"
-                 style={{ objectFit: "contain" }}
+                style={{ objectFit: "contain" }}
               />
               </Card>
               <CardContent>
@@ -201,7 +224,6 @@ const RegistrarWidget = () => {
                   </Typography>
                   </CardContent>
               </motion.div>
-
               <Modal
               closeAfterTransition
               open={open2} 
@@ -209,8 +231,8 @@ const RegistrarWidget = () => {
               >
               <Fade in={open2}>
                 <Box 
-                   minWidth="350px" 
-                   minHeight="300px" 
+                  minWidth="350px" 
+                  minHeight="300px" 
                   sx={{
                     position: 'absolute',
                     top: '50%',
@@ -297,7 +319,6 @@ const RegistrarWidget = () => {
                   </Typography>
                   </CardContent>
               </motion.div>
-              
               <Modal
               closeAfterTransition
               open={open3} 
@@ -354,7 +375,291 @@ const RegistrarWidget = () => {
                   </Box>
               </Fade>
               </Modal>
-              
+
+              {/* house card4 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card onClick={handleOpen4} sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/regis4.png"
+                style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Document Request
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
+              <Modal
+              closeAfterTransition
+              open={open4} 
+              onClose={handleClose4}
+              >
+              <Fade in={open4}>
+                <Box 
+                  minWidth="350px" 
+                  minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose4}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack
+                    spacing={1}
+                    justifyContent={isNonMobileScreens ? 'flex-end' : 'center'}
+                    sx={{
+                      '& > *': {
+                        width: isNonMobileScreens ? '750px' : '100%', // set iframe width based on screen size
+                        maxWidth: '100%',
+                      },
+                    }}
+                    >
+                    <iframe
+                      src="https://docs.google.com/forms/d/e/1FAIpQLSeqAtLzKb_fW14eYyVen_ehCfDLwDqFzvM8sAVMFtgDbpbrQQ/viewform?embedded=true"
+                      height="750"
+                      frameborder="0"
+                      marginheight="0"
+                      marginwidth="0"
+                      scrolling="yes"
+                    >
+                      Loading...
+                    </iframe>
+                  </Stack>                
+                  </Box>
+              </Fade>
+              </Modal>
+
+              {/* house card5 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card onClick={handleOpen5} sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/regis5.png"
+                style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Shifting of Program
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
+              <Modal
+              closeAfterTransition
+              open={open5} 
+              onClose={handleClose5}
+              >
+              <Fade in={open5}>
+                <Box 
+                  minWidth="350px" 
+                  minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose5}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack
+                    spacing={1}
+                    justifyContent={isNonMobileScreens ? 'flex-end' : 'center'}
+                    sx={{
+                      '& > *': {
+                        width: isNonMobileScreens ? '750px' : '100%', // set iframe width based on screen size
+                        maxWidth: '100%',
+                      },
+                    }}
+                    >
+                    <iframe
+                      src="https://docs.google.com/forms/d/e/1FAIpQLSeX2PCgF6E23qkh-9l82h5fJ63_aWTxhqy-PAcy7qfAh2aZlQ/viewform?embedded=true"
+                      height="750"
+                      frameborder="0"
+                      marginheight="0"
+                      marginwidth="0"
+                      scrolling="yes"
+                    >
+                      Loading...
+                    </iframe>
+                  </Stack>                
+                  </Box>
+              </Fade>
+              </Modal>
+
+              {/* house card6 */}
+              <motion.div
+              style={{
+                margin: '0 auto', // add this line to set margin to 0 auto
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 0.2 },
+              }}
+              >
+              <Card onClick={handleOpen6} sx={{ height: 350, width: 345, borderRadius: 3,
+              "@media(max-width: 1238px)": {
+                width:"260px",
+                height:"220px"
+              },
+              "@media(max-width: 470px)": {
+                width:"300px",
+                height:"200px"
+              },
+              }}>
+              <CardMedia
+                  padding="1rem"
+                  component="img"
+                  alt="green iguana"
+                  height="100%"
+                  width="100%"
+                  image="http://localhost:3001/assets/regis6.jpg"
+                style={{ objectFit: "contain" }}
+              />
+              </Card>
+              <CardContent>
+                  <Typography sx={{ fontStyle: 'bold',  letterSpacing: 2  }} align="center" color={dark} gutterBottom variant="h4" component="div">
+                    Completion of Grades
+                  </Typography>
+                  <Typography variant="h7" color="text.secondary">
+                  </Typography>
+                  </CardContent>
+              </motion.div>
+              <Modal
+              closeAfterTransition
+              open={open6} 
+              onClose={handleClose6}
+              >
+              <Fade in={open6}>
+                <Box 
+                  minWidth="350px" 
+                  minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose6}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack
+                    spacing={1}
+                    justifyContent={isNonMobileScreens ? 'flex-end' : 'center'}
+                    sx={{
+                      '& > *': {
+                        width: isNonMobileScreens ? '750px' : '100%', // set iframe width based on screen size
+                        maxWidth: '100%',
+                      },
+                    }}
+                    >
+                    <iframe
+                      src="https://docs.google.com/forms/d/e/1FAIpQLSc-vsjOjL8w86ar0LFDNxjwTgfV6UF9n4plzUiZFtxKxR5qbg/viewform?embedded=true"
+                      height="750"
+                      frameborder="0"
+                      marginheight="0"
+                      marginwidth="0"
+                      scrolling="yes"
+                    >
+                      Loading...
+                    </iframe>
+                  </Stack>                
+                  </Box>
+              </Fade>
+              </Modal>
 
             </Box>
           </motion.Box>

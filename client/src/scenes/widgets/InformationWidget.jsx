@@ -75,13 +75,6 @@ const InformationWidget = () => {
     
                   <ListItem disablePadding>
                     <ListItemButton>
-                     <ListItemIcon><Diversity1OutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Student Organizations</Typography>
-                    </ListItemButton>
-                  </ListItem> 
-    
-                  <ListItem disablePadding>
-                    <ListItemButton>
                      <ListItemIcon><FolderSharedOutlinedIcon /></ListItemIcon>
                       <Typography color={dark}>School Directory</Typography>
                     </ListItemButton>

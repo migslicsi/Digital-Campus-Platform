@@ -82,6 +82,42 @@ const ClinicWidget = () => {
     setOpen1(false);
   };
 
+  const [clinicServices, setClinicServices] = useState([]);
+  const clinicservicesCollectionRef = collection(db, "clinicservices")
+  const [newService, setNewService] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const deleteUser1 = async (id) => {
+    const userDoc = doc(db, "clinicservices", id);
+    await deleteDoc(userDoc);
+    toast.success('Clinic Service sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(clinicservicesCollectionRef, (snapshot) => {
+      setClinicServices(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser1 = async () => {
+    await addDoc(clinicservicesCollectionRef, { Service: newService, Description: newDescription});
+    toast.success('Clinic Service created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
   return (
         <motion.Box 
             initial={{ opacity: 0 }}
@@ -129,19 +165,88 @@ const ClinicWidget = () => {
             </Typography>
 
             <br></br>
-            <Typography variant="h3" gutterBottom sx={{ pl: 1 }}>
-                Services:
-            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography variant="h3" gutterBottom sx={{ pl: 1 }}>
+                    Services:
+                </Typography>
+                {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen2}>
+                    <AddIcon />
+                </IconButton>
+                )}
+            </Box>
 
-            <Typography variant="body1" gutterBottom sx={{ pl: 1 }}>
-                <ol>
-                <li>CONSULTATION – medical / dental</li>
-                <li>EMERGENCY &amp; FIRST AID MANAGEMENT - includes administration of over-the-counter medications, debridement/dressing of wounds, hot/cold compress, immobilization thru application of splints/elastic bandage and the like.</li>
-                <li>CLINIC CONFINEMENT - the school nurse may recommend immediate confinement after evaluation and ascertaining the severity of the illness. Clinic confinement is limited to 2-3 hours only. The nurse will provide clinic certification after clinic confinement and to be countersigned by the class adviser before the scholar is admitted back to his/her classroom.</li>
-                <li>MONITORING &amp; INSPECTION - Prevention of illness and safety measures. Scholars Grooming and Neatness. School Canteen menu and sanitation.</li>
-                <li>REFERRAL - In case of persistent symptoms or illness, the school nurse informs the parents/guardians and class adviser of the scholars immediately. Scholars will then be referred and brought to the nearest medical clinic or medical facility for further evaluation and management. If confinement is necessary, parents/guardians are advised to proceed immediately to the said medical facility.</li>
-                </ol>
-            </Typography>
+            <Modal
+              closeAfterTransition
+              open={open2} 
+              onClose={handleClose2}
+            >
+              <Fade in={open2}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose2}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Service" variant="outlined" 
+                  onChange={(event) => {setNewService(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Description" variant="outlined"
+                  onChange={(event) => {setNewDescription(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser1();
+                      handleClose2();
+                    }}
+                  ><Typography p={1}>Create Service</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
+            
+            <Table>
+                <TableBody>
+                    {clinicServices.map((clinicServices) => (
+                    <TableRow key={clinicServices.Service}>
+                        <TableCell>{clinicServices.Service}</TableCell>
+                        <TableCell>{clinicServices.Description}</TableCell>
+                        {user.isAdmin && (
+                        <TableCell align="left">
+                            <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => {deleteUser1(clinicServices.id)}}>
+                            <DeleteIcon/>
+                            </IconButton>
+                        </TableCell>
+                        )}
+                    </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+
+           
             <br></br>
             <br/>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>

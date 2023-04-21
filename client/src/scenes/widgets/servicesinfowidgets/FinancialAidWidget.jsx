@@ -1,4 +1,4 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { Button, Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -6,6 +6,29 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const FinancialAidWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -13,6 +36,45 @@ const FinancialAidWidget = () => {
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const neutralLight = palette.background.default;
+  const [financialaid, setfinancialaid] = useState([]);
+  const financialaidCollectionRef = collection(db, "financialaid")
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "financialaid", id);
+    await deleteDoc(userDoc);
+    toast.success('Entry deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(financialaidCollectionRef, (snapshot) => {
+      setfinancialaid(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(financialaidCollectionRef, { Title: newTitle, Description: newDescription});
+    toast.success('Entry created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
+  
+  const user = useSelector((state) => state.user);
   
   return (
         <Box 
@@ -45,125 +107,6 @@ const FinancialAidWidget = () => {
             </Typography>
             
             <img src="http://localhost:3001/assets/ciitbg.jpg" alt="clinic" style={{ width: '100%', height: '38%'}} />
-
-            <Box mt="1rem" backgroundColor={neutralLight} borderRadius={1} pl="4rem" pr="4rem" pt="0.5rem" pb="0.5rem" alignItems="center">
-              <Typography
-                variant={isNonMobileScreens ? "h4" : "h5"}
-                textAlign="center"
-                style={{ textDecoration: "underline" }}
-              >
-                Who is Bukas.ph?
-              </Typography>
-              <Typography mt="0.5rem" mb="1.5rem" variant="p" component="p">
-                As an education financing platform, Bukas provides access to quality education through affordable, flexible, and easy tuition loans.<br /><br />
-                As a team, they continue to partner and work with like-minded schools toward building a better tomorrow for the Filipino youth.<br /><br />
-                Since 2019, Bukas has partnered with 72 colleges and universities and has funded over 13,000 college and graduate students, and counting!<br /><br />
-                Got further questions? Email Bukas at info@bukas.ph or visit www.bukas.ph
-              </Typography>
-            </Box>
-
-
-            <Box mt="2rem">
-            <Typography variant="h6" style={{ color: "white", backgroundColor: "black", width: "100%", textAlign: "center", fontWeight: "bold" }}>
-            Bukas Quick Guide
-            </Typography>
-            </Box>
-            
-            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
-
-            <Typography
-             variant={isNonMobileScreens ? "h4" : "h5"}
-             style={{ fontWeight: "bold" }}
-            >Before you get started, make sure you’ve prepared all the necessary requirements.</Typography>
-            
-            <Accordion style={{ width:'100%', backgroundColor: 'transparent', border: '1px solid #ccc'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{ textDecoration: 'underline'}}>
-                Do you have a valid and active mobile number?
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="p">
-                Account verification and important application updates will be sent to your mobile, therefore you must have a working mobile number.
-              </Typography>
-              </AccordionDetails>
-            </Accordion>
-            
-            <Accordion style={{ width:'100%', backgroundColor: 'transparent', border: '1px solid #ccc'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{ textDecoration: 'underline'}}>
-                Do you have a guardian?
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="p">
-                We will require you to provide a guardian who is at least 21 years old and currently residing in the Philippines. Your guardian must also have a contactable mobile number and an active email address.
-              </Typography>
-              </AccordionDetails>
-            </Accordion>
-
-            <Accordion style={{ width:'100%', backgroundColor: 'transparent', border: '1px solid #ccc'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{ textDecoration: 'underline'}}>
-                Do you have a guarantor?
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-              <Typography>
-                A guarantor is someone who will be obliged with handling and taking care of the payments of the student. They must be ready to provide proof of income during your application.
-              </Typography>
-              <br></br>
-              <Typography>
-                You may choose from these three options when selecting your guarantor:
-              </Typography>
-              <ol>
-                <li>
-                  <Typography>
-                    Have your guardian sign on as your guarantor
-                  </Typography>
-                </li>
-                <li>
-                  <Typography>
-                    Sign on as your own guarantor (for working students)
-                  </Typography>
-                </li>
-                <li>
-                  <Typography>
-                    Choose another guarantor apart from your guardian
-                  </Typography>
-                </li>
-              </ol>
-              </AccordionDetails>
-            </Accordion>
-
-            <Accordion style={{ width:'100%', backgroundColor: 'transparent', border: '1px solid #ccc'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography variant="h6" style={{ textDecoration: 'underline'}}>
-                Do you have the required documents?
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography variant="p">
-                You only need your proof of address, student ID (or a valid government ID) , and your assessment form (this can also be your Statement of Account or Enrollment Permit).
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
 
             <div style={{ 
               display: 'flex', 
@@ -213,6 +156,109 @@ const FinancialAidWidget = () => {
                 </motion.div>
               </div>
             </div>
+
+            <Box mt="2rem">
+            <Typography variant="h6" style={{ color: "white", backgroundColor: "black", width: "100%", textAlign: "center", fontWeight: "bold" }}>
+            Bukas Quick Guide
+            </Typography>
+            </Box>
+            
+            
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
+            </Stack>
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Title" variant="outlined" 
+                  onChange={(event) => {setNewTitle(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Description" variant="outlined"
+                  onChange={(event) => {setNewDescription(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create FAQ</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
+
+            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
+
+            <Typography
+             variant={isNonMobileScreens ? "h4" : "h5"}
+             style={{ fontWeight: "bold" }}
+            >Before you get started, make sure you’ve prepared all the necessary requirements.</Typography>
+            
+            <Stack m={1} gap={2}>
+            {financialaid.map((financialaid) => (
+            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography variant="h6" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
+                  {financialaid.Title}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography variant="p">
+                  {financialaid.Description}
+                </Typography>
+                {user.isAdmin && (
+                <Stack direction="row" justifyContent="flex-end">
+                  <IconButton><EditIcon/></IconButton>
+                    <IconButton onClick={() => {deleteUser(financialaid.id)}}>
+                      <DeleteIcon/>
+                    </IconButton>
+                </Stack>
+                )}
+              </AccordionDetails>
+            </Accordion>
+            ))}
+            </Stack>
+
+            
           </Box>
           </motion.Box>
           </Box>

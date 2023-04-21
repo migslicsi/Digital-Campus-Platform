@@ -9,9 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import PsychologyIcon from '@mui/icons-material/Psychology';
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
-import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import DevicesOutlinedIcon from '@mui/icons-material/DevicesOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import { useNavigate } from "react-router-dom";
@@ -23,7 +21,6 @@ import CampaignOutlinedIcon from '@mui/icons-material/CampaignOutlined';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import FolderSharedOutlinedIcon from '@mui/icons-material/FolderSharedOutlined';
 import BookOutlinedIcon from '@mui/icons-material/BookOutlined';
-import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 import { useState } from "react";
 import ServicesInfoHome from "scenes/widgets/ServicesInfoHome";
 import {motion} from "framer-motion"
@@ -39,7 +36,6 @@ import ITWidget from "scenes/widgets/servicesinfowidgets/ITWidget";
 import LibraryWidget from "scenes/widgets/servicesinfowidgets/LibraryWidget";
 import RegistrarWidget from "scenes/widgets/servicesinfowidgets/RegistrarWidget";
 import ScholarshipsWidget from "scenes/widgets/servicesinfowidgets/ScholarshipsWidget";
-import StudentOrgWidget from "scenes/widgets/servicesinfowidgets/StudentOrgWidget";
 import HandbookWidget from "scenes/widgets/servicesinfowidgets/HandbookWidget";            
 
 const ClinicPage = () => {
@@ -209,17 +205,7 @@ const ClinicPage = () => {
                       <Typography color={dark}>Handbook</Typography>
                     </ListItemButton>
                   </ListItem> 
-    
-                  <ListItem disablePadding>
-                    <ListItemButton
-                    selected={activeButton === 'Org'}
-                    onClick={() => handleWidgetSelection('Org')}
-                    >
-                     <ListItemIcon><Diversity1OutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Student Organizations</Typography>
-                    </ListItemButton>
-                  </ListItem> 
-    
+  
                   <ListItem disablePadding>
                     <ListItemButton
                     selected={activeButton === 'Faculty'}
@@ -259,7 +245,6 @@ const ClinicPage = () => {
             {currentWidget === 'Events' && <EventsWidget />}
             {currentWidget === 'Internships' && <InternshipsWidget />}
             {currentWidget === 'Faculty' && <ContactFacultyWidget />}
-            {currentWidget === 'Org' && <StudentOrgWidget />}
             {currentWidget === 'Annoucements' && <AnnoucementsWidget />}
             {currentWidget === 'Calendar' && <CalendarWidget />}
             {currentWidget === 'IT' && <ITWidget />}

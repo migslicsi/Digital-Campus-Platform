@@ -1,28 +1,93 @@
-import { Button, Divider, useTheme, Box, Typography, useMediaQuery } from "@mui/material";
+import { 
+  Divider, 
+  useTheme, 
+  Box, 
+  Typography, 
+  useMediaQuery,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+} from "@mui/material";
 import * as React from 'react';
 import { motion } from "framer-motion";
-import Paper from '@mui/material/Paper';
+
+import { useState, useEffect } from "react";
+import {db} from "./firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import TextField from '@mui/material/TextField';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const ScholarshipsWidget = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
-  const neutralLight = palette.background.default;
+  const light = palette.neutral.light;
+  const [scholarships, setscholarships] = useState([]);
+  const scholarshipsCollectionRef = collection(db, "scholarships")
+  const [newName, setNewName] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newDiscount, setNewDiscount] = useState("");
+  const [newEligibility, setNewEligibility] = useState("");
+  const [newPrivileges, setNewPrivileges] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const deleteUser = async (id) => {
+    const userDoc = doc(db, "scholarships", id);
+    await deleteDoc(userDoc);
+    toast.success('Scholarship sucessfully deleted', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(scholarshipsCollectionRef, (snapshot) => {
+      setscholarships(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    return unsubscribe;
+  }, []);
+
+  const createUser = async () => {
+    await addDoc(scholarshipsCollectionRef, { Name: newName, Description: newDescription, Discount: newDiscount, Eligibility: newEligibility, Privileges: newPrivileges});
+    toast.success('Scholarship created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  };
   
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    color: theme.palette.text.secondary,
-  }));
-  
-  
+  const user = useSelector((state) => state.user);
+
   return (
         <motion.Box 
-            initial={{opacity: 0}}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
             exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
             flexBasis="70%"
@@ -48,205 +113,106 @@ const ScholarshipsWidget = () => {
             color={main}
             >Explore our scholarship opportunities and resources to help fund your education.
             </Typography>
+                   
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              {user.isAdmin && (
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                  <AddIcon />
+                </IconButton>
+              )}
+            </Stack>
 
-            <Box m={1} display="flex" sx={{ gap: '1rem' }} flexWrap="wrap">
+
+            <Modal
+              closeAfterTransition
+              open={open} 
+              onClose={handleClose}
+            >
+              <Fade in={open}>
+                <Box 
+                   minWidth="350px" 
+                   minHeight="300px" 
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    borderRadius: '16px',
+                  }}
+                >
+                  <IconButton
+                    aria-label="close"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      color: 'primary.main',
+                    }}
+                    onClick={handleClose}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                  <Stack spacing={1} justifyContent="flex-end">
+                  <TextField id="outlined-basic" label="Name" variant="outlined" 
+                  onChange={(event) => {setNewName(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Description" variant="outlined"
+                  onChange={(event) => {setNewDescription(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Discount" variant="outlined" 
+                  onChange={(event) => {setNewDiscount(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Eligibility" variant="outlined" 
+                  onChange={(event) => {setNewEligibility(event.target.value)
+                  }}/>
+                  <TextField id="outlined-basic" label="Privileges" variant="outlined" 
+                  onChange={(event) => {setNewPrivileges(event.target.value)
+                  }}/>
+                  <Button 
+                    variant="outlined" 
+                    onClick={() => {
+                      createUser();
+                      handleClose();
+                    }}
+                  ><Typography p={1}>Create Scholarship</Typography></Button>
+                  </Stack>
+                </Box>
+              </Fade>
+            </Modal>
             
-            <Box mt="1rem" backgroundColor={neutralLight} borderRadius={1} pl="4rem" pr="4rem" pt="0.5rem" pb="0.5rem" alignItems="center">
-              <Typography mt="0.5rem" mb="1.5rem" variant="p" component="p">
-               CIIT caters to a diverse student population that have different socio-economic status. Difficulties in pursuing their studies are
-               faced by students who cannot cope with the financial demands of their schooling.  In response to this need, CIIT provides a Student 
-               Financial Assistance Program to eligible students who have high academic achievement and great potential to be successful in their 
-               chosen field but do not have the financial means to pursue it.
-              </Typography>
-            </Box>
-      
-            <Box sx={{ width: '100%', gap: '1rem' }} display="flex" flexWrap="wrap"> 
-              
-              <Stack sx={{ width: '100%',  margin: '0 auto', }} spacing={1}>
-                <Item>
-                  <Typography mb="1rem" mt="1rem" variant="h5" align="center" sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
-                    Future CIITzen Scholarship Grant
-                  </Typography>
-                  <Box m="2rem">
-                    <Typography variant="body1">
-                        Priveleges:
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Discounted Tuition Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Lab Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Misc Fees</Typography>
-                  </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        Who is Eligible?
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Incoming College Students either from Senior High School or Colleges.</Typography>
-                        <Typography component="li" variant="body1">Part of the top fifty who passed the College Admission Test </Typography>
-                        <Typography component="li" variant="body1">Must not have any major offense</Typography>
-                    </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        What are the Retention Requirements?
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Shall not have any failing grades</Typography>
-                        <Typography component="li" variant="body1">Must maintain a termly GPA of 2.8 or higher</Typography>
-                        <Typography component="li" variant="body1">Shall not be placed in any level of academic conditional status</Typography>
-                        <Typography component="li" variant="body1">Must not have any major offense</Typography>
-                    </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        I'd like more details on the discounts.
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">20% on Tuition and Miscellaneous Fees</Typography>
-                    </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        How do I apply?
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Students granted with this scholarship no longer need to pass any credentials nor requirements given to other scholarship types.</Typography>
-                    </ul>
-
-                  </Box>
-                </Item>
-              </Stack>
-
-              <Stack sx={{ width: '100%',  margin: '0 auto', }} spacing={1}>
-                <Item>
-                  <Typography mb="1rem" mt="1rem" variant="h5" align="center" sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
-                    Financial Aid Scholarship
-                  </Typography>
-                  <Box m="2rem">
-                    <Typography variant="body1">
-                        Priveleges:
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Discounted Tuition Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Lab Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Misc Fees</Typography>
-                  </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        Who is Eligible?
-                    </Typography>
-                    <ul>
-                      <Typography component="li" variant="body1">Must be an undergraduate student of a Diploma or Bachelor's Degree in CIIT</Typography>
-                      <Typography component="li" variant="body1">Must have completed a minimum of one (1) year in CIIT</Typography>
-                      <Typography component="li" variant="body1">Proof of a Monthly Family budget per person below P8,000 (excluding Home loan, rent, utilities and food)</Typography>
-                      <Typography component="li" variant="body1">Trimestral GPA of at least 2.8</Typography>
-                      <Typography component="li" variant="body1">Must not have any grade lower than 2.00 in any subject at any given period</Typography>
-                      <Typography component="li" variant="body1">Must have no failing grades</Typography>
-                      <Typography component="li" variant="body1">Must not have any major offense</Typography>
-                      <Typography component="li" variant="body1">Student Output and/or Portfolio</Typography>
-                    </ul>
-
-                  <br></br>
-                  <Typography variant="body1">
-                        What are the Retention Requirements?
-                    </Typography>
-                    <ul>
-                      <Typography component="li" variant="body1">Photocopy of grades/class cards or Certificate of grades from the Registrar</Typography>
-                      <Typography component="li" variant="body1">Clearance from Discipline Officer from any major offense</Typography>
-                      <Typography component="li" variant="body1">Must be able to retain the GPA (2.8 or higher) prescribed by the scholarship discount bracket.</Typography>
-                      <Typography component="li" variant="body1">If the student was not able to retain the grade requirement of his/her discount bracket, he/she will be placed to a lesser bracket or lose his/her scholarship.</Typography>
-                      <Typography component="li" variant="body1">If the student was able to surpass the grade requirement of his/her discount bracket, he/she may be accommodated to a higher discount bracket depending on the available it of the funds or recommendation of the scholarship board.</Typography>
-                      <Typography component="li" variant="body1">Shall not have any failing grades</Typography>
-                      <Typography component="li" variant="body1">Must not have a dropped or unauthorized withdrawn subject</Typography>
-                      <Typography component="li" variant="body1">Must enroll in the recommended subjects based on the Program Curriculum</Typography>
-                      <Typography component="li" variant="body1">Scholar is allowed to shift to another course only once</Typography>
-                      <Typography component="li" variant="body1">Signed MOU for Renewal of Scholarship</Typography>
-                      <Typography component="li" variant="body1">Accomplished 10 hours per week service hours.</Typography>
-                    </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        I'd like more details on the discounts.
-                    </Typography>
-                    <ul>
-                      <Typography component="li" variant="body1">50%  to 80% on Tuition and Miscellaneous Fees</Typography>
-                    </ul>
-                    <Box mt="2rem" style={{ textAlign: 'center' }}>
-                      <Typography mb="1rem" variant="h6">
-                        Ready To Apply?
+            <Grid container spacing={2}>
+              {scholarships.map((scholarships) => (
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                  <Card sx={{ width: '100%', borderRadius: 3, my: 2, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)'}}>
+                    <CardContent>
+                      <Typography pl="1rem" pr="1rem" variant="h3">
+                        {scholarships.Name}
                       </Typography>
-                      <Button variant="outlined" 
-                      style={{ width: '200px' }}>
-                        Apply Now</Button>
-                    </Box>
-
-                  </Box>
-                </Item>
-              </Stack>
-              
-              <Stack sx={{ width: '100%',  margin: '0 auto', }} spacing={1}>
-                <Item>
-                  <Typography mb="1rem" mt="1rem" variant="h5" align="center" sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
-                    Interweave Scholarship
-                  </Typography>
-                  <Box m="2rem">
-                    <Typography variant="body1">
-                        Priveleges:
-                    </Typography>
-                    <ul>
-                        <Typography component="li" variant="body1">Discounted Tuition Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Lab Fees</Typography>
-                        <Typography component="li" variant="body1">Discounted Misc Fees</Typography>
-                  </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        Who is Eligible?
-                    </Typography>
-                    <ul>
-                    <Typography component="li" variant="body1">Incoming College Students either from CIIT SHS or other Senior High Schools</Typography>
-                    <Typography component="li" variant="body1">Must be a SHS Graduate with Completed Admission Credentials</Typography>
-                    <Typography component="li" variant="body1">Passed the College Admission Test</Typography>
-                    <Typography component="li" variant="body1">Average Grade in Previous School must be at least be equivalent to 3.2 (or 93%) based on CIIT Grading System</Typography>
-                    <Typography component="li" variant="body1">Must have no failing grades</Typography>
-                    <Typography component="li" variant="body1">Must not have any major offense</Typography>
-                    <Typography component="li" variant="body1">Student Output and/or Portfolio</Typography>
-                    </ul>
-
-                  <br></br>
-                  <Typography variant="body1">
-                        What are the Retention Requirements?
-                    </Typography>
-                    <ul>
-                    <Typography component="li" variant="body1">Photocopy of grades/class cards or Certificate of grades from the Registrar</Typography>
-                    <Typography component="li" variant="body1">Clearance from Discipline Officer from any major offense</Typography>
-                    <Typography component="li" variant="body1">Must be a Dean's Lister (refer here for Dean's List Qualifications)</Typography>
-                    <Typography component="li" variant="body1">Shall not have any failing grades</Typography>
-                    <Typography component="li" variant="body1">Must not have a dropped or unauthorized withdrawn subject</Typography>
-                    <Typography component="li" variant="body1">Must enroll in the recommended subjects based on the Program Curriculum</Typography>
-                    <Typography component="li" variant="body1">Scholar is allowed to shift to another course only once</Typography>
-                    <Typography component="li" variant="body1">Signed MOU for Renewal of Scholarship</Typography>
-                    <Typography component="li" variant="body1">Accomplished 10 hours per week service hours.</Typography>
-                    </ul>
-                  <br></br>
-                  <Typography variant="body1">
-                        I'd like more details on the discounts.
-                    </Typography>
-                    <ul>
-                      <Typography component="li" variant="body1">100% on Tuition, Laboratory and Miscellaneous Fees</Typography>
-                    </ul>
-                    <Box mt="2rem" style={{ textAlign: 'center' }}>
-                      <Typography mb="1rem" variant="h6">
-                        Ready To Apply?
+                      <Typography mt="1rem" pl="1rem" pr="1rem" variant="body" component="div">
+                        <li>{scholarships.Description}</li>
+                        <li>{scholarships.Discount}</li>
+                        <li>{scholarships.Eligibility}</li>
+                        <li>{scholarships.Privileges}</li>
                       </Typography>
-                      <Button variant="outlined" 
-                      style={{ width: '200px' }}>
-                        Apply Now</Button>
-                    </Box>
-
-                  </Box>
-                </Item>
-              </Stack>
-
-            </Box>
-            </Box>
+                      
+                      {user.isAdmin && (
+                      <Stack direction="row" spacing={1} justifyContent="flex-end">
+                        <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => {deleteUser(scholarships.id)}}>
+                            <DeleteIcon/>
+                            </IconButton>
+                      </Stack>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+           </Grid>
+            
           </motion.Box>
-
     );
 };
 
