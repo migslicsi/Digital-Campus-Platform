@@ -106,7 +106,7 @@ const Form = () => {
       const { firstName } = loggedIn.user;
       toast.success(`Welcome back, ${firstName}`, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
+        autoClose: 2000,
       });
       dispatch(
         setLogin({
