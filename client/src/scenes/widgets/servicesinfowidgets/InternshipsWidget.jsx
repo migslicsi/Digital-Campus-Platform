@@ -52,11 +52,13 @@ const InternshipsWidget = () => {
   const [newField, setNewField] = useState("");
   const [newSetup, setNewSetup] = useState("");
   const [open, setOpen] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
 
   //updated states
-  const [updatedCompany, setUpdatedCompany] = useState()
-  const [updatedField, setUpdatedField] = useState()
-  const [updatedSetup, setUpdatedSetup] = useState()
+  const [selectedInternship, setSelectedInternship] = useState(null);
+  const [updatedCompany, setUpdatedCompany] = useState("");
+  const [updatedField, setUpdatedField] = useState("");
+  const [updatedSetup, setUpdatedSetup] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -66,10 +68,22 @@ const InternshipsWidget = () => {
     setOpen(false);
   };
 
+  const handleOpenEdit = (selectedInternship) => {
+    setSelectedInternship(selectedInternship);
+    setUpdatedCompany(selectedInternship.Company);
+    setUpdatedField(selectedInternship.Field);
+    setUpdatedSetup(selectedInternship.Setup);
+    setOpenEdit(true);
+  };
+
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+  };
+
   const deleteUser = async (id) => {
     const userDoc = doc(db, "internships", id);
     await deleteDoc(userDoc);
-    toast.success('OJT Opportunity sucessfully deleted', {
+    toast.success('Company deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -85,16 +99,24 @@ const InternshipsWidget = () => {
 
   const createUser = async () => {
     await addDoc(internshipsCollectionRef, { Company: newCompany, Field: newField, Setup: newSetup});
-    toast.success('OJT Opportunity created!', {
+    toast.success('Company created!', {
       position: toast.POSITION.TOP_RIGHT
     });
   };
   
   const user = useSelector((state) => state.user);
 
-   const updateUser = async (id) => {
-    const userDoc = doc(db, "internships", id);
-    await updateDoc(userDoc, {Company: updatedCompany, Field: updatedField, Setup: updatedSetup});
+  const updateUser = async () => {
+    const userDoc = doc(db, "internships", selectedInternship.id);
+    await updateDoc(userDoc, {
+      Company: updatedCompany,
+      Field: updatedField,
+      Setup: updatedSetup,
+    });
+    toast.success('Company updated!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
+    handleCloseEdit();
   };
 
   return (
@@ -207,7 +229,7 @@ const InternshipsWidget = () => {
                 </TableHead>
                 <TableBody>
                   {internships.map((internships) => (
-                    <TableRow colSpan={5} key={internships.company}>
+                    <TableRow colSpan={5} key={internships.id}>
                       <TableCell align="left">
                         <Typography>{internships.Company}</Typography>
                       </TableCell>
@@ -219,9 +241,64 @@ const InternshipsWidget = () => {
                       </TableCell>
                       {user.isAdmin && (
                       <TableCell align="left">
+                        <IconButton onClick={() => handleOpenEdit(internships)}><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(internships.id)}}>
                           <DeleteIcon/>
                           </IconButton>
+
+                          <Modal
+                            closeAfterTransition
+                            open={openEdit} 
+                            onClose={handleCloseEdit}
+                          >
+                            <Fade in={openEdit}>
+                              <Box
+                              minWidth="350px" 
+                              minHeight="300px" 
+                             sx={{
+                               position: 'absolute',
+                               top: '50%',
+                               left: '50%',
+                               transform: 'translate(-50%, -50%)',
+                               bgcolor: 'background.paper',
+                               boxShadow: 24,
+                               p: 4,
+                               borderRadius: '16px',
+                             }}
+                              >
+                                <IconButton aria-label="close"
+                                sx={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  right: 0,
+                                  color: 'primary.main',
+                                }}
+                                onClick={handleCloseEdit}
+                                >
+                                <CloseRoundedIcon />
+                                </IconButton>
+                                <Stack spacing={1} justifyContent="flex-end">
+                                <TextField id="outlined-basic" label="Company" variant="outlined" value={updatedCompany}
+                                onChange={(event) => {setUpdatedCompany(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Field" variant="outlined" value={updatedField}
+                                onChange={(event) => {setUpdatedField(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Work Setup" variant="outlined" value={updatedSetup}
+                                onChange={(event) => {setUpdatedSetup(event.target.value)
+                                }}/>
+                                <Button 
+                                  variant="outlined" 
+                                  onClick={() => {
+                                    updateUser(internships.id);
+                                    handleCloseEdit();
+                                  }}
+                                ><Typography p={1}>Update Company</Typography></Button>
+                                </Stack>
+                              </Box>
+                            </Fade>
+                          </Modal>
+
                       </TableCell>
                       )}
                     </TableRow>

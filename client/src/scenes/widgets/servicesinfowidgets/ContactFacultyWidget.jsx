@@ -53,10 +53,38 @@ const ContactFacultyWidget = () => {
   const [newContactFor, setNewContactFor] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
   //updated states
-  const [updatedDepartment, setUpdatedDepartment] = useState()
-  const [updatedContactDetails, setUpdatedContactDetails] = useState()
-  const [updatedContactFor, setUpdatedContactFor] = useState()
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [updateddepartment, setUpdateddepartment] = useState("");
+  const [updatedcontactDetails, setUpdatedcontactDetails] = useState("");
+  const [updatedcontactFor, setUpdatedcontactFor] = useState("");
+
+  const handleOpenEdit = (selectedFaculty) => {
+      setSelectedFaculty(selectedFaculty);
+      setUpdateddepartment(selectedFaculty.department);
+      setUpdatedcontactDetails(selectedFaculty.contactDetails);
+      setUpdatedcontactFor(selectedFaculty.contactFor);
+      setOpenEdit(true);
+    };
+
+  const handleCloseEdit = () => {
+  setOpenEdit(false);
+  };
+
+  const updateUser = async () => {
+      const userDoc = doc(db, "faculty", selectedFaculty.id);
+      await updateDoc(userDoc, {
+        department: updateddepartment,
+        contactDetails: updatedcontactDetails,
+        contactFor: updatedcontactFor,
+      });
+      toast.success('Faculty updated!', {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      handleCloseEdit();
+    };
 
   const handleOpen = () => {
     setOpen(true);
@@ -69,7 +97,7 @@ const ContactFacultyWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "faculty", id);
     await deleteDoc(userDoc);
-    toast.success('Faculty sucessfully deleted', {
+    toast.success('Faculty deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -91,11 +119,6 @@ const ContactFacultyWidget = () => {
   };
   
   const user = useSelector((state) => state.user);
-
-  const updateUser = async (id) => {
-    const userDoc = doc(db, "faculty", id);
-    await updateDoc(userDoc, {department: updatedDepartment, contactDetails: updatedContactDetails, contactFor: updatedContactFor});
-  };
 
   return (
         <motion.Box 
@@ -207,7 +230,7 @@ const ContactFacultyWidget = () => {
                 </TableHead>
                 <TableBody>
                   {faculty.map((faculty) => (
-                    <TableRow colSpan={5} key={faculty.department}>
+                    <TableRow colSpan={5} key={faculty.id}>
                       <TableCell align="left">
                         <Typography>{faculty.department}</Typography>
                       </TableCell>
@@ -219,9 +242,63 @@ const ContactFacultyWidget = () => {
                       </TableCell>
                       {user.isAdmin && (
                       <TableCell align="left">
+                        <IconButton onClick={() => handleOpenEdit(faculty)}><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(faculty.id)}}>
                           <DeleteIcon/>
                           </IconButton>
+
+                          <Modal
+                            closeAfterTransition
+                            open={openEdit} 
+                            onClose={handleCloseEdit}
+                            >
+                            <Fade in={openEdit}>
+                              <Box
+                              minWidth="350px" 
+                              minHeight="300px" 
+                            sx={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              bgcolor: 'background.paper',
+                              boxShadow: 24,
+                              p: 4,
+                              borderRadius: '16px',
+                            }}
+                              >
+                              <IconButton aria-label="close"
+                              sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                color: 'primary.main',
+                              }}
+                              onClick={handleCloseEdit}
+                              >
+                              <CloseRoundedIcon />
+                              </IconButton>
+                              <Stack spacing={1} justifyContent="flex-end">
+                              <TextField id="outlined-basic" label="Department" variant="outlined" value={updateddepartment}
+                              onChange={(event) => {setUpdateddepartment(event.target.value)
+                              }}/>
+                              <TextField id="outlined-basic" label="Contact Details" variant="outlined" value={updatedcontactDetails}
+                              onChange={(event) => {setUpdatedcontactDetails(event.target.value)
+                              }}/>
+                              <TextField id="outlined-basic" label="Contact For" variant="outlined" value={updatedcontactFor}
+                              onChange={(event) => {setUpdatedcontactFor(event.target.value)
+                              }}/>
+                              <Button 
+                                variant="outlined" 
+                                onClick={() => {
+                                updateUser(faculty.id);
+                                handleCloseEdit();
+                                }}
+                              ><Typography p={1}>Update Faculty</Typography></Button>
+                              </Stack>
+                              </Box>
+                            </Fade>
+                            </Modal>
 
                       </TableCell>
                       )}
