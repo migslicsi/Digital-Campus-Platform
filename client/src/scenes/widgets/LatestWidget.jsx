@@ -1,72 +1,107 @@
-import { Typography, useTheme, Divider } from "@mui/material";
-import FlexBetween from "components/FlexBetween";
+import { IconButton, Stack, Divider, useTheme, Box, Typography, useMediaQuery, Card, CardContent, CardMedia } from "@mui/material";
+import * as React from 'react';
+import { motion } from "framer-motion";
+import { useState } from "react";
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import WidgetWrapper from "components/WidgetWrapper";
 
 const LatestWidget = () => {
   const { palette } = useTheme();
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const dark = palette.neutral.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
+  const theme = useTheme();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <WidgetWrapper>
-      <FlexBetween>
-        <Typography color={dark} variant="h5" fontWeight="500">
-          The Latest from the School:
+        <Typography color={dark} variant="h5" fontWeight="500" sx={{ textAlign: "center" }} >
+          Help us finish our thesis! Answer the survey.
         </Typography>
       
-      {/* sticky post 1 */}
-      </FlexBetween>
+      <Box display="flex" justifyContent="center">
       <img
-        width="100%"
+        width="60%"
         height="auto"
         alt="advert"
-        src="http://localhost:3001/assets/info4.jpg"
-        style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
+        src={
+          theme.palette.mode === "dark"
+            ? "http://localhost:3001/assets/cicon-clean-USD.png"
+            : "http://localhost:3001/assets/cicon-cleanb-US.png"
+        }
+        style={{
+          borderRadius: "0.75rem",
+          margin: "0.75rem 0",
+          cursor: "pointer",
+        }}
+        onClick={handleModalOpen}
       />
-        <Typography sx={{fontWeight: 'bold'}} color={main}>Happy Women's Day!</Typography>
-        <Typography color={medium}>March 17, 2023</Typography>
-      <Typography color={medium} m="0.5rem 0">
-       Today, we celebrate you our strong and independent Obebe girlies. We, Obelisk stands with every
-       woman in the society as they continue to fight for gender equality, sexism, sexual harassment,
-       and many other issues that they stand up for. 
-      </Typography>
-      <Divider m="1rem"/>
+      </Box>
 
-      {/* sticky post 2 */}
-      <img
-        width="100%"
-        height="auto"
-        alt="advert"
-        src="http://localhost:3001/assets/sticky1.jpg"
-        style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
-      />
-        <Typography sx={{fontWeight: 'bold'}} color={main}>Bukas PH Webinar</Typography>
-        <Typography color={medium}>March 5, 2023</Typography>
-        <Typography color={medium} m="0.5rem 0">
-         Our student loans partner, Bukas.ph , wishes to invite you to a learning session
-         to get to know more about their affordable and flexible tuition payment
-         methods through their Bukas Tuition Plan.
-      </Typography>
-      <Divider m="1rem"/>
-
-      {/* sticky post 3 */}
-      <img
-        width="100%"
-        height="auto"
-        alt="advert"
-        src="http://localhost:3001/assets/sticky2.jpg"
-        style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
-      />
-        <Typography sx={{fontWeight: 'bold'}} color={main}>School Annoucement</Typography>
-        <Typography color={medium}>March 1, 2023</Typography>
-        <Typography color={medium} m="0.5rem 0">
-         Here is the scheduled face-to-face classes and onsite campus activities break 
-         next week, from 𝗠𝗮𝗿𝗰𝗵 𝟲 𝘁𝗼 𝗠𝗮𝗿𝗰𝗵 𝟭𝟭, 𝟮𝟬𝟮𝟯. All classes will be shifted to the
-         ODL set-up for the whole week during the above mentioned dates. Access to the
-         campus will likewise be limited. Regular onsite classes and activities 
-      </Typography>
-
+    <Modal closeAfterTransition open={isModalOpen} onClose={handleModalClose}>
+      <Fade in={isModalOpen}>
+        <Box 
+            minWidth="350px" 
+            minHeight="300px" 
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: '16px',
+          }}
+        >
+          <IconButton
+            aria-label="close"
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              color: 'primary.main',
+            }}
+            onClick={handleModalClose}
+          >
+            <CloseRoundedIcon />
+          </IconButton>
+          <Stack
+            spacing={1}
+            justifyContent={isNonMobileScreens ? 'flex-end' : 'center'}
+            sx={{
+              '& > *': {
+                width: isNonMobileScreens ? '750px' : '100%', // set iframe width based on screen size
+                maxWidth: '100%',
+              },
+            }}
+            >
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdMJYLaG6WketWs0B2dTGIHOmDCa3HMvmaXVR9suw_jZZtT8w/viewform?embedded=true"
+              height="750"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              scrolling="yes"
+            >
+              Loading...
+            </iframe>
+          </Stack>                
+          </Box>
+      </Fade>
+    </Modal>
     </WidgetWrapper>
   );
 };

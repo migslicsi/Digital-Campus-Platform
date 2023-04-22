@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
@@ -35,7 +37,25 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     );
     const data = await response.json();
     dispatch(setFriends({ friends: data }));
+    
+    // Check if the friendship exists
+    const isFriend = data.some(friend => friend._id === friendId);
+  
+    // Display the appropriate toast message
+    if (isFriend) {
+      toast.success("Friend Added", {
+        autoClose: 1000,
+        position: toast.POSITION.TOP_RIGHT
+      });
+    } else {
+      toast.success("Friend Removed", {
+        autoClose: 1000,
+        position: toast.POSITION.TOP_RIGHT
+      });
+    }
   };
+  
+  
 
   return (
     <FlexBetween>

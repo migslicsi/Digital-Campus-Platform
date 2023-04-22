@@ -22,6 +22,8 @@ import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 import CloseIcon from "@mui/icons-material/Close";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 const registerSchema = yup.object().shape({
@@ -85,6 +87,10 @@ const Form = () => {
 
     if (savedUser) {
       setPageType("login");
+      toast.success("Sign Up Successful, Please Login", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -97,6 +103,11 @@ const Form = () => {
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
+      const { firstName } = loggedIn.user;
+      toast.success(`Welcome back, ${firstName}`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       dispatch(
         setLogin({
           user: loggedIn.user,
@@ -106,6 +117,7 @@ const Form = () => {
       navigate("/home");
     }
   };
+  
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
@@ -319,6 +331,7 @@ const Form = () => {
                   maxWidth: '90vw',
                   bgcolor: 'background.paper',
                   border: '2px solid #000',
+                  borderRadius: "2rem",
                   boxShadow: 24,
                   p: 4,
                   maxHeight: '90vh',

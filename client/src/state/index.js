@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const initialState = {
   mode: "light",
@@ -13,6 +15,11 @@ export const authSlice = createSlice({
   reducers: {
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
+      toast.success(`Switched to ${state.mode} mode.`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+        theme: state.mode === "light" ? "light" : "dark",
+      });
     },
     setLogin: (state, action) => {
       state.user = action.payload.user;
@@ -21,6 +28,10 @@ export const authSlice = createSlice({
     setLogout: (state) => {
       state.user = null;
       state.token = null;
+      toast.success("You have been logged out.", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000
+      });
     },
     setFriends: (state, action) => {
       if (state.user) {

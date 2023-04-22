@@ -23,6 +23,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -55,6 +57,9 @@ const MyPostWidget = ({ picturePath }) => {
     dispatch(setPosts({ posts }));
     setImage(null);
     setPost("");
+    toast.success('Post Created!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
   };
 
   

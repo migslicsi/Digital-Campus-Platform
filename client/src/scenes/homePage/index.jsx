@@ -42,15 +42,18 @@ const HomePage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyPostWidget picturePath={picturePath} />
+          {!isNonMobileScreens && <><><br /></>
+          <Box maxHeight={500} mx="auto"><LatestWidget /></Box></>}
           <PostsWidget userId={_id} />
-        </Box>
-        {isNonMobileScreens && (
-          <Box flexBasis="26%">
-            <LatestWidget />
-            <br/>
-            <FriendListWidget userId={_id} />
           </Box>
-        )}
+
+          {isNonMobileScreens && (
+            <Box flexBasis="26%">
+              <LatestWidget />
+              <br/>
+              <FriendListWidget userId={_id} />
+            </Box>
+          )}
       </Box>
     </motion.Box>
   );

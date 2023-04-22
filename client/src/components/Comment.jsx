@@ -7,6 +7,8 @@ import UserImage from './UserImage';
 import FlexBetween from './FlexBetween';
 import {setPost} from "state";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 function Comment({userId,comment,postId}) {
 const token = useSelector((state)=>state.token)
@@ -15,6 +17,7 @@ const [user , setUser] = useState("");
 const dispatch = useDispatch();
 const { palette } = useTheme();
 const main = palette.neutral.main;
+const user2 = useSelector((state) => state.user);
 
 const getCommentUser = async() => {
   const response = await fetch( `http://localhost:3001/users/${userId}`, {
@@ -36,6 +39,10 @@ const handleDeleteComment = async() => {
   });
   const updatedPost = await response.json();
   dispatch(setPost({ post: updatedPost }));
+  toast.success('Comment deleted!', {
+    autoClose: 1000,
+    position: toast.POSITION.TOP_RIGHT
+  });
 };
 
 
@@ -56,7 +63,7 @@ useEffect(()=>{
       </Box>
       </Box>
           
-      {userId===_id && <DeleteIcon onClick={handleDeleteComment} sx={{cursor:"pointer"}} />}
+      {user && (user2.isAdmin || userId === _id) && <DeleteIcon onClick={handleDeleteComment} sx={{cursor:"pointer"}} />}
       </FlexBetween>
   )
 };

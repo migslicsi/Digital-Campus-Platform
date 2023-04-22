@@ -12,6 +12,8 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const PostWidget = ({
   postId,
@@ -63,6 +65,9 @@ const PostWidget = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
     setComment("");
+    toast.success('Comment posted!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
   };
 
   const handleDelete = async () => {
@@ -75,6 +80,9 @@ const PostWidget = ({
     });
     const message = await response.json();
     setShouldRerender(true);
+    toast.success('Post deleted!', {
+      position: toast.POSITION.TOP_RIGHT
+    });
   };
 
   if (shouldRerender) {
