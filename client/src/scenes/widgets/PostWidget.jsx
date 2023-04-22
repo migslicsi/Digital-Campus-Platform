@@ -2,13 +2,12 @@ import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
   FavoriteOutlined,
-  ShareOutlined,
+  DeleteOutlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Typography, useTheme,InputBase,Button } from "@mui/material";
 import Comment from "components/Comment";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
-// import UserImage from "components/UserImage";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +29,6 @@ const PostWidget = ({
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
-  // const picturePath = useSelector((state)=> state.user.picturePath);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
 
@@ -107,7 +105,7 @@ const PostWidget = ({
         </FlexBetween>
 
         <IconButton>
-          <ShareOutlined />
+          <DeleteOutlined />
         </IconButton>
       </FlexBetween>
       {isComments && (
