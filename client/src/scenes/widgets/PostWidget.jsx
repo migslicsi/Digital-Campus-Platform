@@ -31,7 +31,7 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-
+  const [shouldRerender, setShouldRerender] = useState(false);
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
@@ -64,6 +64,22 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
     setComment("");
   };
+
+  const handleDelete = async () => {
+    const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    const message = await response.json();
+    setShouldRerender(true);
+  };
+
+  if (shouldRerender) {
+    return null; // return null to prevent rendering the deleted post
+  }
 
   return (
     <WidgetWrapper m="2rem 0">

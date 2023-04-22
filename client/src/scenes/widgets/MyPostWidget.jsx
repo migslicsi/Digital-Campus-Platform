@@ -121,34 +121,20 @@ const MyPostWidget = ({ picturePath }) => {
       )}
 
       <Divider sx={{ margin: "1.25rem 0" }} />
-
+      
+      
       <FlexBetween>
-        <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <InsertPhotoIcon sx={{ color: mediumMain }} />
-          <Typography
-            color={mediumMain}
-            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
-          >
-            Photo
-          </Typography>
-        </FlexBetween>
-
-        {isNonMobileScreens ? (
-          <>
-            <FlexBetween gap="0.25rem">
-            </FlexBetween>
-
-            <FlexBetween gap="0.25rem">
-            </FlexBetween>
-
-            <FlexBetween gap="0.25rem">
-            </FlexBetween>
-          </>
-        ) : (
-          <FlexBetween gap="0.25rem">
-            <MoreHorizOutlined sx={{ color: mediumMain }} />
+        <Box sx={{ margin: "0 auto" }}>
+          <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
+            <InsertPhotoIcon sx={{ color: mediumMain }} />
+            <Typography
+              color={mediumMain}
+              sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+            >
+              Photo
+            </Typography>
           </FlexBetween>
-        )}
+        </Box>
 
           <Button
             disabled={!post}
