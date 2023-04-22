@@ -130,7 +130,7 @@ const PostWidget = ({
           </FlexBetween>
         </FlexBetween>
         
-        {user.isAdmin && (
+        {(loggedInUserId === postUserId || user.isAdmin) && (
         <IconButton onClick={handleDelete}>
           <DeleteOutlined />
         </IconButton>)}
