@@ -42,6 +42,35 @@ const FinancialAidWidget = () => {
   const [newDescription, setNewDescription] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+	//updated states
+	const [selectedFinancialAid, setselectedFinancialAid] = useState(null);
+	const [updatedTitle, setUpdatedTitle] = useState("");
+	const [updatedDescription, setUpdatedDescription] = useState("");
+
+	const handleOpenEdit = (selectedFinancialAid) => {
+		setselectedFinancialAid(selectedFinancialAid);
+		setUpdatedTitle(selectedFinancialAid.Title);
+		setUpdatedDescription(selectedFinancialAid.Description);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "financialaid", selectedFinancialAid.id);
+		await updateDoc(userDoc, {
+		  Title: updatedTitle, Description: updatedDescription
+		});
+		toast.success('FAQ updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -231,7 +260,7 @@ const FinancialAidWidget = () => {
             
             <Stack m={1} gap={2}>
             {financialaid.map((financialaid) => (
-            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
+            <Accordion key={financialaid.id} style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -247,10 +276,61 @@ const FinancialAidWidget = () => {
                 </Typography>
                 {user.isAdmin && (
                 <Stack direction="row" justifyContent="flex-end">
-                  <IconButton><EditIcon/></IconButton>
+                    <IconButton onClick={() => handleOpenEdit(financialaid)}><EditIcon/></IconButton>
                     <IconButton onClick={() => {deleteUser(financialaid.id)}}>
                       <DeleteIcon/>
                     </IconButton>
+
+                    <Modal
+                      closeAfterTransition
+                      open={openEdit} 
+                      onClose={handleCloseEdit}
+                      >
+                      <Fade in={openEdit}>
+                        <Box
+                        minWidth="350px" 
+                        minHeight="300px" 
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: '16px',
+                      }}
+                        >
+                        <IconButton aria-label="close"
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                          color: 'primary.main',
+                        }}
+                        onClick={handleCloseEdit}
+                        >
+                        <CloseRoundedIcon />
+                        </IconButton>
+                        <Stack spacing={1} justifyContent="flex-end">
+                        <TextField id="outlined-basic" label="Title" variant="outlined" value={updatedTitle}
+                        onChange={(event) => {setUpdatedTitle(event.target.value)
+                        }}/>
+                        <TextField id="outlined-basic" label="Description" variant="outlined" value={updatedDescription}
+                        onChange={(event) => {setUpdatedDescription(event.target.value)
+                        }}/>
+                        <Button 
+                          variant="outlined" 
+                          onClick={() => {
+                          updateUser(financialaid.id);
+                          handleCloseEdit();
+                          }}
+                        ><Typography p={1}>Update Entry</Typography></Button>
+                        </Stack>
+                        </Box>
+                      </Fade>
+                      </Modal>
+
                 </Stack>
                 )}
               </AccordionDetails>

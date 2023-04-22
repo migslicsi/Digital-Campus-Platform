@@ -51,6 +51,41 @@ const ScholarshipsWidget = () => {
   const [newPrivileges, setNewPrivileges] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+	//updated states
+	const [selectedScholarship, setSelectedScholarship] = useState(null);
+	const [updatedName, setUpdatedName] = useState("");
+	const [updatedDescription, setUpdatedDescription] = useState("");
+	const [updatedDiscount, setUpdatedDiscount] = useState("");
+  const [updatedEligibility, setUpdatedEligibility] = useState("");
+  const [updatedPrivileges, setUpdatedPrivileges] = useState("");
+
+	const handleOpenEdit = (selectedScholarship) => {
+		setSelectedScholarship(selectedScholarship);
+		setUpdatedName(selectedScholarship.Name);
+		setUpdatedDescription(selectedScholarship.Description);
+		setUpdatedDiscount(selectedScholarship.Discount);
+    setUpdatedEligibility(selectedScholarship.Eligibility);
+		setUpdatedPrivileges(selectedScholarship.Privileges);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "scholarships", selectedScholarship.id);
+		await updateDoc(userDoc, {
+		  Name: updatedName, Description: updatedDescription, Discount: updatedDiscount, Eligibility: updatedEligibility, Privileges: updatedPrivileges
+		});
+		toast.success('Scholarship updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -62,7 +97,7 @@ const ScholarshipsWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "scholarships", id);
     await deleteDoc(userDoc);
-    toast.success('Scholarship sucessfully deleted', {
+    toast.success('Scholarship deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -185,7 +220,7 @@ const ScholarshipsWidget = () => {
             
             <Grid container spacing={2}>
               {scholarships.map((scholarships) => (
-                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid item key={scholarships.id} xs={12} sm={6} md={6} lg={6}>
                   <Card sx={{ width: '100%', borderRadius: 3, my: 2, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)'}}>
                     <CardContent>
                       <Typography pl="1rem" pr="1rem" variant="h3">
@@ -200,10 +235,70 @@ const ScholarshipsWidget = () => {
                       
                       {user.isAdmin && (
                       <Stack direction="row" spacing={1} justifyContent="flex-end">
-                        <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => handleOpenEdit(scholarships)}><EditIcon/></IconButton>
                             <IconButton onClick={() => {deleteUser(scholarships.id)}}>
                             <DeleteIcon/>
                             </IconButton>
+
+                            <Modal
+                              closeAfterTransition
+                              open={openEdit} 
+                              onClose={handleCloseEdit}
+                              >
+                              <Fade in={openEdit}>
+                                <Box
+                                minWidth="350px" 
+                                minHeight="300px" 
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                bgcolor: 'background.paper',
+                                boxShadow: 24,
+                                p: 4,
+                                borderRadius: '16px',
+                              }}
+                                >
+                                <IconButton aria-label="close"
+                                sx={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  right: 0,
+                                  color: 'primary.main',
+                                }}
+                                onClick={handleCloseEdit}
+                                >
+                                <CloseRoundedIcon />
+                                </IconButton>
+                                <Stack spacing={1} justifyContent="flex-end">
+                                <TextField id="outlined-basic" label="Name" variant="outlined" value={updatedName}
+                                onChange={(event) => {setUpdatedName(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Description" variant="outlined" value={updatedDescription}
+                                onChange={(event) => {setUpdatedDescription(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Discount" variant="outlined" value={updatedDiscount}
+                                onChange={(event) => {setUpdatedDiscount(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Eligibility" variant="outlined" value={updatedEligibility}
+                                onChange={(event) => {setUpdatedEligibility(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Privileges" variant="outlined" value={updatedPrivileges}
+                                onChange={(event) => {setUpdatedPrivileges(event.target.value)
+                                }}/>
+                                <Button 
+                                  variant="outlined" 
+                                  onClick={() => {
+                                  updateUser(scholarships.id);
+                                  handleCloseEdit();
+                                  }}
+                                ><Typography p={1}>Update Scholarship</Typography></Button>
+                                </Stack>
+                                </Box>
+                              </Fade>
+                              </Modal>
+
                       </Stack>
                       )}
                     </CardContent>

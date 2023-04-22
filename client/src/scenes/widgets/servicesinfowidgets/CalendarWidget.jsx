@@ -56,11 +56,36 @@ const CalendarWidget = () => {
   const [newActivity, setNewActivity] = useState("");
   const [open, setOpen] = useState(false);
 
-  const [value, setValue] = useState("one");
+  const [openEdit, setOpenEdit] = useState(false);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+	//updated states
+	const [selectedCalendar, setSelectedCalendar] = useState(null);
+	const [updatedDate, setUpdatedDate] = useState("");
+	const [updatedDay, setUpdatedDay] = useState("");
+	const [updatedActivity, setUpdatedActivity] = useState("");
+
+	const handleOpenEdit = (selectedCalendar) => {
+		setSelectedCalendar(selectedCalendar);
+		setUpdatedDate(selectedCalendar.Date);
+		setUpdatedDay(selectedCalendar.Day);
+		setUpdatedActivity(selectedCalendar.Activity);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "calendar", selectedCalendar.id);
+		await updateDoc(userDoc, {
+		  Date: updatedDate, Activity: updatedActivity, Day: updatedDay
+		});
+		toast.success('Calendar entry updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
 
   const [loading, setLoading] = useState(false);
 
@@ -82,7 +107,7 @@ const CalendarWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "calendar", id);
     await deleteDoc(userDoc);
-    toast.success('Calendar entry sucessfully deleted', {
+    toast.success('Calendar entry deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -91,7 +116,7 @@ const CalendarWidget = () => {
     const unsubscribe = onSnapshot(calendarCollectionRef, (snapshot) => {
       const sortedCalendar = snapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => new Date(a.Date) - new Date(b.Date));
       setCalendar(sortedCalendar);
     });
     return unsubscribe;
@@ -216,7 +241,7 @@ const CalendarWidget = () => {
                 </TableHead>
                 <TableBody>
                   {calendar.map((calendar) => (
-                    <TableRow colSpan={5} key={calendar}>
+                    <TableRow key={calendar.id} colSpan={5}>
                       <TableCell align="left">
                         <Typography>{calendar.Date}</Typography>
                       </TableCell>
@@ -228,10 +253,64 @@ const CalendarWidget = () => {
                       </TableCell>
                       {user.isAdmin && (
                       <TableCell align="left">
-                        <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={() => handleOpenEdit(calendar)}><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(calendar.id)}}>
                           <DeleteIcon/>
                           </IconButton>
+
+                          <Modal
+                            closeAfterTransition
+                            open={openEdit} 
+                            onClose={handleCloseEdit}
+                            >
+                            <Fade in={openEdit}>
+                              <Box
+                              minWidth="350px" 
+                              minHeight="300px" 
+                            sx={{
+                              position: 'absolute',
+                              top: '50%',
+                              left: '50%',
+                              transform: 'translate(-50%, -50%)',
+                              bgcolor: 'background.paper',
+                              boxShadow: 24,
+                              p: 4,
+                              borderRadius: '16px',
+                            }}
+                              >
+                              <IconButton aria-label="close"
+                              sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                color: 'primary.main',
+                              }}
+                              onClick={handleCloseEdit}
+                              >
+                              <CloseRoundedIcon />
+                              </IconButton>
+                              <Stack spacing={1} justifyContent="flex-end">
+                              <TextField id="outlined-basic" label="Date" variant="outlined" value={updatedDate}
+                              onChange={(event) => {setUpdatedDate(event.target.value)
+                              }}/>
+                              <TextField id="outlined-basic" label="Day" variant="outlined" value={updatedDay}
+                              onChange={(event) => {setUpdatedDay(event.target.value)
+                              }}/>
+                              <TextField id="outlined-basic" label="Activity" variant="outlined" value={updatedActivity}
+                              onChange={(event) => {setUpdatedActivity(event.target.value)
+                              }}/>
+                              <Button 
+                                variant="outlined" 
+                                onClick={() => {
+                                updateUser(calendar.id);
+                                handleCloseEdit();
+                                }}
+                              ><Typography p={1}>Update Calendar Entry</Typography></Button>
+                              </Stack>
+                              </Box>
+                            </Fade>
+                            </Modal>
+                          
                       </TableCell>
                       )}
                     </TableRow>

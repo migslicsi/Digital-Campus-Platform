@@ -51,7 +51,7 @@ const ClinicWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "clinicstaff", id);
     await deleteDoc(userDoc);
-    toast.success('Clinic Staff sucessfully deleted', {
+    toast.success('Staff deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -67,7 +67,7 @@ const ClinicWidget = () => {
 
   const createUser = async () => {
     await addDoc(clinicstaffCollectionRef, { Name: newName, Specialization: newSpecialization});
-    toast.success('Clinic Staff created!', {
+    toast.success('Staff created!', {
       position: toast.POSITION.TOP_RIGHT
     });
   };
@@ -97,7 +97,7 @@ const ClinicWidget = () => {
   const deleteUser1 = async (id) => {
     const userDoc = doc(db, "clinicservices", id);
     await deleteDoc(userDoc);
-    toast.success('Clinic Service sucessfully deleted', {
+    toast.success('Service deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -113,10 +113,72 @@ const ClinicWidget = () => {
 
   const createUser1 = async () => {
     await addDoc(clinicservicesCollectionRef, { Service: newService, Description: newDescription});
-    toast.success('Clinic Service created!', {
+    toast.success('Service created!', {
       position: toast.POSITION.TOP_RIGHT
     });
   };
+
+  //clinic staff
+  const [openEdit, setOpenEdit] = useState(false);
+
+	//updated states
+	const [selectedClinicStaff, setSelectedClinicStaff] = useState(null);
+	const [updatedName, setUpdatedName] = useState("");
+	const [updatedSpecialization, setUpdatedSpecialization] = useState("");
+
+	const handleOpenEdit = (selectedClinicStaff) => {
+		setSelectedClinicStaff(selectedClinicStaff);
+		setUpdatedName(selectedClinicStaff.Name);
+		setUpdatedSpecialization(selectedClinicStaff.Specialization);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "clinicstaff", selectedClinicStaff.id);
+		await updateDoc(userDoc, {
+		  Name: updatedName,
+		  Specialization: updatedSpecialization,
+		});
+		toast.success('Staff updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
+
+  //clinic services
+  const [openEdit1, setOpenEdit1] = useState(false);
+
+	//updated states
+	const [selectedClinicServices, setSelectedClinicServices] = useState(null);
+	const [updatedService, setUpdatedService] = useState("");
+	const [UpdatedDescription, setUpdatedDescription] = useState("");
+
+	const handleOpenEdit1 = (selectedClinicServices) => {
+		setSelectedClinicServices(selectedClinicServices);
+		setUpdatedService(selectedClinicServices.Service);
+		setUpdatedDescription(selectedClinicServices.Description);
+		setOpenEdit1(true);
+	  };
+
+	const handleCloseEdit1 = () => {
+	setOpenEdit1(false);
+	};
+
+	const updateUser1 = async () => {
+		const userDoc = doc(db, "clinicservices", selectedClinicServices.id);
+		await updateDoc(userDoc, {
+		  Service: updatedService,
+      Description: UpdatedDescription,
+		});
+		toast.success('Service updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit1();
+	  };  
 
   return (
         <motion.Box 
@@ -230,15 +292,66 @@ const ClinicWidget = () => {
             <Table>
                 <TableBody>
                     {clinicServices.map((clinicServices) => (
-                    <TableRow key={clinicServices.Service}>
+                    <TableRow key={clinicServices.id}>
                         <TableCell>{clinicServices.Service}</TableCell>
                         <TableCell>{clinicServices.Description}</TableCell>
                         {user.isAdmin && (
                         <TableCell align="left">
-                            <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => handleOpenEdit1(clinicServices)}><EditIcon/></IconButton>
                             <IconButton onClick={() => {deleteUser1(clinicServices.id)}}>
                             <DeleteIcon/>
                             </IconButton>
+
+                            <Modal
+                              closeAfterTransition
+                              open={openEdit1} 
+                              onClose={handleCloseEdit1}
+                              >
+                              <Fade in={openEdit1}>
+                                <Box
+                                minWidth="350px" 
+                                minHeight="300px" 
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                bgcolor: 'background.paper',
+                                boxShadow: 24,
+                                p: 4,
+                                borderRadius: '16px',
+                              }}
+                                >
+                                <IconButton aria-label="close"
+                                sx={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  right: 0,
+                                  color: 'primary.main',
+                                }}
+                                onClick={handleCloseEdit1}
+                                >
+                                <CloseRoundedIcon />
+                                </IconButton>
+                                <Stack spacing={1} justifyContent="flex-end">
+                                <TextField id="outlined-basic" label="Service" variant="outlined" value={updatedService}
+                                onChange={(event) => {setUpdatedService(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Field" variant="outlined" value={UpdatedDescription}
+                                onChange={(event) => {setUpdatedDescription(event.target.value)
+                                }}/>
+                                <Button 
+                                  variant="outlined" 
+                                  onClick={() => {
+                                  updateUser1(clinicServices.id);
+                                  handleCloseEdit1();
+                                  }}
+                                ><Typography p={1}>Update Service</Typography></Button>
+                                </Stack>
+                                </Box>
+                              </Fade>
+                              </Modal>
+
                         </TableCell>
                         )}
                     </TableRow>
@@ -315,15 +428,66 @@ const ClinicWidget = () => {
             <Table>
                 <TableBody>
                     {clinicStaff.map((clinicStaff) => (
-                    <TableRow key={clinicStaff.Name}>
+                    <TableRow key={clinicStaff.id}>
                         <TableCell>{clinicStaff.Name}</TableCell>
                         <TableCell>{clinicStaff.Specialization}</TableCell>
                         {user.isAdmin && (
                         <TableCell align="left">
-                            <IconButton><EditIcon/></IconButton>
+                            <IconButton onClick={() => handleOpenEdit(clinicStaff)}><EditIcon/></IconButton>
                             <IconButton onClick={() => {deleteUser(clinicStaff.id)}}>
                             <DeleteIcon/>
                             </IconButton>
+
+                            <Modal
+                              closeAfterTransition
+                              open={openEdit} 
+                              onClose={handleCloseEdit}
+                              >
+                              <Fade in={openEdit}>
+                                <Box
+                                minWidth="350px" 
+                                minHeight="300px" 
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                bgcolor: 'background.paper',
+                                boxShadow: 24,
+                                p: 4,
+                                borderRadius: '16px',
+                              }}
+                                >
+                                <IconButton aria-label="close"
+                                sx={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  right: 0,
+                                  color: 'primary.main',
+                                }}
+                                onClick={handleCloseEdit}
+                                >
+                                <CloseRoundedIcon />
+                                </IconButton>
+                                <Stack spacing={1} justifyContent="flex-end">
+                                <TextField id="outlined-basic" label="Name" variant="outlined" value={updatedName}
+                                onChange={(event) => {setUpdatedName(event.target.value)
+                                }}/>
+                                <TextField id="outlined-basic" label="Specialization" variant="outlined" value={updatedSpecialization}
+                                onChange={(event) => {setUpdatedSpecialization(event.target.value)
+                                }}/>
+                                <Button 
+                                  variant="outlined" 
+                                  onClick={() => {
+                                  updateUser(clinicStaff.id);
+                                  handleCloseEdit();
+                                  }}
+                                ><Typography p={1}>Update Staff</Typography></Button>
+                                </Stack>
+                                </Box>
+                              </Fade>
+                              </Modal>
+
                         </TableCell>
                         )}
                     </TableRow>

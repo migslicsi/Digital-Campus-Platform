@@ -43,6 +43,39 @@ const EventsWidget = () => {
   const [newPrice, setnewPrice] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+	//updated states
+	const [selectedEvents, setSelectedEvents] = useState(null);
+	const [updatedDate, setUpdatedDate] = useState("");
+	const [updatedLocation, setUpdatedLocation] = useState("");
+	const [updatedName, setUpdatedName] = useState("");
+  const [updatedPrice, setUpdatedPrice] = useState("");
+
+	const handleOpenEdit = (selectedEvents) => {
+		setSelectedEvents(selectedEvents);
+		setUpdatedDate(selectedEvents.Date);
+		setUpdatedLocation(selectedEvents.Location);
+		setUpdatedName(selectedEvents.Name);
+    setUpdatedPrice(selectedEvents.Price);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "events", selectedEvents.id);
+		await updateDoc(userDoc, {
+		  Name: updatedName, Location: updatedLocation, Price: updatedPrice, Date: updatedDate
+		});
+		toast.success('Event updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -54,7 +87,7 @@ const EventsWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "events", id);
     await deleteDoc(userDoc);
-    toast.success('Event sucessfully deleted', {
+    toast.success('Event deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -173,7 +206,7 @@ const EventsWidget = () => {
         
         <Grid container spacing={2}>
           {events.map((events) => (
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item key={events.id} xs={12} sm={6} md={6} lg={6}>
               <Card sx={{ width: '100%', borderRadius: 3, my: 2, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)'}}>
                 <CardContent>
                   <Typography pt="1rem" pl="2rem" pr="2rem" color={dark} gutterBottom variant="h4" component="div">
@@ -201,10 +234,67 @@ const EventsWidget = () => {
                   
                   {user.isAdmin && (
                   <Stack direction="row" spacing={1} justifyContent="flex-end">
-                    <IconButton><EditIcon/></IconButton>
+                        <IconButton onClick={() => handleOpenEdit(events)}><EditIcon/></IconButton>
                         <IconButton onClick={() => {deleteUser(events.id)}}>
                         <DeleteIcon/>
                         </IconButton>
+
+                        <Modal
+                          closeAfterTransition
+                          open={openEdit} 
+                          onClose={handleCloseEdit}
+                          >
+                          <Fade in={openEdit}>
+                            <Box
+                            minWidth="350px" 
+                            minHeight="300px" 
+                          sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: '16px',
+                          }}
+                            >
+                            <IconButton aria-label="close"
+                            sx={{
+                              position: 'absolute',
+                              top: 0,
+                              right: 0,
+                              color: 'primary.main',
+                            }}
+                            onClick={handleCloseEdit}
+                            >
+                            <CloseRoundedIcon />
+                            </IconButton>
+                            <Stack spacing={1} justifyContent="flex-end">
+                            <TextField id="outlined-basic" label="Name" variant="outlined" value={updatedName}
+                            onChange={(event) => {setUpdatedName(event.target.value)
+                            }}/>
+                            <TextField id="outlined-basic" label="Date" variant="outlined" value={updatedDate}
+                            onChange={(event) => {setUpdatedDate(event.target.value)
+                            }}/>
+                            <TextField id="outlined-basic" label="Price" variant="outlined" value={updatedPrice}
+                            onChange={(event) => {setUpdatedPrice(event.target.value)
+                            }}/>
+                            <TextField id="outlined-basic" label="Location" variant="outlined" value={updatedLocation}
+                            onChange={(event) => {setUpdatedLocation(event.target.value)
+                            }}/>
+                            <Button 
+                              variant="outlined" 
+                              onClick={() => {
+                              updateUser(events.id);
+                              handleCloseEdit();
+                              }}
+                            ><Typography p={1}>Update Event</Typography></Button>
+                            </Stack>
+                            </Box>
+                          </Fade>
+                          </Modal>
+
                   </Stack>
                   )}
                 </CardContent>

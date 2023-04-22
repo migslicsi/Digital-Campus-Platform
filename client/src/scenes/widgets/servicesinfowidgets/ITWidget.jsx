@@ -37,6 +37,35 @@ const ITWidget = () => {
   const [newanswer, setNewAnswer] = useState("");
   const [open, setOpen] = useState(false);
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+	//updated states
+	const [selectedItHelp, setselectedItHelp] = useState(null);
+	const [updatedquestion, setUpdatedquestion] = useState("");
+	const [updatedanswer, setUpdatedanswer] = useState("");
+
+	const handleOpenEdit = (selectedItHelp) => {
+		setselectedItHelp(selectedItHelp);
+		setUpdatedquestion(selectedItHelp.question);
+		setUpdatedanswer(selectedItHelp.answer);
+		setOpenEdit(true);
+	  };
+
+	const handleCloseEdit = () => {
+	setOpenEdit(false);
+	};
+
+	const updateUser = async () => {
+		const userDoc = doc(db, "ithelp", selectedItHelp.id);
+		await updateDoc(userDoc, {
+		  question: updatedquestion, answer: updatedanswer
+		});
+		toast.success('FAQ updated!', {
+		  position: toast.POSITION.TOP_RIGHT
+		});
+		handleCloseEdit();
+	  };
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -48,7 +77,7 @@ const ITWidget = () => {
   const deleteUser = async (id) => {
     const userDoc = doc(db, "ithelp", id);
     await deleteDoc(userDoc);
-    toast.success('FAQ deleted', {
+    toast.success('FAQ deleted!', {
       position: toast.POSITION.TOP_RIGHT
     });
   }
@@ -160,7 +189,7 @@ const ITWidget = () => {
 
             <Stack m={1} gap={2}>
             {ithelp.map((ithelp) => (
-            <Accordion style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
+            <Accordion key={ithelp.id} style={{ backgroundColor: 'transparent', border: '1px solid #ccc'}}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -176,10 +205,61 @@ const ITWidget = () => {
                 </Typography>
                 {user.isAdmin && (
                 <Stack direction="row" justifyContent="flex-end">
-                  <IconButton><EditIcon/></IconButton>
+                  <IconButton onClick={() => handleOpenEdit(ithelp)}><EditIcon/></IconButton>
                     <IconButton onClick={() => {deleteUser(ithelp.id)}}>
                       <DeleteIcon/>
                     </IconButton>
+
+                    <Modal
+                      closeAfterTransition
+                      open={openEdit} 
+                      onClose={handleCloseEdit}
+                      >
+                      <Fade in={openEdit}>
+                        <Box
+                        minWidth="350px" 
+                        minHeight="300px" 
+                      sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: '16px',
+                      }}
+                        >
+                        <IconButton aria-label="close"
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          right: 0,
+                          color: 'primary.main',
+                        }}
+                        onClick={handleCloseEdit}
+                        >
+                        <CloseRoundedIcon />
+                        </IconButton>
+                        <Stack spacing={1} justifyContent="flex-end">
+                        <TextField id="outlined-basic" label="Question" variant="outlined" value={updatedquestion}
+                        onChange={(event) => {setUpdatedquestion(event.target.value)
+                        }}/>
+                        <TextField id="outlined-basic" label="Answer" variant="outlined" value={updatedanswer}
+                        onChange={(event) => {setUpdatedanswer(event.target.value)
+                        }}/>
+                        <Button 
+                          variant="outlined" 
+                          onClick={() => {
+                          updateUser(ithelp.id);
+                          handleCloseEdit();
+                          }}
+                        ><Typography p={1}>Update FAQ</Typography></Button>
+                        </Stack>
+                        </Box>
+                      </Fade>
+                      </Modal>
+
                 </Stack>
                 )}
               </AccordionDetails>
