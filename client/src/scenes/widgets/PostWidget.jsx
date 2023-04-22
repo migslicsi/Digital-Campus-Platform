@@ -35,6 +35,8 @@ const PostWidget = ({
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
+  const user = useSelector((state) => state.user);
+
 
   const patchLike = async () => {
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
@@ -103,10 +105,11 @@ const PostWidget = ({
             <Typography>{comments.length}</Typography>
           </FlexBetween>
         </FlexBetween>
-
-        <IconButton>
+        
+        {user.isAdmin && (
+        <IconButton onClick={handleDelete}>
           <DeleteOutlined />
-        </IconButton>
+        </IconButton>)}
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
