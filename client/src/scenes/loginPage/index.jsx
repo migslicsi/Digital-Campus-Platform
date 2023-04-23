@@ -90,28 +90,20 @@ const LoginPage = () => {
         }}
       >
       <Box
-       width="25%"
-       display="absolute"
-       p="2rem"
-       borderRadius="1.5rem"
-       borderStyle="solid"
-       backgroundColor={theme.palette.background.alt}
-       border="2px solid rgba(0,213,253,255)"
-       sx={{
-       backdropFilter: "none",
-       mr: "10%",
-       ml: "auto",
-       boxShadow: "none",
-       "@media(max-width: 1000px)": {
-       width: "80%",
-       mr: "auto",
-       },
-       "@media(max-width: 600px)": {
-       width: "80%",
-       mr: "auto",
-       },
-       }}
-        >
+        width={isNonMobile ? "50%" : "100%"}
+        display="absolute"
+        p={isNonMobile ? "2rem" : "1rem"}
+        borderRadius="1.5rem"
+        borderStyle="solid"
+        backgroundColor={theme.palette.background.alt}
+        border="2px solid rgba(0,213,253,255)"
+        sx={{
+          backdropFilter: "none",
+          mr: isNonMobile ? "10%" : "0",
+          ml: isNonMobile ? "auto" : "0",
+          boxShadow: "none",
+        }}
+      >
           <Box
           display="flex"
           justifyContent="center"
