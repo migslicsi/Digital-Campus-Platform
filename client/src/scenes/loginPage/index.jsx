@@ -121,7 +121,7 @@ const LoginPage = () => {
            <img
             src={
               theme.palette.mode === "dark"
-              ? "https://ciit-plusplus-backend.onrender.com/assets/ciconw-b.png"
+              ? "https://ciit-plusplus-backend.onrender.com/assets/cicon-clean-USD2.png"
               : "https://ciit-plusplus-backend.onrender.com/assets/cicon-cleanb.png"
             }
             alt="Your Logo"
