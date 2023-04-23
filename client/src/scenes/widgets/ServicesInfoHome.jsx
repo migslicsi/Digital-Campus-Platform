@@ -1,4 +1,4 @@
-import { Divider, useTheme, Box, Typography, useMediaQuery,} from "@mui/material"
+import { Divider, useTheme, Box, Typography, IconButton,} from "@mui/material"
 import * as React from 'react';
 import LatestWidget from "./LatestWidget";
 import { styled } from '@mui/material/styles';
@@ -6,17 +6,14 @@ import Chip from '@mui/material/Chip';
 import { motion } from 'framer-motion';
 
 const ServicesInfoHome = () => {
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { palette } = useTheme();
   const dark = palette.neutral.dark;
-  const main = palette.neutral.main;
-  const neutralLight = palette.background.default;
 
   const ListItem = styled('li')(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
 
-  const [chipData, setChipData] = React.useState([
+  const [chipData] = React.useState([
     { key: 0, label: 'React' },
     { key: 1, label: 'ExpressJS' },
     { key: 2, label: 'MongoDB' },
@@ -26,7 +23,7 @@ const ServicesInfoHome = () => {
     { key: 6, label: 'Material UI' },
     { key: 7, label: 'Adobe PS' },
     { key: 8, label: 'Restful API' },
-    { key: 8, label: 'Toastify' },
+    { key: 9, label: 'Toastify' },
   ]);
   
   return (
@@ -41,6 +38,7 @@ const ServicesInfoHome = () => {
             pb="0.5rem"
             variant="h2"
             color={dark}
+            align="center"
             >
             Welcome to the Services & Information Hub for Students!
             </Typography>
