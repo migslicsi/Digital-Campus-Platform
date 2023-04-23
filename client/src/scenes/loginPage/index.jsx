@@ -80,11 +80,11 @@ const LoginPage = () => {
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
           "@media(max-width: 1000px)": {
-            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-4.webp)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-5.webp)",
             backgroundPosition: "center center",
           },
           "@media(max-width: 600px)": {
-            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-4.webp)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-5.webp)",
             backgroundPosition: "center center",
           },
         }}
