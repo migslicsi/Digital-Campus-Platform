@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const { userId } = useParams();
+  const { friendId } = useParams();
   const {_id} = useSelector((state)=> state.user);
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");

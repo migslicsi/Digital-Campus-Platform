@@ -3,6 +3,7 @@ import HomePage from "scenes/homePage";
 import LoginPage from "scenes/loginPage";
 import ProfilePage from "scenes/profilePage";
 import ClinicPage from "scenes/clinicPage";
+import Friend from './Friend';
 import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {AnimatePresence} from "framer-motion";
@@ -24,6 +25,9 @@ function AnimatedRoutes() {
             path="/profile/:userId" 
             element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
             {/* services-information */}
+            <Route 
+            path="/profile/:friendId" 
+            element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
             <Route
             path="/services-information-page"
             element={isAuth ? <ClinicPage /> : <Navigate to="/" />} />
