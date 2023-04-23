@@ -22,8 +22,8 @@ const ServicesInfoHome = () => {
     { key: 5, label: 'Framer Motion' },
     { key: 6, label: 'Material UI' },
     { key: 7, label: 'Adobe PS' },
-    { key: 8, label: 'Restful API' },
-    { key: 9, label: 'Toastify' },
+    { key: 8, label: 'Toastify' },
+    { key: 9, label: 'Render' },
   ]);
   
   return (
