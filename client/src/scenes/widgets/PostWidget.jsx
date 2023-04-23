@@ -41,7 +41,7 @@ const PostWidget = ({
 
 
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
+    const response = await fetch(`https://ciit-plusplus-backend.onrender.com/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const PostWidget = ({
   };
 
   const handleComment = async() => {
-    const response = await fetch(`http://localhost:3001/posts/${postId}/${loggedInUserId}/comment`,{
+    const response = await fetch(`https://ciit-plusplus-backend.onrender.com/posts/${postId}/${loggedInUserId}/comment`,{
       method:"POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const PostWidget = ({
   };
 
   const handleDelete = async () => {
-    const response = await fetch(`http://localhost:3001/posts/${postId}`, {
+    const response = await fetch(`https://ciit-plusplus-backend.onrender.com/posts/${postId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${picturePath}`}
+          src={`https://ciit-plusplus-backend.onrender.com/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">

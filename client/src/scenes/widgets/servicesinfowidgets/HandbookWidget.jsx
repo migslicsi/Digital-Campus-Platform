@@ -50,7 +50,7 @@ const HandbookWidget = () => {
                   overflow: 'scroll',
               }}>
                 <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.3.122/pdf.worker.min.js">
-                  <Viewer fileUrl="http://localhost:3001/assets/handbook.pdf" defaultScale={defaultScale} />
+                  <Viewer fileUrl="https://ciit-plusplus-backend.onrender.com/assets/handbook.pdf" defaultScale={defaultScale} />
                 </Worker>
               </Box>
             </Box>

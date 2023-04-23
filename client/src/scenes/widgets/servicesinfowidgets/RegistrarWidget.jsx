@@ -117,7 +117,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis3.png"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis3.png"
                  style={{ objectFit: "contain" }}
               />
               </Card>
@@ -212,7 +212,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis1.png"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis1.png"
                 style={{ objectFit: "contain" }}
               />
               </Card>
@@ -307,7 +307,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis2.jpg"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis2.jpg"
                  style={{ objectFit: "contain" }}
               />
               </Card>
@@ -402,7 +402,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis4.png"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis4.png"
                 style={{ objectFit: "contain" }}
               />
               </Card>
@@ -497,7 +497,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis5.png"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis5.png"
                 style={{ objectFit: "contain" }}
               />
               </Card>
@@ -592,7 +592,7 @@ const RegistrarWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/regis6.jpg"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/regis6.jpg"
                 style={{ objectFit: "contain" }}
               />
               </Card>

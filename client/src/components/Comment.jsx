@@ -20,7 +20,7 @@ const main = palette.neutral.main;
 const user2 = useSelector((state) => state.user);
 
 const getCommentUser = async() => {
-  const response = await fetch( `http://localhost:3001/users/${userId}`, {
+  const response = await fetch( `https://ciit-plusplus-backend.onrender.com/users/${userId}`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -29,7 +29,7 @@ const getCommentUser = async() => {
 };
 
 const handleDeleteComment = async() => {
-  const response = await fetch(`http://localhost:3001/posts/${postId}/${userId}/comment/delete`,{
+  const response = await fetch(`https://ciit-plusplus-backend.onrender.com/posts/${postId}/${userId}/comment/delete`,{
     method:"PATCH",
     headers: {
       Authorization: `Bearer ${token}`,

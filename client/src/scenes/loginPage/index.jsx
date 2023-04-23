@@ -54,8 +54,8 @@ const LoginPage = () => {
               alt="logo"
               src={
                 theme.palette.mode === "dark"
-                  ? "http://localhost:3001/assets/ciconw-b.png"
-                  : "http://localhost:3001/assets/cicon2-1.png"
+                  ? "https://ciit-plusplus-backend.onrender.com/assets/ciconw-b.png"
+                  : "https://ciit-plusplus-backend.onrender.com/assets/cicon2-1.png"
               }
               style={{ width: "300px", height: "auto", marginBottom: "250px" }}
             />
@@ -71,7 +71,7 @@ const LoginPage = () => {
       >
       <Box
         sx={{
-          backgroundImage: "url(http://localhost:3001/assets/bg3-4.webp)",
+          backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-4.webp)",
           backgroundSize: "cover",
           minHeight: "100vh",
           display: "flex",
@@ -80,11 +80,11 @@ const LoginPage = () => {
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
           "@media(max-width: 1000px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bgfc.png)",
             backgroundPosition: "center center",
           },
           "@media(max-width: 600px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bgfc.png)",
             backgroundPosition: "center center",
           },
         }}
@@ -121,8 +121,8 @@ const LoginPage = () => {
            <img
             src={
               theme.palette.mode === "dark"
-                ? "http://localhost:3001/assets/ciconw.png"
-                : "http://localhost:3001/assets/cicon.png"
+                ? "https://ciit-plusplus-backend.onrender.com/assets/ciconw.png"
+                : "https://ciit-plusplus-backend.onrender.com/assets/cicon.png"
             }
             alt="Your Logo"
             style={{ maxWidth: "50%", maxHeight: "50%" }}
