@@ -8,7 +8,6 @@ import {
   useTheme,
   Select,
   MenuItem,
-  InputLabel,
   Link,
   Modal,
   IconButton,

@@ -70,7 +70,6 @@ const Navbar = () => {
         }}
         onClick={() => {
           navigate("/home");
-          window.location.reload();
         }}
         />
       </FlexBetween>
