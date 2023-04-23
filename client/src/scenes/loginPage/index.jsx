@@ -90,20 +90,31 @@ const LoginPage = () => {
         }}
       >
       <Box
-        width={isNonMobile ? "50%" : "100%"}
-        display="absolute"
-        p={isNonMobile ? "2rem" : "1rem"}
-        borderRadius="1.5rem"
-        borderStyle="solid"
-        backgroundColor={theme.palette.background.alt}
-        border="2px solid rgba(0,213,253,255)"
-        sx={{
-          backdropFilter: "none",
-          mr: isNonMobile ? "10%" : "0",
-          ml: isNonMobile ? "auto" : "0",
-          boxShadow: "none",
+       width="25%"
+       display="absolute"
+       p="2rem"
+       borderRadius="1.5rem"
+       borderStyle="solid" 
+       backgroundColor={theme.palette.background.alt}
+       border=" 2px solid rgba(0,213,253,255)"
+       boxShadow="0 0 10px rgba(0,213,253,0.7), 0 0 20px rgba(0,213,253,0.5), 0 0 30px rgba(0,213,253,0.3), 0 0 40px rgba(0,213,253,0.1)"
+       sx={{ 
+        mr: "10%",
+        ml: "auto",
+        "@media(max-width: 1000px)": {
+          width: "80%", // Set width to 50% upon 1000px media query
+          mr: "auto", // Set margin right to "auto" to center the box horizontally
+        },
+        "@media(min-width: 1000px)": {
+          width: "50%", // Set width to 50% upon 1000px media query
+          mr: "auto", // Set margin right to "auto" to center the box horizontally
+        },
+        "@media(max-width: 600px)": {
+          width: "80%", // Set width to 50% upon 1000px media query
+          mr: "auto", // Set margin right to "auto" to center the box horizontally
+        },
         }}
-      >
+        >
           <Box
           display="flex"
           justifyContent="center"
