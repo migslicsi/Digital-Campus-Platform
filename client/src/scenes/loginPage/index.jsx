@@ -79,7 +79,7 @@ const LoginPage = () => {
           alignItems: "center",
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
-          "@media(max-width: 1000px)": {
+          "@media(max-width: 1300px)": {
             backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-5.webp)",
             backgroundPosition: "center center",
           },
@@ -90,28 +90,28 @@ const LoginPage = () => {
         }}
       >
       <Box
-       width="25%"
-       display="absolute"
-       p="2rem"
-       borderRadius="1.5rem"
-       borderStyle="solid"
-       backgroundColor={theme.palette.background.alt}
-       border="2px solid rgba(0,213,253,255)"
-       sx={{
-       backdropFilter: "none",
-       mr: "10%",
-       ml: "auto",
-       boxShadow: "none",
-       "@media(max-width: 1000px)": {
-       width: "80%",
-       mr: "auto",
-       },
-       "@media(max-width: 600px)": {
-       width: "80%",
-       mr: "auto",
-       },
-       }}
-       >
+        display="absolute"
+        p="2rem"
+        borderRadius="1.5rem"
+        borderStyle="solid"
+        backgroundColor={theme.palette.background.alt}
+        border="2px solid rgba(0,213,253,255)"
+        sx={{
+          backdropFilter: "none",
+          mr: "10%",
+          ml: "auto",
+          boxShadow: "none",
+          maxWidth: "500px", // <-- set the maximum width here
+          "@media(max-width: 1300px)": {
+            mr: "auto",
+          },
+          "@media(max-width: 600px)": {
+            mr: "1.5rem",
+            ml: "1.5rem",
+          },
+        }}
+      >
+
           <Box
           display="flex"
           justifyContent="center"

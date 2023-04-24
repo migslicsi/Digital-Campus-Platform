@@ -27,16 +27,16 @@ const InformationWidget = () => {
     return (
         <WidgetWrapper marginTop="1.5rem">
          <FlexBetween>
-            <Box sx={{ width: '100%'}}>
-             <nav aria-label="main menu">
-                <Typography 
-                sx={{fontWeight: 'bold'}} 
-                mb="0.5rem"fontSize="large" 
-                color={main}>
-                School Information
-                </Typography>
-                <Divider/>
-                <List onClick={() => navigate("/services-information-page")}>
+         <Box sx={{ width: '100%', "&:hover": { cursor: "pointer" } }} onClick={() => navigate("/services-information-page")}>
+         <nav aria-label="main menu">
+            <Typography 
+            sx={{fontWeight: 'bold'}} 
+            mb="0.5rem"fontSize="large" 
+            color={main}>
+            School Services
+            </Typography>
+            <Divider/>
+            <List>
                  
                  <ListItem disablePadding>
                     <ListItemButton>
@@ -55,7 +55,7 @@ const InformationWidget = () => {
                   <ListItem disablePadding>
                     <ListItemButton>
                      <ListItemIcon><CampaignOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Annoucements</Typography>
+                      <Typography color={dark}>Announcements</Typography>
                     </ListItemButton>
                   </ListItem>
                   

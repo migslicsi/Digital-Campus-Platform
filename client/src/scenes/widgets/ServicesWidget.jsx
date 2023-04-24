@@ -24,7 +24,7 @@ const ServicesWidget = () => {
     return (
     <WidgetWrapper marginTop="1.5rem">
      <FlexBetween>
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%', "&:hover": { cursor: "pointer" } }} onClick={() => navigate("/services-information-page")}>
          <nav aria-label="main menu">
             <Typography 
             sx={{fontWeight: 'bold'}} 
@@ -33,7 +33,7 @@ const ServicesWidget = () => {
             School Services
             </Typography>
             <Divider/>
-            <List onClick={() => navigate("/services-information-page")}>
+            <List>
              
              <ListItem disablePadding>
                 <ListItemButton>

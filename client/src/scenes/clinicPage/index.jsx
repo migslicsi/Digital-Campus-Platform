@@ -192,7 +192,7 @@ const ClinicPage = () => {
                     onClick={() => handleWidgetSelection('Annoucements')}
                     >
                      <ListItemIcon><CampaignOutlinedIcon /></ListItemIcon>
-                      <Typography color={dark}>Annoucements</Typography>
+                      <Typography color={dark}>Announcements</Typography>
                     </ListItemButton>
                   </ListItem>
                   

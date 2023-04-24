@@ -9,6 +9,7 @@ import FriendListWidget from "scenes/widgets/FriendListWidget";
 import ServicesWidget from "scenes/widgets/ServicesWidget";
 import InformationWidget from "scenes/widgets/InformationWidget";
 import { motion } from "framer-motion";
+import Skeleton from "@mui/material/Skeleton";
 
 const HomePage = () => {
   
@@ -17,9 +18,9 @@ const HomePage = () => {
 
   return (
     <motion.Box
-    initial={{opacity: 0}}
-    animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
-    exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 0.5, ease: "easeInOut" } }}
+      exit={{ opacity: 0, transition: { duration: 0.5, ease: "easeInOut" } }}
     >
       <Navbar />
       <Box
@@ -31,7 +32,13 @@ const HomePage = () => {
         justifyContent="space-between"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={_id} picturePath={picturePath} />
+          {/* check if user data is available */}
+          {picturePath && _id ? (
+            <UserWidget userId={_id} picturePath={picturePath} />
+          ) : (
+            <Skeleton variant="rectangular" height={140} />
+          )}
+
           <Box m="2rem 0" />
           <ServicesWidget />
           <InformationWidget />
@@ -42,18 +49,24 @@ const HomePage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyPostWidget picturePath={picturePath} />
-          {!isNonMobileScreens && <><><br /></>
-          <Box maxHeight={500} mx="auto"><LatestWidget /></Box></>}
-          <PostsWidget userId={_id} />
-          </Box>
-
-          {isNonMobileScreens && (
-            <Box flexBasis="26%">
-              <LatestWidget />
-              <br/>
-              <FriendListWidget userId={_id} />
-            </Box>
+          {!isNonMobileScreens && (
+            <>
+              <br />
+              <Box maxHeight={500} mx="auto">
+                <LatestWidget />
+              </Box>
+            </>
           )}
+          <PostsWidget userId={_id} />
+        </Box>
+
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <LatestWidget />
+            <br />
+            <FriendListWidget userId={_id} />
+          </Box>
+        )}
       </Box>
     </motion.Box>
   );

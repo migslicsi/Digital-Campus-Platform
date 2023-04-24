@@ -114,7 +114,7 @@ const Form = () => {
         })
       );
       navigate("/home");
-    }
+    } 
   };
   
 
