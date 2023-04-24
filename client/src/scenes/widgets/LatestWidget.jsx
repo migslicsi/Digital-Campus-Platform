@@ -38,8 +38,8 @@ const LatestWidget = () => {
         alt="advert"
         src={
           theme.palette.mode === "dark"
-            ? "http://localhost:3001/assets/cicon-clean-USD.png"
-            : "http://localhost:3001/assets/cicon-cleanb-US.png"
+            ? "https://ciit-plusplus-backend.onrender.com/assets/cicon-clean-USD.png"
+            : "https://ciit-plusplus-backend.onrender.com/assets/cicon-cleanb-US.png"
         }
         style={{
           borderRadius: "0.75rem",

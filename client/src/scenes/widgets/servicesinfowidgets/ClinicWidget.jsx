@@ -211,10 +211,10 @@ const ClinicWidget = () => {
 
             <Grid container spacing={0} mb="1rem" ml="0.5rem" pr="1rem">
             <Grid item xs={12} sm={6}>
-                <img src="http://localhost:3001/assets/clinic.png" alt="clinic" style={{ width: '100%', height: '100%'}} />
+                <img src="https://ciit-plusplus-backend.onrender.com/assets/clinic.png" alt="clinic" style={{ width: '100%', height: '100%'}} />
             </Grid>
             <Grid item xs={12} sm={6}>
-                <img src="http://localhost:3001/assets/clinic2.jpg" alt="clinic" style={{ width: '100%', height: '100%'}} />
+                <img src="https://ciit-plusplus-backend.onrender.com/assets/clinic2.jpg" alt="clinic" style={{ width: '100%', height: '100%'}} />
             </Grid>
             </Grid>
 

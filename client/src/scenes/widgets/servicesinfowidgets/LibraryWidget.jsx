@@ -94,7 +94,7 @@ const LibraryWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/lib1.png"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/lib1.png"
                  style={{ objectFit: "contain" }}
               />
               </Card>
@@ -190,7 +190,7 @@ const LibraryWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/lib2.jpg"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/lib2.jpg"
                  style={{ objectFit: "contain" }}
               />
               </Card>
@@ -286,7 +286,7 @@ const LibraryWidget = () => {
                   alt="green iguana"
                   height="100%"
                   width="100%"
-                  image="http://localhost:3001/assets/lib3.jpg"
+                  image="https://ciit-plusplus-backend.onrender.com/assets/lib3.jpg"
                  style={{ objectFit: "contain" }}
               />
               </Card>

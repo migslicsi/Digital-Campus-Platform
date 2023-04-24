@@ -135,7 +135,7 @@ const FinancialAidWidget = () => {
             >Explore our financial aid options and resources to help fund your education.
             </Typography>
             
-            <img src="http://localhost:3001/assets/ciitbg.jpg" alt="clinic" style={{ width: '100%', height: '38%'}} />
+            <img src="https://ciit-plusplus-backend.onrender.com/assets/ciitbg.jpg" alt="clinic" style={{ width: '100%', height: '38%'}} />
 
             <div style={{ 
               display: 'flex', 
@@ -181,7 +181,7 @@ const FinancialAidWidget = () => {
                   whileHover={{ scale: 0.8, transition: { duration: 0.2 }  }}
                   style={{ width: '80%', height: '80%' }}
                 >
-                  <img src="http://localhost:3001/assets/Req1.png" alt="clinic" style={{ width: '100%', height: '100%' }} />
+                  <img src="https://ciit-plusplus-backend.onrender.com/assets/Req1.png" alt="clinic" style={{ width: '100%', height: '100%' }} />
                 </motion.div>
               </div>
             </div>

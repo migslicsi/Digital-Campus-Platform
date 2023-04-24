@@ -53,8 +53,8 @@ const Navbar = () => {
         component="img"
         src={
           theme.palette.mode === "dark"
-            ? "http://localhost:3001/assets/cicon-clean.png"
-            : "http://localhost:3001/assets/cicon-cleanb.png"
+            ? "https://ciit-plusplus-backend.onrender.com/assets/cicon-clean-USD2.png"
+            : "https://ciit-plusplus-backend.onrender.com/assets/cicon-cleanb.png"
         }
         alt="CIIT++"
         sx={{
@@ -70,7 +70,6 @@ const Navbar = () => {
         }}
         onClick={() => {
           navigate("/home");
-          window.location.reload();
         }}
         />
       </FlexBetween>

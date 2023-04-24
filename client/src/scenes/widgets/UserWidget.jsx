@@ -1,6 +1,3 @@
-import {
-    EditOutlined,
-  } from "@mui/icons-material";
   import { Box, Typography, Divider, useTheme } from "@mui/material";
   import UserImage from "components/UserImage";
   import FlexBetween from "components/FlexBetween";
@@ -21,7 +18,7 @@ import {
     const main = palette.neutral.main;
   
     const getUser = async () => {
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      const response = await fetch(`https://ciit-plusplus-backend.onrender.com/users/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -54,8 +54,8 @@ const LoginPage = () => {
               alt="logo"
               src={
                 theme.palette.mode === "dark"
-                  ? "http://localhost:3001/assets/ciconw-b.png"
-                  : "http://localhost:3001/assets/cicon2-1.png"
+                ? "https://ciit-plusplus-backend.onrender.com/assets/cicon-clean-USD2.png"
+                : "https://ciit-plusplus-backend.onrender.com/assets/cicon-cleanb.png"
               }
               style={{ width: "300px", height: "auto", marginBottom: "250px" }}
             />
@@ -71,7 +71,7 @@ const LoginPage = () => {
       >
       <Box
         sx={{
-          backgroundImage: "url(http://localhost:3001/assets/bg3-4.webp)",
+          backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-4.webp)",
           backgroundSize: "cover",
           minHeight: "100vh",
           display: "flex",
@@ -80,11 +80,11 @@ const LoginPage = () => {
           backdropFilter: "blur(10px) opacity(0.8)",
           // Add media queries here
           "@media(max-width: 1000px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-5.webp)",
             backgroundPosition: "center center",
           },
           "@media(max-width: 600px)": {
-            backgroundImage: "url(http://localhost:3001/assets/bgfc.png)",
+            backgroundImage: "url(https://ciit-plusplus-backend.onrender.com/assets/bg3-5.webp)",
             backgroundPosition: "center center",
           },
         }}
@@ -94,24 +94,24 @@ const LoginPage = () => {
        display="absolute"
        p="2rem"
        borderRadius="1.5rem"
-       borderStyle="solid" 
+       borderStyle="solid"
        backgroundColor={theme.palette.background.alt}
-       border=" 2px solid rgba(0,213,253,255)"
-       boxShadow="0 0 10px rgba(0,213,253,0.7), 0 0 20px rgba(0,213,253,0.5), 0 0 30px rgba(0,213,253,0.3), 0 0 40px rgba(0,213,253,0.1)"
-       sx={{ 
-        backdropFilter: "blur(10px)",
-        mr: "10%",
-        ml: "auto",
-        "@media(max-width: 1000px)": {
-          width: "50%", // Set width to 50% upon 1000px media query
-          mr: "auto", // Set margin right to "auto" to center the box horizontally
-        },
-        "@media(max-width: 600px)": {
-          width: "80%", // Set width to 50% upon 1000px media query
-          mr: "auto", // Set margin right to "auto" to center the box horizontally
-        },
-        }}
-        >
+       border="2px solid rgba(0,213,253,255)"
+       sx={{
+       backdropFilter: "none",
+       mr: "10%",
+       ml: "auto",
+       boxShadow: "none",
+       "@media(max-width: 1000px)": {
+       width: "80%",
+       mr: "auto",
+       },
+       "@media(max-width: 600px)": {
+       width: "80%",
+       mr: "auto",
+       },
+       }}
+       >
           <Box
           display="flex"
           justifyContent="center"
@@ -121,8 +121,8 @@ const LoginPage = () => {
            <img
             src={
               theme.palette.mode === "dark"
-                ? "http://localhost:3001/assets/ciconw.png"
-                : "http://localhost:3001/assets/cicon.png"
+              ? "https://ciit-plusplus-backend.onrender.com/assets/cicon-clean-USD2.png"
+              : "https://ciit-plusplus-backend.onrender.com/assets/cicon-cleanb.png"
             }
             alt="Your Logo"
             style={{ maxWidth: "50%", maxHeight: "50%" }}
