@@ -98,10 +98,14 @@ const LoginPage = () => {
         border="2px solid rgba(0,213,253,255)"
         sx={{
           backdropFilter: "none",
+          mt: "2rem",
+          mb: "2rem",
           mr: "10%",
           ml: "auto",
           boxShadow: "none",
           maxWidth: "500px", // <-- set the maximum width here
+          overflowY: "auto", // <-- add this to make the content scrollable
+          maxHeight: "calc(100vh - 10rem)", // <-- add this to set the maximum height
           "@media(max-width: 1300px)": {
             mr: "auto",
           },
@@ -117,7 +121,7 @@ const LoginPage = () => {
           justifyContent="center"
           alignItems="center"
           mb="2rem"
-        >
+          >
            <img
             src={
               theme.palette.mode === "dark"
@@ -126,8 +130,8 @@ const LoginPage = () => {
             }
             alt="Your Logo"
             style={{ maxWidth: "50%", maxHeight: "50%" }}
-          />
-        </Box>
+            />
+          </Box>
 
         <Typography
           fontWeight="500"
