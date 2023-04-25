@@ -62,7 +62,6 @@ useEffect(()=>{
         </Typography>
       </Box>
       </Box>
-          
       {user && (user2.isAdmin || userId === _id) && <DeleteIcon onClick={handleDeleteComment} sx={{cursor:"pointer"}} />}
       </FlexBetween>
   )

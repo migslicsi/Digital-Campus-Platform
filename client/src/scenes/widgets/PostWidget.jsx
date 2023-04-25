@@ -25,6 +25,7 @@ const PostWidget = ({
   userPicturePath,
   likes,
   comments,
+  createdAt,
 }) => {
   const [isComments, setIsComments] = useState(false);
   const [comment , setComment] = useState("");
@@ -38,7 +39,14 @@ const PostWidget = ({
   const main = palette.neutral.main;
   const primary = palette.primary.main;
   const user = useSelector((state) => state.user);
-
+  const date = new Date(createdAt);
+  const month = date.toLocaleString('default', { month: 'long' }); // Get the month name in long format
+  const day = date.getDate(); // Get the day of the month
+  const year = date.getFullYear(); // Get the year
+  let hour = date.getHours(); // Get the hour (in 24-hour format)
+  let ampm = hour >= 12 ? 'PM' : 'AM'; // Determine if it's AM or PM
+  hour = hour % 12 || 12; // Convert the hour to 12-hour format
+  const formattedDate = `${month} ${day} ${year} at ${hour}${ampm}`; // Create the formatted date string
 
   const patchLike = async () => {
     const response = await fetch(`https://ciit-plusplus-backend.onrender.com/posts/${postId}/like`, {
@@ -109,6 +117,7 @@ const PostWidget = ({
           src={`https://ciit-plusplus-backend.onrender.com/assets/${picturePath}`}
         />
       )}
+      <Typography style={{ fontSize: '0.8rem', color: '#ccc', textAlign: 'right' }}>{formattedDate}</Typography>
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">
